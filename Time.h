@@ -1,24 +1,24 @@
 #include <iostream>
-using namespace std;
+#include <iomanip>
+#include <thread>  // for std::this_thread::sleep_for
+#include <chrono>  // for std::chrono::seconds
 
-
-class Time {
-
-
-private:
+struct Time {
     int hours;
     int minutes;
+    int seconds;
+};
 
-public:
-    Time(int hours, int minutes) : hours(hours), minutes(minutes) {}
+Time simulateTimePassage(const Time& currentTime, int secondsPassed) {
+    Time newTime = currentTime;
 
-    int getHours() { return hours; }
-    int getMinutes() { return minutes; }
+    // Convert everything to seconds and add the simulated time passage
+    int totalSeconds = currentTime.hours * 3600 + currentTime.minutes * 60 + currentTime.seconds + secondsPassed;
 
-    void setHours(int h) { hours = h; }
-    void setMinutes(int m) { minutes = m; }
+    // Calculate new hours, minutes, and seconds
+    newTime.hours = totalSeconds / 3600 % 24;
+    newTime.minutes = (totalSeconds % 3600) / 60;
+    newTime.seconds = totalSeconds % 60;
 
-    void printTime() const {
-        std::cout << hours << ":" << minutes;
-    }
-};    
+    return newTime;
+}
