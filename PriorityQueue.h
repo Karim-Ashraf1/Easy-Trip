@@ -14,6 +14,7 @@ private:
 public:
     PriorityQueue();
     bool isEmpty() const;
+	 bool enqueue(const T& newEntry) override;
     bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
 	bool dequeue(T &frntEntry);
