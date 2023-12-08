@@ -32,7 +32,33 @@ public:
     int getOFFTime() const { return getOFFTime; }
     int getOnTime() const { return getOnTime; }
     string getType() const { return type; }
+    
+    //Setter method for each attribute
+    void setId(int idx) 
+    { 
+        id = idx; 
+    }
+    void setStartStation(int startStationx) 
+    {
+         startStation = startStationx; 
+    }
 
+    void setEndStation(int endStationx) 
+    { 
+        endStation = endStationx; 
+    }
+    void setGetOnTime(int getOnTimex) 
+    {
+         getOnTime = getOnTimex; 
+    }
+    void setGetOffTime(int getOFFTimex) 
+    { 
+        getOffTime = getOFFTimex; 
+    }
+    void setType(string typex) 
+    {
+         type = typex; 
+    }
 
 
 
