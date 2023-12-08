@@ -8,7 +8,7 @@ private:
     
 public:
     virtual void Execute() =0 {
-
+        //Pure virtual function to be executed by inherited classes
     }
 };
 
