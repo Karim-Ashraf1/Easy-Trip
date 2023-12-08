@@ -7,13 +7,14 @@ private:
     int id;
     int startStation;
     int endStation;
-    int getOnOffTime;
+    int getOnTime;
+    int getOFFTime;
     string type;
 
 public:
     // Constructor 
-    Passenger(int id, int startStation, int endStation, int getOnOffTime, string type)
-        : id(id), startStation(startStation), endStation(endStation), getOnOffTime(getOnOffTime), type(type) {}
+    Passenger(int id, int startStation, int endStation, int getOnTime, int getOFFTime;, string type)
+        : id(id), startStation(startStation), endStation(endStation), getOnTime(getOnTime), getOFFime(getOFFTime) type(type) {}
 
     // Getter method for each attribute
     int getId() const { return id; }
