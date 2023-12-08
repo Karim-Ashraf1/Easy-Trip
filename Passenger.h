@@ -51,9 +51,9 @@ public:
     {
          getOnTime = getOnTimex; 
     }
-    void setGetOffTime(int getOFFTimex) 
+    void setGetOFFTime(int getOFFTimex) 
     { 
-        getOffTime = getOFFTimex; 
+        getOFFTime = getOFFTimex; 
     }
     void setType(string typex) 
     {
