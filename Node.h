@@ -7,6 +7,7 @@ class Node
 private:
 	T item; // A data item
 	Node<T>* next; // Pointer to next node
+    Node<T>* prev;
 public :
 	Node();
 	Node(const T & r_Item);	
