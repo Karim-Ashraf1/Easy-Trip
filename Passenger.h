@@ -29,7 +29,8 @@ public:
     int getId() const { return id; }
     int getStartStation() const { return startStation; }
     int getEndStation() const { return endStation; }
-    int getGetOnOffTime() const { return getOnOffTime; }
+    int getOFFTime() const { return getOFFTime; }
+    int getOnTime() const { return getOnTime; }
     string getType() const { return type; }
 
 
