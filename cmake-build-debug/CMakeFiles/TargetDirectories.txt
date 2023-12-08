@@ -1,0 +1,3 @@
+/Users/nourmeyy/Documents/GitHub/Easy-Trip/cmake-build-debug/CMakeFiles/Easy_Trip.dir
+/Users/nourmeyy/Documents/GitHub/Easy-Trip/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/nourmeyy/Documents/GitHub/Easy-Trip/cmake-build-debug/CMakeFiles/rebuild_cache.dir
