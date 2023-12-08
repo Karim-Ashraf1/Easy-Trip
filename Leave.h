@@ -11,6 +11,6 @@ private:
     Station STRT ; // start station of the passenger asking to leave
 public:
     void Execute(){
-        //to be implented later
+        //to be implented later on
     }
 };

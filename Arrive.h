@@ -3,16 +3,12 @@
 #include<Passenger.h>
 using namespace std;
 
-class Arrival_Event{
+class Arrive{
 private:
-    bool A ; // means this is a LEAVE event line
-    Passenger TYP ; // passenger type
-    int ET ; // event timestep
-    int ID ; // unique number to identifies each passenger
-    Station STRT ; // start station of the passenger
-    Station END; //  end station of the passenger
-public:
-    void Execute(){
-        //to be implented later
-    }
+    Passenger Psngr ; // Creating a Passenger instance 
+    int ET ; // Event timestep
+    int ID ; // Unique number that identifies each passenger
+    Station Stn ; // Create a station instance
+protected:
+    void Execute();
 };
