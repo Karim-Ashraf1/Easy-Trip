@@ -17,6 +17,7 @@ public:
     {
        id=idx;
        startStation=startStationx;
+       endStation=endStationx;
        getOnTime=getOnTimex;
        getOFFTime=getOFFTimex;
        type=typex; 
