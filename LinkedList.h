@@ -3,7 +3,7 @@
 
 #include "Node.h"
 #include <iostream>
-using namespace std;
+
 
 template <typename T>
 class LinkedList
@@ -31,16 +31,16 @@ public:
 	*/
 	void PrintList()	const
 	{
-		cout << "\nprinting list contents:\n\n";
+		std::cout << "\nprinting list contents:\n\n";
 		Node<T>* p = Head;
 
 		while (p)
 		{
-			cout << "[ " << p->getItem() << " ]";
-			cout << "--->";
+			std::cout << "[ " << p->getItem() << " ]";
+			std::cout << "--->";
 			p = p->getNext();
 		}
-		cout << "*\n";
+		std::cout << "*\n";
 	}
 
 	/*
@@ -138,11 +138,11 @@ public:
 	void RecPrint(Node<T>* ptr) {
 		ptr = Head;
 		if (ptr == nullptr) {
-			cout << "list is empty";
+			std::cout << "list is empty";
 		}
 		while (ptr->getNext() != nullptr)
 		{
-			cout << ptr;
+			std::cout << ptr;
 		}
 	}
 

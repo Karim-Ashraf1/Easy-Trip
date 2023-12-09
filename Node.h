@@ -27,6 +27,7 @@ template < typename T>
 Node<T>::Node() 
 {
 	next = nullptr;
+	prev = nullptr;
 } 
 
 template < typename T>
@@ -34,6 +35,7 @@ Node<T>::Node( const T& r_Item)
 {
 	item = r_Item;
 	next = nullptr;
+	prev = nullptr;
 } 
 
 template < typename T>

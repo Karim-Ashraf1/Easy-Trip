@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-using namespace std;
+
 
 class Passenger {
 private:
@@ -10,11 +10,20 @@ private:
     int endStation;
     int getOnTime;
     int getOFFTime;
-    string type;
+    std::string type;
 
 public:
-    // Constructor 
-    Passenger(int idx, int startStationx, int endStationx, int getOnTimex, int getOFFTimex, string typex) 
+    // Constructors
+    Passenger()
+    {
+        id=0;
+       startStation=0;
+       endStation=0;
+       getOnTime=0;
+       getOFFTime=0;
+       type=" "; 
+    } 
+    Passenger(int idx, int startStationx, int endStationx, int getOnTimex, int getOFFTimex, std::string typex) 
     {
        id=idx;
        startStation=startStationx;
@@ -32,7 +41,7 @@ public:
     int getEndStation() const { return endStation; }
     int getOFFTime() const { return getOFFTime; }
     int getOnTime() const { return getOnTime; }
-    string getType() const { return type; }
+    std::string getType() const { return type; }
     
     //Setter method for each attribute
     void setId(int idx) 
@@ -56,7 +65,7 @@ public:
     { 
         getOFFTime = getOFFTimex; 
     }
-    void setType(string typex) 
+    void setType(std::string typex) 
     {
          type = typex; 
     }
