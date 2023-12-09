@@ -9,7 +9,7 @@ class LinkedList
 {
 private:
 	Node<T> *Head; // Pointer to the head of the list
-	// You can add tail pointer too (depending on your problem)
+				   // You can add tail pointer too (depending on your problem)
 public:
 	LinkedList()
 	{
@@ -116,16 +116,19 @@ public:
 		return false;
 	}
 	// function to find amd return a node from linked list.
-	Passenger<T>* FindPassenger(const T& key) {
-        Node<T>* current = head;
-        while (current->getNext() != nullptr) {
-            if (*(current->data) == key) {
-                return current;
-            }
-            current = current->next;
-        }
-        return nullptr;
-    }
+	Passenger<T> *FindPassenger(const T &key)
+	{
+		Node<T> *current = head;
+		while (current->getNext() != nullptr)
+		{
+			if (*(current->data) == key)
+			{
+				return current;
+			}
+			current = current->next;
+		}
+		return nullptr;
+	}
 
 	//[3]CountOccurance
 	// returns how many times a certain value appeared in the list
@@ -195,6 +198,18 @@ public:
 
 	bool DeleteNode(T value)
 	{
+		Node<T> *temp = new Node<T>;
+		temp = Head;
+		while (temp->getNext() != nullptr)
+		{
+			if (temp->item == value)
+			{
+				delete temp->getItem();
+				return true;
+			}
+			temp = temp->setNext();
+		}
+		return false;
 	}
 
 	bool DeleteNodes(T value)
