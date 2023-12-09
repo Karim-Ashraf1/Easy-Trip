@@ -1,12 +1,12 @@
+
 #include <iostream>
-using namespace std;
 #include <LinkedQueue.h>
 #include "Passenger.h"
 
 class Bus {
 private:
     int id;
-    string type;
+    std::string type;
     int capacity = 45;
     int CurrentLoad;
     int maintenanceT; // for time
