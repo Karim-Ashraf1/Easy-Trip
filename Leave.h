@@ -34,8 +34,7 @@ public:
         LinkedList<Passenger *> appropiate;  // List of pointers to passengers
         LinkedQueue<Passenger *> leavequeue; // queue that will save passengers in bus until removing the leaving passenger
 
-        // DP = appropiate.Find(LP); //
-        // leavequeue.dequeue(DP);
+        appropiate.DeleteNode(appropiate.FindPassenger(LP)); // delete the leaving passenger if found in passengers
 
 
     }
