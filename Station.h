@@ -1,7 +1,7 @@
+#pragma once
 #include "PriorityQueue.h"
 #include "LinkedQueue.h"
 #include "Passenger.h"
-#include "Events.h"
 #include "Bus.h"
 
 class Station {
@@ -9,8 +9,7 @@ private:
     int number;
     int timeBetweenStations;
     PriorityQueue<Passenger> WaitingPassengers;
-    PriorityQueue<Events> Events;
-    LinkedQueue<Bus> AvailableBuses;
+    PriorityQueue<Bus> AvailableBuses;
 
 public:
     Station(int number, int timeBetweenStations)
@@ -25,14 +24,6 @@ public:
 
     bool removePassenger(Passenger& passenger) {
         return WaitingPassengers.dequeue(passenger);
-    }
-
-    void addEvent(const Event& event) {
-        Events.priorityEnqueue(event);
-    }
-
-    bool removeEvent(Event& event) {
-        return Events.dequeue(event);
     }
 
     void addBus(const Bus& bus) {
@@ -54,7 +45,7 @@ public:
                 // std::cout << "Passenger " << passengers[i].getId() << " dequeued at station " << number << std::endl;
                 //remove passenger from the array
                 passengers[i]=null;
-                busx.setCurrentLoad((busx.getCurrentLoad()-1);
+                busx.setCurrentLoad((busx.getCurrentLoad()-1));
            
             }
         }
@@ -83,5 +74,4 @@ public:
     }
 }
 
- 
-};
+ ;
