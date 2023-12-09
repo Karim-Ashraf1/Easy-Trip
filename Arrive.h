@@ -15,7 +15,7 @@ private:
     int ID ; // Unique number that identifies each passenger
     int StartStation ; // Shows the starting station
     int EndStation ; // Shows the ending station
-    int OnTime ; // Shows the the time of the passenger getting on th bus
+    int OnTime ; // Shows the time of the passenger getting on th bus
     int OffTime ; // Shows the time the passenger gets off the bus
     string Type ; // The type of passenger
     LinkedList<Passenger*> appropiate ; //list of pointers to passengers 
