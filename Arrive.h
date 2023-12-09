@@ -2,6 +2,8 @@
 #include "Time.h"
 #include "Passenger.h"
 #include "PriorityQueue.h"
+using namespace std;
+
 
 class Arrive
 {
