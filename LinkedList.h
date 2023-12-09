@@ -101,7 +101,7 @@ public:
 	//[2]Find
 	// searches for a given value in the list, returns true if found; false otherwise.
 
-	Passenger *Find(T key)
+	bool Find(T key)
 	{
 		Node<T> *temp = new Node<T>;
 		temp = Head;
@@ -109,11 +109,23 @@ public:
 		{
 			if (temp->getItem() == key)
 			{
-				return temp;
+				return true;
 			}
 			temp = temp->setNext();
 		}
+		return false;
 	}
+	// function to find amd return a node from linked list.
+	Node<T>* FindPassenger(const T& key) {
+        Node<T>* current = head;
+        while (current->getNext() != nullptr) {
+            if (*(current->data) == key) {
+                return current;
+            }
+            current = current->next;
+        }
+        return nullptr;
+    }
 
 	//[3]CountOccurance
 	// returns how many times a certain value appeared in the list
