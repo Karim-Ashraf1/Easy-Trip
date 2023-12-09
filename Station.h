@@ -43,7 +43,7 @@ public:
         return AvailableBuses.dequeue(bus);
     }
 
-    void checkEndStationAndRemove(getNumber, Bus busx) {
+    void checkEndStationAndRemove(getNumber(), Bus busx) {
       while (i < 45) {
         // Check if the end station of the passenger is the current station
         if (busx.PassengersInBus[i].getEndStation() == number) {
@@ -55,6 +55,19 @@ public:
            
         }
     }
+    void loadPassengersToBus(PriorityQueue<Passenger>& waitingPassengers, Bus& bus) {
+    int maxPassengers = 45;
+    int availableSeats = maxPassengers - bus.getCurrentLoad();
+
+    while (availableSeats > 0 && !waitingPassengers.isEmpty()) {
+        Passenger nextPassenger;
+        if (waitingPassengers.dequeue(nextPassenger)) {
+        for (int i = 0; i < 45; ++i) {
+                if (PassengersInBus[i] == nullptr) {
+                    // Add the passenger to the array at the first available index
+                    PassengersInBus[i] = passenger;
+        }    
+
 }
 
  
