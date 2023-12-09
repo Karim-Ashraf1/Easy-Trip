@@ -36,7 +36,7 @@ public:
 
     void checkEndStationAndRemove(getNumber(), Bus busx)
     {
-      while (int i = 0 ; i < 45; ++i)
+      while (int i = 0 && i < 45)
        {
             // Check if the end station of the passenger is the current station
             if (busx.PassengersInBus[i].getEndStation() == number) 
@@ -48,6 +48,7 @@ public:
                 busx.setCurrentLoad((busx.getCurrentLoad()-1));
            
             }
+            i++;
         }
     }    
     void loadPassengersToBus(PriorityQueue<Passenger>& waitingPassengers, Bus& bus)
