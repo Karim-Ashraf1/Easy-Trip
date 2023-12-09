@@ -36,7 +36,7 @@ public:
 
     void checkEndStationAndRemove(getNumber(), Bus busx)
     {
-      while (i < 45)
+      while (int i = 0 ; i < 45; ++i)
        {
             // Check if the end station of the passenger is the current station
             if (busx.PassengersInBus[i].getEndStation() == number) 
