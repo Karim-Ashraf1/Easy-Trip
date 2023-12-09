@@ -1,6 +1,4 @@
 #include<iostream>
-#include<Station.h>
-#include<Passenger.h>
 using namespace std;
 
 class Events{

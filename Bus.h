@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 
+=======
+#pragma once
+>>>>>>> d9a6a53286efc62ae0faccdee840f0c3fbe99ac0
 #include <iostream>
 #include <LinkedQueue.h>
 #include "Passenger.h"
