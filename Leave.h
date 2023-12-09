@@ -14,12 +14,14 @@ private:
     int ID;        // id if the passengerswho decided to leave
     Station STRT;  // start station of the passenger asking to leave
     Passenger *LP; // LP= Leaving Passenger
+    Passenger *DP; // DP= Dequeued Passenger
 protected:
     void Execute()
     {
         LinkedList<Passenger *> appropiate;  // List of pointers to passengers
         LinkedQueue<Passenger *> leavequeue; // queue that will save passengers in bus until removing the leaving passenger
 
-        appropiate.Find(LP); //
+        DP = appropiate.Find(LP); //
+        leavequeue.dequeue(DP);
     }
 };
