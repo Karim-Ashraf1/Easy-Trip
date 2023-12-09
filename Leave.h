@@ -1,6 +1,8 @@
 #include<iostream>
 #include<Station.h>
 #include<Passenger.h>
+#include<LinkedList.h>
+#include<LinkedQueue.h>
 using namespace std;
 
 class Leave_Event{
@@ -9,8 +11,14 @@ private:
     int ET ; // event timestep
     int ID ; //id if the passengerswho decided to leave
     Station STRT ; // start station of the passenger asking to leave
-public:
+    Passenger* psgr1;
+protected:
     void Execute(){
-        //to be implented later on
+        LinkedList<Passenger*> appropiate; //List of pointers to passengers
+        LinkedQueue<Passenger*> leavequeue; // queue that will save passengers in bus until removing the leaving passenger
+
+        //appropiate.Find();
+    
     }
+
 };
