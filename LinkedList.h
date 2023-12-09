@@ -116,7 +116,7 @@ public:
 		return false;
 	}
 	// function to find amd return a node from linked list.
-	Node<T>* FindPassenger(const T& key) {
+	Passenger<T>* FindPassenger(const T& key) {
         Node<T>* current = head;
         while (current->getNext() != nullptr) {
             if (*(current->data) == key) {
