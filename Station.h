@@ -43,15 +43,15 @@ public:
         return AvailableBuses.dequeue(bus);
     }
 
-    void checkEndStationAndRemove(getNumber, Passenger passengers[45]) {
-    for (int i = 0; i < 45; ++i) {
+    void checkEndStationAndRemove(getNumber, Bus busx) {
+      while (i < 45) {
         // Check if the end station of the passenger is the current station
-        if (passengers[i].getEndStation() == currentStation) {
+        if (busx.PassengersInBus[i].getEndStation() == number) {
             //option to announce arrival
             // std::cout << "Passenger " << passengers[i].getId() << " dequeued at station " << number << std::endl;
             //remove passenger from the array
             passengers[i]=null;
-
+            busx.setCurrentLoad((busx.getCurrentLoad()-1);
            
         }
     }
