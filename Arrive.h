@@ -1,24 +1,20 @@
 #pragma once
-#include <Time.h>
-#include<iostream> 
-#include<Station.h>
-#include<Passenger.h>
-#include<LinkedList.h>
-using namespace std;
-
+#include "Time.h"
+#include "Passenger.h"
+#include "PriorityQueue.h"
 
 class Arrive
 {
 private:
     Passenger Psngr ; // Creating a Passenger instance 
-    //Time ET ; // Event timestep          ///to be implemented later
+    ///Time E_T ; // Event timestep     //// to be implemented later             
     int ID ; // Unique number that identifies each passenger
     int StartStation ; // Shows the starting station
     int EndStation ; // Shows the ending station
     int OnTime ; // Shows the time of the passenger getting on th bus
     int OffTime ; // Shows the time the passenger gets off the bus
     string Type ; // The type of passenger
-    LinkedList<Passenger*> appropiate ; //list of pointers to passengers 
+    PriorityQueue<Passenger*> appropiate ; //list of pointers to passengers 
 
 public:
 
@@ -32,13 +28,12 @@ public:
 
 
     /// getters for all attrubiutes of arrive(which are for passenger)
-    int GetID() {return ID;}
-    int GetStartStation() {return StartStation;}
-    int GetEndStation() {return EndStation;}
-    int GetOnTime() {return OnTime;}
-    int GetOffTime() {return OffTime;}
-    string GetType() {return Type;}
-    
+    int GetID() const {return ID;}
+    int GetStartStation()const {return StartStation;}
+    int GetEndStation() const {return EndStation;}
+    int GetOnTime() const {return OnTime;}
+    int GetOffTime() const {return OffTime;}
+    string GetType() const {return Type;}
 
 
     /// overloaded Excute() in Events class
@@ -55,8 +50,7 @@ public:
 
         Passenger *psgr_ptr=&Psngr;
 
-        appropiate.InsertEnd(psgr_ptr); /// adding The passenger to linked list
+        appropiate.enqueue(psgr_ptr); /// adding The passenger to linked list
     }
-    void SetET(int et);  ///to be implemented later
-    int GetET();  ///to be implemented later
+    
 };
