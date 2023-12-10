@@ -11,8 +11,8 @@ private:
     int CurrentLoad; //
     int maintenanceT; // for time
     int maintenanceJ; // for journeys
-    static int tDC = 0; // total passengers transported by this bus
-    static int N = 0; // total delivery trips
+    static int tDC; // total passengers transported by this bus
+    static int N; // total delivery trips
     Time tBT; // total busy time
     Time TSim; // total Simulation
 public:
@@ -27,12 +27,14 @@ public:
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() {return CurrentLoad ;}
     int getN(int N) { return N++ ;}
-    static int getTotalPassenger() {return tDC}
+    static int getTotalPassenger() {return tDC;}
 
     //setter for current load
     void setCurrentLoad(int x){CurrentLoad = x ;}
     void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
-    int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100 << "%";}
+    int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;}
 
+    //Setters for class
+    void setTDC(){tDC = 0;}
 
 };
