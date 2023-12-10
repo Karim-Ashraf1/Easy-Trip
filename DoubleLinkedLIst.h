@@ -1,9 +1,8 @@
 #pragma once 
-#include "LinkedList.h"
 #include "Node.h"
 
 template<class T>
-class DoubleLinkedList : public LinkedList<T>
+class DoubleLinkedList :
 {
    private:
 	Node<T>* Head;	//Pointer to the head of the list	
