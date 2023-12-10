@@ -2,7 +2,7 @@
 #include "Node.h"
 
 template<class T>
-class DoubleLinkedList :
+class DoubleLinkedList
 {
    private:
 	Node<T>* Head;	//Pointer to the head of the list	
