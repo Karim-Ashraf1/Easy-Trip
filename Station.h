@@ -68,6 +68,8 @@ public:
                         {
                                  // Add the passenger to the array at the first available index
                             bus.PassengersInBus[i] = nextPassenger;
+                            bus.setCurrentLoad((bus.getCurrentLoad()+1));
+                            bus.setTotalPassengers((bus.getTotalPassengers()+1));
                         }    
         
                     }  
