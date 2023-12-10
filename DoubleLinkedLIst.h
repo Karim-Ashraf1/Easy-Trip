@@ -15,7 +15,7 @@ public:
 	}
 
 	//List is being desturcted ==> delete all items in the list
-	~LinkedList()
+	~DoubleLinkedList()
 	{
 		DeleteAll();
 	}
