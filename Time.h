@@ -20,6 +20,30 @@ public:
         int minutes = m;
         int secound = s;
     }
+    
+    Time& operator=(const Time& other) {
+        if (this != &other) {
+            hours = other.hours;
+            minutes = other.minutes;
+            seconds = other.seconds;
+        }
+        return *this;
+    }
+
+    Time operator-(const Time& otherTime) const {
+        int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
+        int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+
+        int differenceSeconds = totalSeconds1 - totalSeconds2;
+
+        // Calculate new hours, minutes, and seconds for the difference
+        Time result;
+        result.hours = differenceSeconds / 3600;
+        result.minutes = (differenceSeconds % 3600) / 60;
+        result.seconds = differenceSeconds % 60;
+
+        return result;
+    }
 
     Time simulateTimePassage(const Time &currentTime, int secondsPassed)
     {
