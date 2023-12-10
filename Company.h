@@ -2,15 +2,15 @@
 #include <Events.h>
 #include <Bus.h>
 #include <Station.h>
-#include<LinkedList.h>
+#include<DoubleLinkedList.h>
 #include <UI.h>
 using namespace std;
 
 class Company {
 private:
-    LinkedList<Events*> EventsList;
-    LinkedList<Bus*> BusesList;
-    LinkedList<Station*> StationsList;
+    DoubleLinkedList<Events*> EventsList;
+    DoubleLinkedList<Bus*> BusesList;
+    DoubleLinkedList<Station*> StationsList;
     string InputFile;
     string OutputFile;
 
@@ -28,8 +28,11 @@ public:
 
     void simulateProgram() {
         // Execute the events that should be executed at that min
+
         // Move buses from available to moving to checkup to available again
+
         // Collect statistics that are needed to create output file
+
         // Calls UI class functions to print details on the output screen
 
     }
