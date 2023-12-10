@@ -7,6 +7,13 @@ private:
     int seconds;
 
 public:
+      Time()
+    {
+        int hours = 0;
+        int minutes = 0;
+        int secound = 0;
+    }
+
     Time(int h, int m, int s)
     {
         int hours = h;
