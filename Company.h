@@ -52,8 +52,27 @@ public:
 
     void StartProgram() {
         // read the file
-        vector<string> arr;
-        ReadFile("file.txt", arr[]);
+       void StartProgram(ifstream& fileName,string ArrayOut[])
+{
+    fstream ReadFile;
+    string word, t, q, filename;
+
+    // filename of the file
+    filename = "filename.txt";
+
+    // opening file
+    ReadFile.open(filename.c_str());
+
+    // extracting words from the file
+	int i=0;
+    while (ReadFile >> word)
+    {	
+		ArrayOut[i]=word;
+        // displaying content
+		i++;
+    }
+	ReadFile.close();
+}
 
         // add events to EventsList
 
