@@ -8,8 +8,9 @@ class Station {
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger> WaitingPassengers;
-    PriorityQueue<Bus> AvailableBuses;
+    PriorityQueue<Passenger> NormalWaitingPassengers;
+    LinkedQueue<Passenger> WheelchairWaitingPassengers;
+    LinkedQueue<Bus> AvailableBuses;
 
 public:
     Station(int number, int timeBetweenStations)
@@ -20,7 +21,7 @@ public:
     int getTimeBetweenStations()  { return timeBetweenStations; }
 
     void addBus(const Bus& bus) {
-        AvailableBuses.priorityEnqueue(bus);
+        AvailableBuses.enqueue(bus);
     }
 
     bool removeBus(Bus& bus) {
