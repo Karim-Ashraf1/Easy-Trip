@@ -22,7 +22,7 @@ public:
         int secound = s;
     }
     void toString(){
-        cout<<hours<<":"<<minutes<< "/n";
+        std::cout<<hours<<":"<<minutes<< "/n";
     }
     
     Time& operator=(const Time& other) {
@@ -54,7 +54,7 @@ public:
     resultTime.seconds = resultSeconds % 60;
 
     return resultTime;
-}
+    }
 
     Time operator-(const Time& otherTime) const {
         int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
@@ -70,6 +70,22 @@ public:
 
         return result;
     }
+    Time operator*(int multiplier) const {
+    // Convert the time to seconds
+    int totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    // Multiply by the integer
+    totalSeconds *= multiplier;
+
+    // Calculate new hours, minutes, and seconds for the result
+    Time resultTime;
+    resultTime.hours = totalSeconds / 3600;
+    resultTime.minutes = (totalSeconds % 3600) / 60;
+    resultTime.seconds = totalSeconds % 60;
+
+    return resultTime;
+    }
+
 
     Time simulateTimePassage(const Time &currentTime, int secondsPassed)
     {
