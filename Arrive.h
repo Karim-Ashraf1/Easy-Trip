@@ -9,9 +9,11 @@ class Arrive
 {
 private:
     Passenger Psngr ; // Creating a Passenger instance 
-    ///Time E_T ; // Event timestep     //// to be implemented later             
+    Time On; // Setting the on time for the passenger
+    Time Off; // Setting the off time for the passenger
     int ID ; // Unique number that identifies each passenger
     int StartStation ; // Shows the starting station
+    bool A; // true if an arrival has been activated
     int EndStation ; // Shows the ending station
     int OnTime ; // Shows the time of the passenger getting on th bus
     int OffTime ; // Shows the time the passenger gets off the bus
@@ -46,8 +48,8 @@ public:
         Psngr.setId(ID);
         Psngr.setStartStation(StartStation);
         Psngr.setEndStation(EndStation);
-        Psngr.setGetOFFTime(OffTime);
-        Psngr.setGetOnTime(OnTime);
+        Psngr.setOFFTime( On);
+        Psngr.setOnTime(Off);
         Psngr.setType(Type);
 
         Passenger *psgr_ptr=&Psngr;
