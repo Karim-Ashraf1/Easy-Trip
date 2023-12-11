@@ -37,6 +37,10 @@ public:
     void setdirection(char directionx){direction = directionx ;}
     //void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     void setTDC(int x){tDC = x;}
+    void setN(int n){N=n;}
+    void setTBT(Time tbt){tBT=tbt;}
+    void setTSim(Time tsim){TSim=tsim;}
+
     //getters for attributes
     int getId() { return id;}
     std::string getType() { return type; }
@@ -46,6 +50,8 @@ public:
     int getN() { return N;}
     char getdirection() { return direction ;}
     static int getTDC() {return tDC;}
+    int getCapacity(){return Bcapacity;}
+    Time getTBT(){return tBT;}
 
     int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
