@@ -1,21 +1,22 @@
 #pragma once
-#include "Node.h"
 #include "PriorityQueue.h"
 #include "LinkedQueue.h"
-#include "LinkedList.h"
 #include "Passenger.h"
 #include "Bus.h"
+#include "LinkedList.h"
 
 class Station {
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger*> WaitingPassengersForward;
-    PriorityQueue<Passenger*> WaitingPassengersBackward;
-    LinkedQueue<Passenger*> WheelchairWaitingPassengersForwards;
-    LinkedQueue<Passenger*> WheelchairWaitingPassengersBackwards;
+    PriorityQueue<Passenger> NormalWaitingPassengersForward;
+    PriorityQueue<Passenger> NormalWaitingPassengersBackward;
+    LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
+    LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
     LinkedQueue<Bus> AvailableBuses;
     LinkedList<Passenger*> FinishList;
+
+
 public:
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
@@ -34,6 +35,7 @@ public:
 
     void AddToFinishList(Passenger psngr){
         Passenger* pntr;
+        pntr= &psngr;
         FinishList.InsertEnd(pntr);
     }
     void printFinishListAttributes() const {
@@ -103,12 +105,11 @@ public:
                             // Add the pointer to the passenger to the array at the first available index
                             bus.PassengersInBus[i] = pntr2 ;
                             bus.setCurrentLoad((bus.getCurrentLoad()+1));
-                            bus.setTotalPassengers((bus.getTotalPassengers()+1));
+                            bus.setTDC((bus.getTDC()+1));
                         }    
         
                     }  
                 }          
             }
     }
-   
 };

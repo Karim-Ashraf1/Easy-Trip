@@ -1,4 +1,5 @@
 #pragma once
+#include "LinkedList.h"
 #include <iostream>
 #include "Passenger.h"
 #include "Time.h"
@@ -16,30 +17,36 @@ private:
     Time TSim; // total Simulation
     char direction;
 public:
-    int TotalPassengers;
     Passenger* PassengersInBus[Bcapacity];
-    Bus(int id, std::string type, int maintenanceT, int maintenanceJ)
-        : id(id), type(type), maintenanceT(maintenanceT), maintenanceJ(maintenanceJ) {}
+    Bus(int id, std::string type, int CurrentLoad, int maintenanceT, int maintenanceJ, char direction){
+        id = id; type = type; CurrentLoad = CurrentLoad;
+        maintenanceT = maintenanceT; maintenanceJ = maintenanceJ; direction = direction;
+    }
+    Bus(){
+        id = 1; type = "MBus";
+        CurrentLoad = 0;
+        maintenanceT = 0;
+        maintenanceJ = 0;
+        direction = 'F';
+    }
 
+    //setter for current load
+    void setId(int idx) {id = idx;}
+    void setType(std::string typex) {type = typex;}
+    void setCurrentLoad(int CurrentLoadx){CurrentLoad = CurrentLoadx ;}
+    void setdirection(char directionx){direction = directionx ;}
+    void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
+    void setTDC(int x){tDC = x;}
     //getters for attributes
-    int getId() { return id; }
+    int getId() { return id;}
     std::string getType() { return type; }
     int getMaintenanceTime() { return maintenanceT; }
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() {return CurrentLoad ;}
-    int getTotalPassengers() {return TotalPassengers ;}
-    int getN(int N) { return N++ ;}
+    int getN() { return N;}
     char getdirection() { return direction ;}
-    static int getTotalPassenger() {return tDC;}
+    static int getTDC() {return tDC;}
 
-    //setter for current load
-    void setCurrentLoad(int x){CurrentLoad = x ;}
-    void setdirection(char x){direction = x ;}
-    void setTotalPassengers(int x) {TotalPassengers=x ;}
-    void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
-    int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;}
-
-    //Setters for class
-    void setTDC(){tDC = 0;}
+    int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
 };
