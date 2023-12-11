@@ -23,9 +23,13 @@ x.printFinishListAttributes();
 ofstream WriteFile("filename.txt");
 
 // Write to the file
-WriteFile << "Files can be tricky, but it is fun enough!";
+WriteFile << "A SP 4:19 6 2 1 Pregnant \n"
+              << "A NP 4:31 7 2 1 \n "
+              << "A NP 4:39 8 2 1 \n"
+              << "A SP 4 : 43 9 1 2 Pregnant \n"
+              << "A WP 4 : 51 10 2 1 \n";
 
-// Close the file
+ // Close the file
 WriteFile.close();
 
 Company cmp;
