@@ -15,6 +15,7 @@ private:
     static int N; // total delivery trips
     Time tBT; // total busy time
     Time TSim; // total Simulation
+    char direction;
 public:
     int TotalPassengers;
     Passenger* PassengersInBus[Bcapacity];
@@ -29,10 +30,12 @@ public:
     int getCurrentLoad() {return CurrentLoad ;}
     int getTotalPassengers() {return TotalPassengers ;}
     int getN(int N) { return N++ ;}
+    char getdirection() { return direction ;}
     static int getTotalPassenger() {return tDC;}
 
     //setter for current load
     void setCurrentLoad(int x){CurrentLoad = x ;}
+    void setdirection(char x){direction = x ;}
     void setTotalPassengers(int x) {TotalPassengers=x ;}
     void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;}

@@ -8,8 +8,11 @@ class Station {
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger> NormalWaitingPassengers;
-    LinkedQueue<Passenger> WheelchairWaitingPassengers;
+    PriorityQueue<Passenger> NormalWaitingPassengersForward;
+    PriorityQueue<Passenger> NormalWaitingPassengersBackward;
+    LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
+    LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
+
     LinkedQueue<Bus> AvailableBuses;
 
 public:
