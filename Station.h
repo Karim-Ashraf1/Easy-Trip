@@ -16,15 +16,8 @@ public:
         : number(number), timeBetweenStations(timeBetweenStations) {}
 
     int getNumber()  { return number; }
+
     int getTimeBetweenStations()  { return timeBetweenStations; }
-
-    void addPassenger(const Passenger& passenger) {
-        WaitingPassengers.priorityEnqueue(passenger);
-    }
-
-    bool removePassenger(Passenger& passenger) {
-        return WaitingPassengers.dequeue(passenger);
-    }
 
     void addBus(const Bus& bus) {
         AvailableBuses.priorityEnqueue(bus);
@@ -34,18 +27,20 @@ public:
         return AvailableBuses.dequeue(bus);
     }
 
-    void checkEndStationAndRemove(Station x, Bus busx)
+    void checkEndStationAndRemove(Station stationx, Bus busx)
     {
         int i=0;
       while ( i < 45)
-       {
+       {    
+            //create a pointer that points to the same passenger
+            Passenger* pntr=busx.PassengersInBus[i];
+            //create another passenger with the same attributes
+            Passenger psngr = *pntr;
             // Check if the end station of the passenger is the current station
-            if (busx.PassengersInBus[i].getEndStation() == x.getNumber()) 
+            if (psngr.getEndStation() == stationx.getNumber()) 
             {
-                //option to announce arrival
-                // std::cout << "Passenger " << passengers[i].getId() << " dequeued at station " << number << std::endl;
                 //remove passenger from the array
-                busx.PassengersInBus[i]=Passenger();
+                busx.PassengersInBus[i]=nullptr;
                 busx.setCurrentLoad((busx.getCurrentLoad()-1));
            
             }
@@ -64,10 +59,13 @@ public:
                 {
                      for (int i = 0; i < 45; ++i) 
                     {
-                         if (bus.PassengersInBus[i].getId()==0) 
+                        Passenger* pntr=bus.PassengersInBus[i];
+                        Passenger psngr = *pntr;    
+                         if (psngr.getId()==0) 
                         {
-                                 // Add the passenger to the array at the first available index
-                            bus.PassengersInBus[i] = nextPassenger;
+                            Passenger* pntr2 = &nextPassenger;
+                            // Add the pointer to the passenger to the array at the first available index
+                            bus.PassengersInBus[i] = pntr2 ;
                             bus.setCurrentLoad((bus.getCurrentLoad()+1));
                             bus.setTotalPassengers((bus.getTotalPassengers()+1));
                         }    
