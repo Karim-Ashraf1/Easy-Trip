@@ -29,7 +29,7 @@ public:
     void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     void setTDC(){tDC = 0;}
     //getters for attributes
-    int getId() { return id; }
+    int getId() { return id;}
     std::string getType() { return type; }
     int getMaintenanceTime() { return maintenanceT; }
     int getMaintenanceJourneys() { return maintenanceJ; }
