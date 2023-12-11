@@ -40,6 +40,14 @@ public:
 
         // Close the file
         file.close();
+
+        // print result
+        for (const auto& line : InputList) {
+        for (const auto& word : line) {
+            cout << word << " ";
+        }
+        cout << endl;
+    }
     }
 
     void StartProgram() {
