@@ -20,6 +20,9 @@ public:
         int minutes = m;
         int secound = s;
     }
+    void toString(){
+        cout<<hours<<":"<<minutes<< "/n";
+    }
     
     Time& operator=(const Time& other) {
         if (this != &other) {
