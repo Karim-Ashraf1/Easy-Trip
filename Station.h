@@ -41,7 +41,7 @@ public:
     void printFinishListAttributes() const {
         std::cout << "Passengers in FinishList at Station " << number << ":\n";
 
-        Node<Passenger*>* current = FinishList.getHead(); 
+        Node<Passenger*>* current = FinishList.Head; 
 
         while (current != nullptr) {
             Passenger* passenger = current->getItem();
