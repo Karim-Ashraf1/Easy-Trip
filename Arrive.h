@@ -38,7 +38,7 @@ class Arrive : public Events
         string GetType() const { return Type; }
 
         /// overloaded Excute() in Events class
-        void Execute(int FileArray[], int Size)
+        void Execute(int FileArray[])
         {
 
 
