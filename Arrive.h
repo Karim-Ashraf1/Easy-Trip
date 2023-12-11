@@ -2,10 +2,11 @@
 #include "Time.h"
 #include "Passenger.h"
 #include "PriorityQueue.h"
+#include<Events.h>
 using namespace std;
 
 
-class Arrive
+class Arrive : public Events
 {
 private:
     Passenger Psngr ; // Creating a Passenger instance 
