@@ -34,7 +34,7 @@ public:
     /// overloaded Excute() in Events class
     void Execute()
     {
-        DoubleLinkedList<Passenger *> appropiate;               // List of pointers to passengers
-        appropiate.DeleteNodeVal(appropiate.FindPassenger(LP)); //  // delete the leaving passenger if found in passengers
+        DoubleLinkedList<Passenger *> Passwait;               // List of pointers to passengers
+        Passwait.DeleteNodeVal(Passwait.FindPassenger(LP)); //  // delete the leaving passenger if found in passengers
     }
 };
