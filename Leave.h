@@ -32,7 +32,7 @@ public:
     Passenger* Get_LP() const {return LP;}
 
     /// overloaded Excute() in Events class
-    void Execute()
+    void Execute(int FileArray[], int Size)
     {
         DoubleLinkedList<Passenger *> Passwait;               // List of pointers to passengers
         Passwait.DeleteNodeVal(Passwait.FindPassenger(LP)); //  // delete the leaving passenger if found in passengers
