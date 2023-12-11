@@ -35,7 +35,7 @@ public:
     void setType(std::string typex) {type = typex;}
     void setCurrentLoad(int CurrentLoadx){CurrentLoad = CurrentLoadx ;}
     void setdirection(char directionx){direction = directionx ;}
-    void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
+    //void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     void setTDC(int x){tDC = x;}
     //getters for attributes
     int getId() { return id;}

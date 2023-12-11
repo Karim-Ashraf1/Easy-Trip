@@ -134,16 +134,16 @@ Input: None.
 Output: elements of the queue.
 */
 
-template <typename T>
-void PrintQueue() {
-	Node<T> *temp = new Node<T>;
-	temp = frontPtr;
-    while (!isEmpty()) {
-        cout << temp->getItem();
-		temp = temp->getNext();
-    }
+//template <typename T>
+//void PrintQueue() {
+//	Node<T> *temp = new Node<T>;
+//	temp = frontPtr;
+  //  while (!isEmpty()) {
+ //       cout << temp->getItem();
+	//	temp = temp->getNext();
+   // }
 
-}
+//}
 
 ///////////////////////////////////////////////////////////////////////////////////
 
