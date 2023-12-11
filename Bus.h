@@ -19,8 +19,15 @@ private:
 public:
     Passenger* PassengersInBus[Bcapacity];
     Bus(int id, std::string type, int CurrentLoad, int maintenanceT, int maintenanceJ, char direction){
-        id = 1; type = "MBus"; CurrentLoad = 0;
-        maintenanceT = 0; maintenanceJ = 0; direction = "F";
+        id = id; type = type; CurrentLoad = CurrentLoad;
+        maintenanceT = maintenanceT; maintenanceJ = maintenanceJ; direction = direction;
+    }
+    Bus(){
+        id = 1; type = "MBus";
+        CurrentLoad = 0;
+        maintenanceT = 0;
+        maintenanceJ = 0;
+        direction = 'F';
     }
 
     //setter for current load
