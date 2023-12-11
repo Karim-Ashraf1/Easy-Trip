@@ -1,15 +1,14 @@
 #include <iostream>
-#include "Events.h"
-#include "Bus.h"
-#include "Station.h"
-#include "LinkedQueue.h"
-#include "DoubleLinkedList.h"
-#include "UI.h"
+#include <Events.h>
+#include <Bus.h>
+#include <Station.h>
+#include <DoubleLinkedList.h>
+#include <UI.h>
 using namespace std;
 
 class Company {
 private:
-    LinkedQueue<Events*> EventsList;
+    DoubleLinkedList<Events*> EventsList;
     DoubleLinkedList<Bus*> BusesList;
     DoubleLinkedList<Station*> StationsList;
 
