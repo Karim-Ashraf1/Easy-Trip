@@ -10,7 +10,7 @@ class Arrive : public Events
     private:
         Passenger Psngr;// Creating a Passenger instance
         Time On;// Setting the on time for the passenger
-        Time Off;// Setting the off time for the passenger
+      //  Time Off;// Setting the off time for the passenger
         int ID;// Unique number that identifies each passenger
         int StartStation;// Shows the starting station
         bool A;// true if an arrival has been activated
@@ -26,7 +26,7 @@ class Arrive : public Events
         void SetStartStation(int start) { StartStation = start; }
         void SetEndStation(int End) { EndStation = End; }
         void SetOnTime(int on_time) { OnTime = on_time; }
-        void SetOffTime(int Off_time) { OffTime = Off_time; }
+       // void SetOffTime(int Off_time) { OffTime = Off_time; }
         void SetType(string type) { Type = type; }
 
         /// getters for all attrubiutes of arrive(which are for passenger)
@@ -34,21 +34,22 @@ class Arrive : public Events
         int GetStartStation() const { return StartStation; }
         int GetEndStation() const { return EndStation; }
         int GetOnTime() const { return OnTime; }
-        int GetOffTime() const { return OffTime; }
+      //  int GetOffTime() const { return OffTime; }
         string GetType() const { return Type; }
 
         /// overloaded Excute() in Events class
         void Execute(int FileArray[])
         {
+            
 
-
+            
             /// Takes Attrubiutes of Arrive and sets the passenger instance by them
-            Psngr.setId(ID);
-            Psngr.setStartStation(StartStation);
-            Psngr.setEndStation(EndStation);
-            Psngr.setOFFTime(On);
-            Psngr.setOnTime(Off);
-            Psngr.setType(Type);
+            Psngr.setId(FileArray[1]);
+            Psngr.setStartStation(FileArray[4]);
+            Psngr.setEndStation(FileArray[5]);
+            //Psngr.setOFFTime(FileArray[1]);
+            Psngr.setOnTime(FileArray[3]);
+            Psngr.setType(to_string(FileArray[1]));
 
             Passenger *psgr_ptr = &Psngr;
 

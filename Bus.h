@@ -35,7 +35,7 @@ public:
     void setType(std::string typex) {type = typex;}
     void setCurrentLoad(int CurrentLoadx){CurrentLoad = CurrentLoadx ;}
     void setdirection(char directionx){direction = directionx ;}
-    //void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
+    void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     void setTDC(int x){tDC = x;}
     void setN(int n){N=n;}
     void setTBT(Time tbt){tBT=tbt;}
@@ -52,7 +52,8 @@ public:
     static int getTDC() {return tDC;}
     int getCapacity(){return Bcapacity;}
     Time getTBT(){return tBT;}
+    Time getTsim(){return TSim;}
 
-    int BusUtilization(int tDC, int Bcapacity, int N, int tBT, int TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
+    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
 };

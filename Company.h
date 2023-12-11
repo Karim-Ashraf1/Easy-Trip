@@ -17,14 +17,14 @@ private:
 
 public:
 
-int StartProgram(ifstream& fileName)
+void StartProgram(ifstream& fileName)
 {
-    int FileArray[9];
+    int FileArray[6];
     Arrive arival;
     Leave_Event Leaver;
-    string ArrayArrive[9];
+    string ArrayArrive[6];
     string ArrayLeave[3];
-    string ArrayOut[9];
+    string ArrayOut[6];
     fstream ReadFile;
     string word, t, q, filename;
 
