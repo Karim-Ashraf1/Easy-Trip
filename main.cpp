@@ -31,11 +31,11 @@ void CheckIndex(const string event)
                 { // Pass1.setSPType("Pregnant"); // tbi
                     EventArr[6] = "Pregnant";
                 }
-                else if (event[17] == "Aged")
+                else if (event[7] == "Aged")
                 { // Pass1.setSPType("Aged"); // tbi
                     EventArr[6] = "Aged";
                 }
-                else if (event[17] == "POD")
+                else if (event[7] == "POD")
                 { // Pass1.setSPType("POD"); // tbi
                     EventArr[6] = "POD";
                 }
