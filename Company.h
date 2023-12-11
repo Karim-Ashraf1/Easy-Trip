@@ -2,7 +2,7 @@
 #include <Events.h>
 #include <Bus.h>
 #include <Station.h>
-#include<DoubleLinkedList.h>
+#include <DoubleLinkedList.h>
 #include <UI.h>
 #include<fstream>
 #include <sstream>
@@ -13,12 +13,9 @@ private:
     DoubleLinkedList<Events*> EventsList;
     DoubleLinkedList<Bus*> BusesList;
     DoubleLinkedList<Station*> StationsList;
-    string InputFile;
-    string OutputFile;
 
 public:
-    Company(string& inputFile, string& outputFile)
-        : InputFile(inputFile), OutputFile(outputFile) {}
+
 
 
     void ReadFile(const string& filename, vector<vector<string>>& InputList) {
