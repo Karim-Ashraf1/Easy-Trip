@@ -11,9 +11,8 @@ using namespace std;
 
 class Company {
 private:
-    LinkedQueue<Events*> EventsList;
-    DoubleLinkedList<Bus*> BusesList;
-    DoubleLinkedList<Station*> StationsList;
+    LinkedQueue <Events*> EventsList;
+    DoubleLinkedList <Station*> StationsList;
 
 public:
     void ReadFile(const string& filename, vector<vector<string>>& InputList) {
@@ -46,13 +45,15 @@ public:
         for (const auto& line : InputList) {
         for (const auto& word : line) {
             cout << word << " ";
-        }
+            }
         cout << endl;
-    }
+        }
     }
 
     void StartProgram() {
         // read the file
+        vector<string> arr;
+        ReadFile("file.txt", arr[]);
 
         // add events to EventsList
 

@@ -12,7 +12,6 @@ private:
     PriorityQueue<Passenger> NormalWaitingPassengersBackward;
     LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
     LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
-
     LinkedQueue<Bus> AvailableBuses;
 
 public:
