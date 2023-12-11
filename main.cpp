@@ -3,7 +3,7 @@
 #include "Passenger.h"
 using namespace std;
 
-void checkindex(string event);
+void CheckIndex(string event);
 
 int main(){
     string event1 = "A NP 10:12 1 2 5";
