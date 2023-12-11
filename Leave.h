@@ -4,9 +4,10 @@
 #include <DoubleLinkedList.h>
 #include <LinkedQueue.h>
 #include <Arrive.h>
+#include <Events.h>
 using namespace std;
 
-class Leave_Event
+class Leave_Event : public Events
 {
 private:
     bool L;        // means this is a LEAVE event line
@@ -20,14 +21,14 @@ public:
     void SetID(int id) { ID = id; }
     void SetStartStation(int start) { STRT = start; }
     void setEventTimeStep(int et) { ET = et; }
-    void setL(int l){L=l;}
+    void setL(int l) { L = l; }
 
     /// getters for all attrubiutes of Leave
     int GetID() const { return ID; }
     int GetStartStation() const { return STRT; }
     int GetEventTimeStep() const { return ET; }
-    int GrtLeaveEvent() const {return L;}
-    
+    int GrtLeaveEvent() const { return L; }
+
     /// overloaded Excute() in Events class
     void Execute()
     {
