@@ -39,13 +39,19 @@ public:
         int i=0;
       while ( i < 45)
        {
+            //create a pointer that points to the same passenger in the queue 
+            Passenger* C ;
+            C=busx.PassengersInBus[i];
+            //create a passenger that shares the same attributes as the passenger that the pointer points to
+            Passenger p;
+            p=*C;
             // Check if the end station of the passenger is the current station
-            if (busx.PassengersInBus[i].getEndStation() == x.getNumber()) 
+            if (p.getEndStation() == x.getNumber()) 
             {
                 //option to announce arrival
                 // std::cout << "Passenger " << passengers[i].getId() << " dequeued at station " << number << std::endl;
                 //remove passenger from the array
-                busx.PassengersInBus[i]=Passenger();
+                busx.PassengersInBus[i]=nullptr;
                 busx.setCurrentLoad((busx.getCurrentLoad()-1));
            
             }
@@ -64,10 +70,18 @@ public:
                 {
                      for (int i = 0; i < 45; ++i) 
                     {
-                         if (bus.PassengersInBus[i].getId()==0) 
+                        //create a pointer that points to the same passenger in the queue 
+                            Passenger* C ;
+                             C=bus.PassengersInBus[i];
+                        //create a passenger that shares the same attributes as the passenger that the pointer points to
+                            Passenger p;
+                             p=*C;
+                         if (p.getId()==0) 
                         {
-                                 // Add the passenger to the array at the first available index
-                            bus.PassengersInBus[i] = nextPassenger;
+                            Passenger* P;
+                            P=&p;
+                                 // Add the passenger pointer to the array at the first available index
+                            bus.PassengersInBus[i] = P;
                             bus.setCurrentLoad((bus.getCurrentLoad()+1));
                             bus.setTotalPassengers((bus.getTotalPassengers()+1));
                         }    
