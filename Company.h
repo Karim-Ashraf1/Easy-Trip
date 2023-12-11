@@ -15,9 +15,6 @@ private:
     DoubleLinkedList<Station*> StationsList;
 
 public:
-
-
-
     void ReadFile(const string& filename, vector<vector<string>>& InputList) {
         // Open the file
         ifstream file(filename);
