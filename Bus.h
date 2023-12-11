@@ -7,7 +7,7 @@ class Bus {
 private:
     int id;
     std::string type;
-    static const int Bcapacity = 45;
+    const int Bcapacity = 45;
     int CurrentLoad; //
     int maintenanceT; // for time
     int maintenanceJ; // for journeys
@@ -31,8 +31,10 @@ public:
     }
 
     //setter for current load
-    void setCurrentLoad(int x){CurrentLoad = x ;}
-    void setdirection(char x){direction = x ;}
+    void setId(int idx) {id = idx;}
+    void setType(std::string typex) {type = typex;}
+    void setCurrentLoad(int CurrentLoadx){CurrentLoad = CurrentLoadx ;}
+    void setdirection(char directionx){direction = directionx ;}
     void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     void setTDC(){tDC = 0;}
     //getters for attributes
