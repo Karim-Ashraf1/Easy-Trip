@@ -1,6 +1,8 @@
 #pragma once
+#include "Node.h"
 #include "PriorityQueue.h"
 #include "LinkedQueue.h"
+#include "LinkedList.h"
 #include "Passenger.h"
 #include "Bus.h"
 
@@ -8,13 +10,12 @@ class Station {
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger> NormalWaitingPassengersForward;
-    PriorityQueue<Passenger> NormalWaitingPassengersBackward;
-    LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
-    LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
-
+    PriorityQueue<Passenger*> WaitingPassengersForward;
+    PriorityQueue<Passenger*> WaitingPassengersBackward;
+    LinkedQueue<Passenger*> WheelchairWaitingPassengersForwards;
+    LinkedQueue<Passenger*> WheelchairWaitingPassengersBackwards;
     LinkedQueue<Bus> AvailableBuses;
-
+    LinkedList<Passenger*> FinishList;
 public:
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
@@ -30,6 +31,37 @@ public:
     bool removeBus(Bus& bus) {
         return AvailableBuses.dequeue(bus);
     }
+
+    void AddToFinishList(Passenger psngr){
+        Passenger* pntr;
+        FinishList.InsertEnd(pntr);
+    }
+    void printFinishListAttributes() const {
+        std::cout << "Passengers in FinishList at Station " << number << ":\n";
+
+        Node<Passenger*>* current = FinishList.getHead(); 
+
+        while (current != nullptr) {
+            Passenger* passenger = current->getItem();
+
+            // Print attributes of the passenger
+            std::cout << "ID: " << passenger->getId() << "\n";
+            std::cout << "Start Station: " << passenger->getStartStation() << "\n";
+            std::cout << "End Station: " << passenger->getEndStation() << "\n";
+            std::cout << "On Time: " ;
+            passenger->getOnTime().toString();
+            std::cout << "OFF Time: " ;
+            passenger->getOFFTime().toString();
+            std::cout << "Type: " << passenger->getType() << "\n";
+            if (passenger->getType()=="SP"){
+                std::cout << "Subtype: " << passenger->getsubtype() << "\n";
+            }
+
+            // Move to the next node in the linked list
+            current = current->getNext();
+        }
+    }
+  
 
     void checkEndStationAndRemove(Station stationx, Bus busx)
     {
@@ -78,4 +110,5 @@ public:
                 }          
             }
     }
+   
 };

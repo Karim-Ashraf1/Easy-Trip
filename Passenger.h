@@ -27,7 +27,7 @@ public:
     Time getOFFTime() const { return OFFTime; }
     Time getOnTime() const { return OnTime; }
     std::string getType() const { return type; }
-    
+    std::string getsubtype() const { return subtype; }
     // Setter method for each attribute
     void setId(int idx) { id = idx; }
     void setStartStation(int startStationx) { startStation = startStationx; }
@@ -35,4 +35,5 @@ public:
     void setOnTime(const Time& getOnTimex) { OnTime = getOnTimex; }
     void setOFFTime(const Time& getOFFTimex) { OFFTime = getOFFTimex; }
     void setType(const std::string& typex) { type = typex; }
+    void setsubtype(const std::string& subtypex) { subtype = subtypex; }
 };
