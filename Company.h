@@ -2,7 +2,7 @@
 #include <Events.h>
 #include <Bus.h>
 #include <Station.h>
-#include<DoubleLinkedList.h>
+#include <DoubleLinkedList.h>
 #include <UI.h>
 using namespace std;
 
@@ -11,12 +11,9 @@ private:
     DoubleLinkedList<Events*> EventsList;
     DoubleLinkedList<Bus*> BusesList;
     DoubleLinkedList<Station*> StationsList;
-    string InputFile;
-    string OutputFile;
 
 public:
-    Company(string& inputFile, string& outputFile)
-        : InputFile(inputFile), OutputFile(outputFile) {}
+
 
     void StartProgram() {
         // read the file
