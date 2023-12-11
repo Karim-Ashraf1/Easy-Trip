@@ -52,28 +52,23 @@ public:
             i++;
         }
     }    
-    void loadPassengersToBus(PriorityQueue<Passenger>& waitingPassengers, Bus& bus)
-    {
+    void loadPassengersToBus(PriorityQueue<Passenger>& waitingPassengers, Bus& bus){
         int maxPassengers = 45;
         int availableSeats = maxPassengers - bus.getCurrentLoad();
 
-             while (availableSeats > 0 && !waitingPassengers.isEmpty())
-            {
-                 Passenger nextPassenger;
-                 if (waitingPassengers.dequeue(nextPassenger))
-                {
-                     for (int i = 0; i < 45; ++i) 
-                    {
-                         if (bus.PassengersInBus[i].getId()==0) 
-                        {
-                                 // Add the passenger to the array at the first available index
-                            bus.PassengersInBus[i] = nextPassenger;
-                            bus.setCurrentLoad((bus.getCurrentLoad()+1));
-                            bus.setTotalPassengers((bus.getTotalPassengers()+1));
-                        }    
+        while (availableSeats > 0 && !waitingPassengers.isEmpty()){
+            Passenger nextPassenger;
+            if (waitingPassengers.dequeue(nextPassenger)){
+                for (int i = 0; i < 45; ++i){
+                    if (bus.PassengersInBus[i].getId()==0){
+                        // Add the passenger to the array at the first available index
+                        bus.PassengersInBus[i] = nextPassenger;
+                        bus.setCurrentLoad((bus.getCurrentLoad()+1));
+                        bus.setTotalPassengers((bus.getTotalPassengers()+1));
+                    }
         
-                    }  
-                }          
+                }
             }
+        }
     }
 };
