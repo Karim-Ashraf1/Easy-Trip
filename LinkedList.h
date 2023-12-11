@@ -8,16 +8,18 @@ template <typename T>
 class LinkedList
 {
 private:
-	Node<T> *Head; // Pointer to the head of the list
+	//Node<T> *Head; // Pointer to the head of the list
 				   // You can add tail pointer too (depending on your problem)
 public:
+		Node<T> *Head;
 	LinkedList()
 	{
 		Head = nullptr;
 	}
-		Node<T>* LinkedList<T>::getHead() const {
-    return head;
-	}
+	//getHead() const
+ //{
+   // return Head;
+//}
 	// List is being desturcted ==> delete all items in the list
 	~LinkedList()
 	{
@@ -79,26 +81,30 @@ public:
 	// inserts a new node at end if the list
 
 	void InsertEnd(const T &data)
-	{
+{
+    Node<T> *newnode = new Node<T>;
+    newnode->setNext(nullptr);
+    newnode->setItem(data);
 
-		Node<T> *newnode = new Node<T>;
-		newnode->setNext(nullptr);
-		newnode->setItem(data);
-		if (Head == nullptr)
-		{
-			Head = newnode;
-			return;
-		}
+    if (Head == nullptr)
+    {
+        // If the list is empty, set the new node as the head
+        Head = newnode;
+        return;
+    }
 
-		Node<T> *p = Head;
+    Node<T> *p = Head;
 
-		while (p->getNext())
-		{
-			p = p->getNext();
-		}
+    // Traverse the list to find the last node
+    while (p->getNext())
+    {
+        p = p->getNext();
+    }
 
-		p->setNext();
-	}
+    // Set the next of the last node to the new node
+    p->setNext(newnode);
+}
+
 
 	//[2]Find
 	// searches for a given value in the list, returns true if found; false otherwise.
@@ -118,19 +124,19 @@ public:
 		return false;
 	}
 	// function to find amd return a node from linked list.
-	Passenger<T> *FindPassenger(const T &key)
-	{
-		Node<T> *current = head;
-		while (current->getNext() != nullptr)
-		{
-			if (*(current->data) == key)
-			{
-				return current;
-			}
-			current = current->next;
-		}
-		return nullptr;
-	}
+	//Passenger<T> *FindPassenger(const T &key)
+	//{
+	//	Node<T> *current = head;
+	//	while (current->getNext() != nullptr)
+	//	{
+	//		if (*(current->data) == key)
+	//		{
+	//			return current;
+	//		}
+	//		current = current->next;
+	//	}
+	//	return nullptr;
+	//}
 
 	//[3]CountOccurance
 	// returns how many times a certain value appeared in the list
@@ -214,9 +220,6 @@ public:
 		return false;
 	}
 
-	bool DeleteNodes(T value)
-	{
-	}
 
 	//[8]Merge
 	// Merges the current list to another list L by making the last Node in the current list
@@ -237,29 +240,29 @@ public:
 	//[9] Reverse
 	// Reverses the linked list (without allocating any new Nodes)
 
-	void Reverse()
-	{
-
-		Node *reverseLinkedList(Node * Head)
-		{
-			Node *prev = nullptr;
-			Node *current = Head;
-			Node *nextNode = nullptr;
-
-			while (current != nullptr)
-			{
-				nextNode = current->next; // Save the next node
-				current->next = prev;	  // Reverse the link
-
+	//void Reverse()
+	//{
+//
+//		Node *reverseLinkedList(Node * Head)
+//	{
+//			Node *prev = nullptr;
+//			Node *current = Head;
+//			Node *nextNode = nullptr;
+//
+//			while (current != nullptr)
+//			{
+//				nextNode = current->next; // Save the next node
+//				current->next = prev;	  // Reverse the link
+//
 				// Move to the next pair of nodes
-				prev = current;
-				current = nextNode;
-			}
+//				prev = current;
+//				current = nextNode;
+//			}
 
 			// 'prev' now points to the new head of the reversed list
-			return prev;
-		}
-	}
+			//return prev;
+		//}
+	//}
 };
 
 #endif

@@ -29,9 +29,8 @@ WriteFile << "Files can be tricky, but it is fun enough!";
 WriteFile.close();
 
 Company cmp;
-string filename[20];
 ifstream readfile("files.txt");
-cmp.StartProgram(readfile, filename);
+cmp.StartProgram(readfile);
 
 return 0;
 }
