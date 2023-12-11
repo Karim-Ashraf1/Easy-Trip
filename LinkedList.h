@@ -15,7 +15,9 @@ public:
 	{
 		Head = nullptr;
 	}
-
+	Node<T>* LinkedList<T>::getHead() const {
+    return head;
+}
 	// List is being desturcted ==> delete all items in the list
 	~LinkedList()
 	{
