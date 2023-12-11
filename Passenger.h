@@ -11,6 +11,7 @@ private:
     Time OnTime;
     Time OFFTime;
     std::string type;
+    std::string subtype;
 
 public:
     // Constructors

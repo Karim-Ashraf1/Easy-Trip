@@ -20,12 +20,14 @@ public:
     void SetID(int id) { ID = id; }
     void SetStartStation(int start) { STRT = start; }
     void setEventTimeStep(int et) { ET = et; }
+    void setL(int l){L=l;}
 
     /// getters for all attrubiutes of Leave
     int GetID() const { return ID; }
     int GetStartStation() const { return STRT; }
     int GetEventTimeStep() const { return ET; }
-
+    int GrtLeaveEvent() const {return L;}
+    
     /// overloaded Excute() in Events class
     void Execute()
     {
