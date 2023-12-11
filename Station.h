@@ -43,7 +43,7 @@ public:
 
         while (current != nullptr) {
             Passenger* passenger = current->getItem();
-
+ 
             // Print attributes of the passenger
             std::cout << "ID: " << passenger->getId() << "\n";
             std::cout << "Start Station: " << passenger->getStartStation() << "\n";

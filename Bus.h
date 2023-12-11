@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <LinkedQueue.h>
 #include "Passenger.h"
 #include "Time.h"
 class Bus {
