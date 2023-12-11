@@ -52,6 +52,7 @@ public:
     static int getTDC() {return tDC;}
     int getCapacity(){return Bcapacity;}
     Time getTBT(){return tBT;}
+    Time getTsim(){return TSim;}
 
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
