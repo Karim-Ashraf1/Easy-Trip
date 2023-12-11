@@ -2,7 +2,8 @@
 #include "Time.h"
 #include "Passenger.h"
 #include "PriorityQueue.h"
-#include <Events.h>
+#include "Events.h"
+#include <String>
 using namespace std;
 
 class Arrive : public Events
@@ -48,7 +49,7 @@ class Arrive : public Events
             Psngr.setStartStation(FileArray[4]);
             Psngr.setEndStation(FileArray[5]);
             //Psngr.setOFFTime(FileArray[1]);
-            Psngr.setOnTime(FileArray[3]);
+            //Psngr.setOnTime(FileArray[3]);
             Psngr.setType(to_string(FileArray[1]));
 
             Passenger *psgr_ptr = &Psngr;
