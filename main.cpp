@@ -27,15 +27,15 @@ void CheckIndex(const string event)
             {
                 EventArr[1] = "SP";
                 Pass1.setType("SP");
-                if (event[7] == "Pregnant")
+                if (event[17] == "Pregnant")
                 { // Pass1.setSPType("Pregnant"); // tbi
                     EventArr[6] = "Pregnant";
                 }
-                else if (event[7] == "Aged")
+                else if (event[17] == "Aged")
                 { // Pass1.setSPType("Aged"); // tbi
                     EventArr[6] = "Aged";
                 }
-                else if (event[7] == "POD")
+                else if (event[17] == "POD")
                 { // Pass1.setSPType("POD"); // tbi
                     EventArr[6] = "POD";
                 }
