@@ -33,6 +33,28 @@ public:
         }
         return *this;
     }
+    Time operator/(const Time& otherTime) const {
+    // Convert both times to seconds
+    int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
+    int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+
+    // Avoid division by zero
+    if (totalSeconds2 == 0) {
+        std::cerr << "Error: Division by zero!\n";
+        // Return a default-constructed Time object
+        return Time();
+    }
+
+    int resultSeconds = totalSeconds1 / totalSeconds2;
+
+    // Calculate new hours, minutes, and seconds for the result
+    Time resultTime;
+    resultTime.hours = resultSeconds / 3600;
+    resultTime.minutes = (resultSeconds % 3600) / 60;
+    resultTime.seconds = resultSeconds % 60;
+
+    return resultTime;
+}
 
     Time operator-(const Time& otherTime) const {
         int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
