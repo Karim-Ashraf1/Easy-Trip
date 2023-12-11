@@ -5,7 +5,7 @@
 int main() {
 
     Arrive arriveEvent;
-
+    int FileArray[7];
     arriveEvent.SetID(2);
     arriveEvent.SetStartStation(1);
     arriveEvent.SetEndStation(4);
@@ -13,7 +13,7 @@ int main() {
     arriveEvent.SetOffTime(15);
     arriveEvent.SetType("SP");
 
-    arriveEvent.Execute();
+    arriveEvent.Execute(FileArray);
 
 /////////////////////////////////////////////////////
 
@@ -27,7 +27,7 @@ int main() {
     Passenger leavingPassenger;
     leaveEvent.set_LP(&leavingPassenger);
 
-    leaveEvent.Execute();
+    leaveEvent.Execute(FileArray);
 
     return 0;
 }
