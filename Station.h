@@ -18,20 +18,71 @@ private:
 
 
 public:
+    void setNumber(int newNumber) {
+        number = newNumber;
+    }
+
+    
+    int getNumber() const {
+        return number;
+    }
+
+    
+    void setTimeBetweenStations(int newTime) {
+        timeBetweenStations = newTime;
+    }
+
+    
+    int getTimeBetweenStations() const {
+        return timeBetweenStations;
+    }
+
+    
+    void setNormalWaitingPassengersForward(const PriorityQueue<Passenger>& passengers) {
+        NormalWaitingPassengersForward = passengers;
+    }
+    void setNormalWaitingPassengersBackrward(const PriorityQueue<Passenger>& passengers) {
+        NormalWaitingPassengersBackward = passengers;
+    }
+    void setWheelchairWaitingPassengersForwards(const LinkedQueue<Passenger>& passengers) {
+        WheelchairWaitingPassengersForwards = passengers;
+    }
+    void setWheelchairWaitingPassengersBackwards(const LinkedQueue<Passenger>& passengers) {
+        WheelchairWaitingPassengersBackwards = passengers;
+    }
+     void setAvailableBusses(const LinkedQueue<Bus>& busses) {
+        AvailableBuses = busses;
+    }
+    
+    PriorityQueue<Passenger>& getNormalWaitingPassengersForward() {
+        return NormalWaitingPassengersForward;
+    }
+    PriorityQueue<Passenger>& getNormalWaitingPassengersBackward() {
+        return NormalWaitingPassengersBackward;
+    }
+    LinkedQueue<Passenger>& getWheelchairWaitingPassengersForwards() {
+        return WheelchairWaitingPassengersForwards;
+    }
+      LinkedQueue<Passenger>& getWheelchairWaitingPassengersBackwards() {
+        return WheelchairWaitingPassengersBackwards;
+    }
+      LinkedQueue<Bus>& getAvailableBusses() {
+        return AvailableBuses;
+    }
+      LinkedList<Passenger*>& getFinishlist() {
+        return FinishList;
+    }
+    Station(){
+        number=0;
+        timeBetweenStations=0;
+
+    }
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
 
-    int getNumber()  { return number; }
 
-    int getTimeBetweenStations()  { return timeBetweenStations; }
 
-    void addBus(const Bus& bus) {
-        AvailableBuses.enqueue(bus);
-    }
-
-    bool removeBus(Bus& bus) {
-        return AvailableBuses.dequeue(bus);
-    }
+    
 
     void AddToFinishList(Passenger psngr){
         Passenger* pntr;
