@@ -102,9 +102,9 @@ public:
             std::cout << "Start Station: " << passenger->getStartStation() << "\n";
             std::cout << "End Station: " << passenger->getEndStation() << "\n";
             std::cout << "On Time: " ;
-            passenger->getOnTime().toString();
+            passenger->getOnTime();
             std::cout << "OFF Time: " ;
-            passenger->getOFFTime().toString();
+            passenger->getOFFTime();
             std::cout << "Type: " << passenger->getType() << "\n";
             if (passenger->getType()=="SP"){
                 std::cout << "Subtype: " << passenger->getsubtype() << "\n";
