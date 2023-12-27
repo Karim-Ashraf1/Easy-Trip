@@ -56,4 +56,9 @@ public:
 
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
+    void moveBus(Station& currentStation, Station& nextStation) {
+        currentStation.getAvailableBusses().enqueue(*this);
+        cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << nextStation.getNumber() << ".\n";
+    }
+
 };

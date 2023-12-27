@@ -163,4 +163,27 @@ public:
                 }          
             }
     }
+
+    void moveBusFromWatingToMoving() {
+        while (!AvailableBuses.isEmpty()) {
+            Bus currentBus;
+            if (AvailableBuses.dequeue(currentBus)) {
+                // Load passengers to bus
+                loadPassengersToBus(NormalWaitingPassengersForward, currentBus);
+                loadPassengersToBus(NormalWaitingPassengersBackward, currentBus);
+                // loadPassengersToBus(WheelchairWaitingPassengersForwards, currentBus);
+                // loadPassengersToBus(WheelchairWaitingPassengersBackwards, currentBus);
+
+                currentBus.moveBus();
+
+                // Check if any passengers have reached their destination
+                checkEndStationAndRemove(*this, currentBus);
+
+                // Add the bus back to the available buses queue if it still has space
+                if (currentBus.getCurrentLoad() < currentBus.getCapacity()) {
+                    AvailableBuses.enqueue(currentBus);
+                }
+            }
+    }
+    }
 };

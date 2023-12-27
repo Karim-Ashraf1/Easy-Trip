@@ -86,6 +86,22 @@ Time operator *(int multiplier) const {
 
         return result;
     }
+
+    Time operator+(const Time& otherTime) const {
+        int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
+        int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+
+        int totalSeconds = totalSeconds1 + totalSeconds2;
+
+        // Calculate new hours, minutes, and seconds for the difference
+        Time result;
+        result.hours = totalSeconds / 3600;
+        result.minutes = (totalSeconds % 3600) / 60;
+        result.seconds = totalSeconds % 60;
+
+        return result;
+    }
+    
     Time operator*(int multiplier) const {
     // Convert the time to seconds
     int totalSeconds = hours * 3600 + minutes * 60 + seconds;
