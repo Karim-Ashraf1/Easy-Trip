@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Passenger.h"
 #include "Time.h"
+#include "Station.h"
+#include "DoubleLinkedLIst.h"
+
 class Bus {
 private:
     int id;
@@ -56,10 +59,31 @@ public:
 
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
-    void moveBus(Station& currentStation, Station& nextStation) {
-        nextStation.getAvailableBusses().enqueue(*this);
-        currentStation.getAvailableBusses().dequeue(*this);
-        cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << nextStation.getNumber() << ".\n";
+    void moveBusForward(DoubleLinkedList<Station*>& stationsList, Station& currentStation) {
+        // Find the current station in the linked list
+        Node<Station*>* currentNode = stationsList.Find(&currentStation);
+
+        if (currentNode != nullptr && currentNode->getNext() != nullptr) {
+            // Remove the bus from the current station's
+            currentStation.getAvailableBusses().dequeue(*this);
+            // Move the bus to the next station in the linked list
+            Station* nextStation = currentNode->getNext()->getItem();
+            nextStation->getAvailableBusses().enqueue(*this);
+            cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() + 1<< ".\n";
+        }
+    }
+    void moveBusBackward(DoubleLinkedList<Station*>& stationsList, Station& currentStation) {
+        // Find the current station in the linked list
+        Node<Station*>* currentNode = stationsList.Find(&currentStation);
+
+        if (currentNode != nullptr && currentNode->getPrev() != nullptr) {
+            // Remove the bus from the current station's
+            currentStation.getAvailableBusses().dequeue(*this);
+            // Move the bus to the next station in the linked list
+            Station* nextStation = currentNode->getPrev()->getItem();
+            nextStation->getAvailableBusses().enqueue(*this);
+            cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() - 1<< ".\n";
+        }
     }
 
 };
