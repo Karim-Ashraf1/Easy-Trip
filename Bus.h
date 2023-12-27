@@ -60,28 +60,30 @@ public:
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return (tDC/(Bcapacity *N) * (tBT/TSim))*100;};
 
     void moveBusForward(DoubleLinkedList<Station*>& stationsList, Station& currentStation) {
-        // Find the current station in the linked list
-        Node<Station*>* currentNode = stationsList.Find(&currentStation);
+        
+        Node<Station*>* currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
 
         if (currentNode != nullptr && currentNode->getNext() != nullptr) {
-            // Remove the bus from the current station's
-            currentStation.getAvailableBusses().dequeue(*this);
-            // Move the bus to the next station in the linked list
-            Station* nextStation = currentNode->getNext()->getItem();
+            
+            currentStation.getAvailableBusses().dequeue(*this); // Remove the bus from the current station's
+            
+            Station* nextStation = currentNode->getNext()->getItem(); // Move the bus to the next station in the linked list
             nextStation->getAvailableBusses().enqueue(*this);
+            
             cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() + 1<< ".\n";
         }
     }
     void moveBusBackward(DoubleLinkedList<Station*>& stationsList, Station& currentStation) {
-        // Find the current station in the linked list
-        Node<Station*>* currentNode = stationsList.Find(&currentStation);
+
+        Node<Station*>* currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
 
         if (currentNode != nullptr && currentNode->getPrev() != nullptr) {
-            // Remove the bus from the current station's
-            currentStation.getAvailableBusses().dequeue(*this);
-            // Move the bus to the next station in the linked list
-            Station* nextStation = currentNode->getPrev()->getItem();
-            nextStation->getAvailableBusses().enqueue(*this);
+
+            currentStation.getAvailableBusses().dequeue(*this);    // Remove the bus from the current station's
+
+            Station* nextStation = currentNode->getPrev()->getItem(); 
+            nextStation->getAvailableBusses().enqueue(*this); // Move the bus to the next station in the linked list
+
             cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() - 1<< ".\n";
         }
     }
