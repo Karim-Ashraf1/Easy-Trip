@@ -14,10 +14,74 @@ class Company {
 private:
     LinkedQueue <Events*> EventsList;
     DoubleLinkedList <Station*> StationsList;
-
+    LinkedQueue<Bus*> GarageQueue;
 public:
 
-void StartProgram(ifstream& fileName)
+int* ConvertToInt(string Array[], int size)
+{   
+    int Arr[2];
+    for (int i = 0;i < size;i++) {
+        Arr[i] = stoi(Array[i]);
+    }
+    return Arr;
+}
+
+
+int* StoreBusToGarage(string str)
+{
+    string word = "";
+    string sentence[2];
+    int count = 0;
+    for (auto x : str)
+    {
+        if (x == ' ')
+        {
+            sentence[count] = word;
+            word = "";
+            count++;
+        }
+        else {
+            word = word + x;
+        }
+    }
+    sentence[count] = word;
+    int* FinalArrayPtr=ConvertToInt(sentence, 2);
+    return FinalArrayPtr;
+}
+
+
+
+
+
+LinkedQueue<Bus*> EnqueueGarage(const string& fileName)
+{
+    ifstream file;
+    string filename="file.txt";
+    int current_line=0;
+    string line;
+    LinkedQueue<Bus*> WpBusQueue;
+    LinkedQueue<Bus*> NpBusQueue;
+    int* BussesNumber;
+
+    file.open(filename);
+    if (file.fail()){
+        cout <<"Failed";
+        return;
+    }
+    while(!file.eof()){
+        current_line++;
+        getline(file,line);
+        if (current_line == 2)break;
+    }
+   BussesNumber= StoreBusToGarage(line);
+//    // enque b 3add el busses f for loop rw 7ot el busses random ;
+//    WpBusQueue.enqueue(BussesNumber);// to be solved later
+//    NpBusQueue.enqueue(BussesNumber+1);// to be solved later
+     
+}
+
+
+void StartProgram(const string& fileName)
 {
     int FileArray[6];
     Arrive arival;
@@ -25,7 +89,7 @@ void StartProgram(ifstream& fileName)
     string ArrayArrive[6];
     string ArrayLeave[3];
     string ArrayOut[6];
-    fstream ReadFile;
+    ifstream ReadFile;
     string word, t, q, filename;
 
     // filename of the file
