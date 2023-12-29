@@ -17,6 +17,7 @@ private:
     LinkedQueue<Bus*> GarageQueue;
 public:
 
+// conversion from string to integer 
 int* ConvertToInt(string Array[], int size)
 {   
     int Arr[2];
@@ -26,7 +27,7 @@ int* ConvertToInt(string Array[], int size)
     return Arr;
 }
 
-
+// Takes string and slices it by Space and returns an array converted to integer 
 int* StoreBusToGarage(string str)
 {
     string word = "";
@@ -52,15 +53,16 @@ int* StoreBusToGarage(string str)
 
 
 
-
+// function to Enque busess to a queue according to their number from the inout file
 LinkedQueue<Bus*> EnqueueGarage(const string& fileName)
 {
     ifstream file;
     string filename="file.txt";
     int current_line=0;
     string line;
-    LinkedQueue<Bus*> WpBusQueue;
-    LinkedQueue<Bus*> NpBusQueue;
+    LinkedQueue<Bus*> BusQueue;
+    LinkedList<Bus*> WBusList;
+    LinkedList<Bus*> MBusList;
     int* BussesNumber;
 
     file.open(filename);
@@ -74,7 +76,24 @@ LinkedQueue<Bus*> EnqueueGarage(const string& fileName)
         if (current_line == 2)break;
     }
    BussesNumber= StoreBusToGarage(line);
-//    // enque b 3add el busses f for loop rw 7ot el busses random ;
+//  functions to create objects according to number of busses available
+    for (int i=0; i < *(BussesNumber); i++)
+    {
+        Bus *MixedBus = new Bus ();
+        MixedBus->setdirection('F');
+        MixedBus->setId(i);
+        MixedBus->setType("MB");
+        WBusList.InsertEnd(MixedBus);
+    }
+
+    for (int i=0; i < *(BussesNumber+1); i++)
+    {
+        Bus *WheelChairBus = new Bus ();
+        WheelChairBus->setdirection('F');
+        WheelChairBus->setId(i);
+        WheelChairBus->setType("WB");
+        WBusList.InsertEnd(WheelChairBus);
+    }
 //    WpBusQueue.enqueue(BussesNumber);// to be solved later
 //    NpBusQueue.enqueue(BussesNumber+1);// to be solved later
      
