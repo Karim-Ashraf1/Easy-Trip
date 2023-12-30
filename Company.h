@@ -131,16 +131,20 @@ public:
             }
 
         }while(W || M);
-    //    NpBusQueue.enqueue(BussesNumber+1);// to be solved later
-        
+        return BusQueue;        
     }
+
+
+    // to be modified later
+    int StartProgram(ifstream& fileName){
         Arrive arival;
-        Leave_Event Leaver;
+        Leave_Event Leave;
         string ArrayArrive[6];
         string ArrayLeave[3];
         string ArrayOut[6];
         ifstream ReadFile;
         string word, t, q, filename;
+        int* FileArray; //to be checked later
 
         // filename of the file
         filename = "filename.txt";
@@ -155,7 +159,6 @@ public:
         while (ReadFile >> word)
         {
             ArrayOut[i]=word;
-            // displaying content
             i++;
         }
 
@@ -164,9 +167,10 @@ public:
             arival.Execute(FileArray);
         }
         if (ArrayOut[0] == "L"){
-            Leaver.Execute(FileArray);
+            Leave.Execute(FileArray);
         }
 
         ReadFile.close();
+    }
     };
         
