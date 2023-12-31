@@ -62,8 +62,6 @@ public:
         int current_line=0;
         string line;
         LinkedQueue<Bus*> BusQueue;
-        LinkedList<Bus*> WBusList;
-        LinkedList<Bus*> MBusList;
         int* BussesNumber;
         int counter=0;
 
@@ -87,7 +85,7 @@ public:
             MixedBus->setdirection('F');
             MixedBus->setId(i);
             MixedBus->setType("MB");
-            WBusList.InsertEnd(MixedBus);
+            BusQueue.enqueue(MixedBus);
         }
 
         for (int i=0; i < *(BussesNumber+1); i++)
@@ -96,42 +94,10 @@ public:
             WheelChairBus->setdirection('F');
             WheelChairBus->setId(i);
             WheelChairBus->setType("WB");
-            WBusList.InsertEnd(WheelChairBus);
+            BusQueue.enqueue(WheelChairBus);
         }
-
-        bool W=false;
-        bool M=false;
-        do
-        {   
-            if(MBusList.FindByIndex(counter))
-            {
-                M=true;
-            }
-            if(WBusList.FindByIndex(counter))
-            {
-                W=true;
-            }
-            if (W && M)
-            {
-                BusQueue.enqueue(WBusList.FindByIndex(counter));
-                BusQueue.enqueue(MBusList.FindByIndex(counter));
-                counter ++;
-            }
-            if (W && !MBusList.FindByIndex(counter))
-            {
-                M=false;
-                BusQueue.enqueue(WBusList.FindByIndex(counter));
-                counter ++;
-            }
-            if (M && !WBusList.FindByIndex(counter))
-            {
-                W=false;
-                BusQueue.enqueue(MBusList.FindByIndex(counter));
-                counter ++;
-            }
-
-        }while(W || M);
-        return BusQueue;        
+        return BusQueue;
+        
     }
 
 
@@ -144,7 +110,7 @@ public:
         string ArrayOut[6];
         ifstream ReadFile;
         string word, t, q, filename;
-        int* FileArray; //to be checked later
+        int FileArray[10]; //to be modified into linked list
 
         // filename of the file
         filename = "filename.txt";
@@ -172,5 +138,4 @@ public:
 
         ReadFile.close();
     }
-    };
-        
+};
