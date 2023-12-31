@@ -48,6 +48,7 @@ public:
     void setType(std::string typex) { type = typex; }
     void setMixedBusMaintenanceTime(int MBMT) { MBmaintenanceT = MBMT; }
     void setWheelBusMaintenanceTime(int WBMT) { WBmaintencienTime = WBMT; }
+    void setMaintenanceJourney(int MJ) { maintenanceJ = MJ; }
     void setCurrentLoad(int CurrentLoadx) { CurrentLoad = CurrentLoadx; }
     void setDirection(char directionx) { direction = directionx; }
     void setPassenger(LinkedList<Passenger *> Passenger) { Passengers = Passenger; }
