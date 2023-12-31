@@ -24,12 +24,13 @@ private:
     LinkedList<Passenger *> Passengers;
 
 public:
-    Bus(int id, std::string type, int CurrentLoad, int maintenanceT, int maintenanceJ, char direction)
+    Bus(int id, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
     {
         id = id;
         type = type;
         CurrentLoad = CurrentLoad;
-        maintenanceT = maintenanceT;
+        MBmaintenanceT = MBmaintenanceT;
+        WBmaintenanceT = WBmaintenanceT;
         maintenanceJ = maintenanceJ;
         direction = direction;
     }
@@ -38,7 +39,7 @@ public:
         id = 1;
         type = "MBus";
         CurrentLoad = 0;
-        maintenanceT = 0;
+        MBmaintenanceT = 0 : WBmaintenanceT = 0;
         maintenanceJ = 0;
         direction = 'F';
     }
