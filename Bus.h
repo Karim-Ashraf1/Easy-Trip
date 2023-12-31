@@ -39,7 +39,8 @@ public:
         id = 1;
         type = "MBus";
         CurrentLoad = 0;
-        MBmaintenanceT = 0 : WBmaintenanceT = 0;
+        MBmaintenanceT = 0;
+        WBmaintenanceT = 0;
         maintenanceJ = 0;
         direction = 'F';
     }
@@ -48,7 +49,7 @@ public:
     void setId(int idx) { id = idx; }
     void setType(std::string typex) { type = typex; }
     void setMixedBusMaintenanceTime(int MBMT) { MBmaintenanceT = MBMT; }
-    void setWheelBusMaintenanceTime(int WBMT) { WBmaintencienTime = WBMT; }
+    void setWheelBusMaintenanceTime(int WBMT) { WBmaintenanceT = WBMT; }
     void setMaintenanceJourney(int MJ) { maintenanceJ = MJ; }
     void setCurrentLoad(int CurrentLoadx) { CurrentLoad = CurrentLoadx; }
     void setDirection(char directionx) { direction = directionx; }
@@ -63,7 +64,7 @@ public:
     int getId() { return id; }
     std::string getType() { return type; }
     int getMixedBusMaintenanceTime() { return MBmaintenanceT; }
-    int getWheelBusMaintenanceTime() { return WBmaintencienTime; }
+    int getWheelBusMaintenanceTime() { return WBmaintenanceT; }
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() { return CurrentLoad; }
     char getdirection() { return direction; }
