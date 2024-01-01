@@ -10,6 +10,7 @@
 #include "DoubleLinkedList.h"
 #include "UI.h"
 #include "Function.h"
+#include <Functions.h>
 using namespace std;
 
 class Company {
@@ -32,7 +33,7 @@ public:
         for (int i=0; i < *(BussesNumber); i++)
         {
             Bus *MixedBus = new Bus ();
-            MixedBus->setdirection('F');
+            MixedBus->setDirection('F');
             MixedBus->setId(i);
             MixedBus->setType("MB");
             BusQueue.enqueue(MixedBus);
@@ -41,7 +42,7 @@ public:
         for (int i=0; i < *(BussesNumber+1); i++)
         {
             Bus *WheelChairBus = new Bus ();
-            WheelChairBus->setdirection('F');
+            WheelChairBus->setDirection('F');
             WheelChairBus->setId(i);
             WheelChairBus->setType("WB");
             BusQueue.enqueue(WheelChairBus);
