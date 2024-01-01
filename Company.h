@@ -68,4 +68,23 @@ public:
             //Leave.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
     }
+
+    void Simulate() {
+
+        // loop in company
+            // 1) bus from station #0 to movingbusses list
+            // 2) from checkup to movingbusses list
+            // 3) bus from movingbusses list to waiting in station
+        // loop in stations
+            // 4) promotion from np to sp
+            // 5) if there is leave event will remove the passenger
+            // 6) arrival event if there is arival passengers
+        // loop in busses
+            // 7) passengers getoff to finish list
+            // 8) check if the bus need checkup if yes will go to checkup if no step 9 will happen
+            // 9) boarding passengers accourding to their piriority
+            // 10) bus from waiting in station to movingbusses list
+            // 11) 
+
+    }
 };
