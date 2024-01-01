@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include "Time.h"  
 
@@ -34,6 +35,31 @@ public:
     void setEndStation(int endStationx) { endStation = endStationx; }
     void setOnTime(Time getOnTimex) { OnTime = getOnTimex; }
     void setOFFTime(Time getOFFTimex) { OFFTime = getOFFTimex; }
+    void setOnTimeFromString(const std::string& timeStr) {
+		std::stringstream ss(timeStr);
+		int hours = 0, minutes = 0;
+		char delimiter;
+
+		if (ss >> hours >> delimiter >> minutes && delimiter == ':') {
+			// Set the OnTime attribute
+			OnTime.setHours(hours);
+			OnTime.setMinutes(minutes);
+		}
+		
+	}
+
+	void setOFFTimeFromString(const std::string& timeStr) {
+        std::stringstream ss(timeStr);
+		int hours = 0, minutes = 0;
+		char delimiter;
+
+		if (ss >> hours >> delimiter >> minutes && delimiter == ':') {
+			// Set the OFFTime attribute
+			OFFTime.setHours(hours);
+			OFFTime.setMinutes(minutes);
+		}
+		
+	}
     void setType(const std::string& typex) { type = typex; }
     void setsubtype(const std::string& subtypex) { subtype = subtypex; }
 };
