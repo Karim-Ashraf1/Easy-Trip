@@ -50,22 +50,28 @@ public:
         return BusQueue;
     }
 
+    LinkedQueue<Bus*> MoveBus(LinkedQueue<Bus*> &GarageQueue){
+        LinkedQueue<Bus*>Moving_Busses;
+        Bus* BussCheck;
+        while(!GarageQueue.isEmpty()){ 
+            GarageQueue.dequeue(BussCheck);    
+            Moving_Busses.enqueue(BussCheck);
+        }    
+        return Moving_Busses;
+    }
 
     // to be modified later
-    int StartProgram(string fileName){
+    int EventExcute(string fileName){
         
-        
+        Arrive arival;
+        Leave leave;
         string* ArrayPtr=GetFileLine(fileName,7,'R');
-
-        int FileArray[10]; //to be modified into linked list
-
-
         if (*ArrayPtr == "A")
         {
-            //arival.Execute(ArrayPtr); // to be fixed when changed to linked list
+            arival.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
         if (*ArrayPtr == "L"){
-            //Leave.Execute(ArrayPtr); // to be fixed when changed to linked list
+            leave.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
     }
 
