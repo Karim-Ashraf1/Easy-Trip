@@ -52,15 +52,58 @@ string* SplitString(string str)
     return sentence;
 }
 
+
+int* CalcCapacity(const string& fileName){
+// Use the ifstream object file to read the file
+    ifstream file;
+    string* FileArray;//to be changed to linked list
+    // filename will store the name of the file and line_number the line number
+    string filename=fileName;
+    int line_number=6;
+    int* Capacity;
+
+    // Open the file with the provided filename
+    file.open(filename);
+
+    // If there was a failure opening the file (perhaps it does not exist) then
+    // exit with an error message and status.
+    if (file.fail())
+    {
+        cout << "File failed to open." << endl;
+        return;
+    }
+
+
+    int current_line = 0;
+    string line;
+
+    // Continue to read the file one line at a time, unless we reach the end of 
+    while (!file.eof())
+    {
+        // Increment the current line number being read as we are reading in the 
+        current_line++;
+
+        // Read the next line from the 'file' into the 'line' string 
+        getline(file, line);
+
+        // If current line number of the line we've read in matches the line number 
+        // that we're looking for, use break to stop the loop
+        if (current_line == line_number)
+            Capacity=ConvertToInt(SplitString(line));//to be fixed when linked list
+            return Capacity;
+        }
+}
+
 string* GetFileLine(const string& fileName,int lineNum,char Functionality/*R to read from, O to read only this line*/)
 {
     // Use the ifstream object file to read the file
     ifstream file;
-    string* FileArray;//to be changed to linked list
-
     // filename will store the name of the file and line_number the line number
     string filename=fileName;
+    int Capacity=*(CalcCapacity(filename));
+    string* FileArray = new string[Capacity] ;//to be changed to linked list
     int line_number=lineNum;
+    
 
     // Open the file with the provided filename
     file.open(filename);
@@ -90,13 +133,12 @@ string* GetFileLine(const string& fileName,int lineNum,char Functionality/*R to 
         // If current line number of the line we've read in matches the line number 
         // that we're looking for, use break to stop the loop
         if (current_line == line_number)
-           // FileArray=ConvertToInt(SplitString(line));//to be fixed when linked list
+           FileArray=SplitString(line);//to be fixed when linked list
             break;
         }
     if (Functionality=='R'){
-        // If current line number of the line we've read in matches the line number 
-        // that we're looking for, use break to stop the loop
         if (current_line >= line_number) {
+            
             FileArray=SplitString(line); 
         }
     }
