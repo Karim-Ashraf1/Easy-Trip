@@ -50,14 +50,19 @@ public:
         return BusQueue;
     }
 
-    LinkedQueue<Bus*> MoveBus(LinkedQueue<Bus*> &GarageQueue){
+    LinkedQueue<Bus*> MoveBus(LinkedQueue<Bus*> &GarageQueue,int Time){
         LinkedQueue<Bus*>Moving_Busses;
         Bus* BussCheck;
+        if (Time % 15==0){
         while(!GarageQueue.isEmpty()){ 
             GarageQueue.dequeue(BussCheck);    
             Moving_Busses.enqueue(BussCheck);
         }    
         return Moving_Busses;
+        }
+        else {
+            return;
+        }
     }
 
     // to be modified later
