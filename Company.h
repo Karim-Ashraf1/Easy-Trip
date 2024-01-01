@@ -50,22 +50,72 @@ public:
         return BusQueue;
     }
 
+    LinkedQueue<Bus*> MoveBus(LinkedQueue<Bus*> &GarageQueue,int Time){
+        LinkedQueue<Bus*>Moving_Busses;
+        Bus* BussCheck;
+        if (Time % 15==0){
+        while(!GarageQueue.isEmpty()){ 
+            GarageQueue.dequeue(BussCheck);    
+            Moving_Busses.enqueue(BussCheck);
+        }    
+        return Moving_Busses;
+        }
+        else {
+            return;
+        }
+    }
 
     // to be modified later
-    int StartProgram(string fileName){
+    int EventExcute(const string &fileName){
         
-        
+        Arrive arival;
+        Leave leave;
         string* ArrayPtr=GetFileLine(fileName,7,'R');
-
-        int FileArray[10]; //to be modified into linked list
-
-
         if (*ArrayPtr == "A")
         {
-            //arival.Execute(ArrayPtr); // to be fixed when changed to linked list
+            arival.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
         if (*ArrayPtr == "L"){
-            //Leave.Execute(ArrayPtr); // to be fixed when changed to linked list
+            leave.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
+    }
+
+    // Bus* AddBusToCheckup(const string &fileName){
+    //     Bus* bus=new Bus;
+    //     int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
+    //     bus->setMaintenanceJourney(*ArrayPtr);
+    //     bus->setWheelBusMaintenanceTime(*(ArrayPtr+1));    
+    //     bus->setMixedBusMaintenanceTime(*(ArrayPtr+2));
+
+    // }
+
+
+
+    void Simulate(const string& fileName) {
+
+        GetFileLine(fileName,1,'O'); //  no. of stations , no. of min between each 2 stations
+        GetFileLine(fileName,2,'O'); //  no. of WBuses , no. of MBuses
+        GetFileLine(fileName,3,'O'); //  Capacity of each bus type (WBus then MBus)
+        GetFileLine(fileName,4,'O'); //  no. of trips before checkup and the checkup durations
+        GetFileLine(fileName,5,'O'); //  maxW (minutes), get on/off time (seconds)
+        GetFileLine(fileName,6,'O'); //  no. of events in this file. This line should be followed by n lines
+        GetFileLine(fileName,7,'R'); //  read all the file
+
+        
+        // loop in company
+            // 1) bus from station #0 to movingbusses list
+            // 2) from checkup to movingbusses list
+            // 3) bus from movingbusses list to waiting in station
+        // loop in stations
+            // 4) promotion from np to sp
+            // 5) if there is leave event will remove the passenger
+            // 6) arrival event if there is arival passengers
+        // loop in busses
+            // 7) passengers getoff to finish list
+            // 8) check if the bus need checkup if yes will go to checkup if no step 9 will happen
+            // 9) boarding passengers accourding to their piriority
+            // 10) bus from waiting in station to movingbusses list
+            // 11) 
+
     }
 };

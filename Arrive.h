@@ -39,21 +39,16 @@ class Arrive : public Events
         string GetType() const { return Type; }
 
         /// overloaded Excute() in Events class
-        void Execute(int FileArray[]/*to be changed to linked list*/)
+        void Execute(string* FileArray/*to be changed to linked list*/)
         {
-            
+          /// Takes Attrubiutes of Arrive and sets the passenger instance by them
+          Psngr.setOnTime(*FileArray);         
+          Psngr.setType(*(FileArray+1));            
+          Psngr.setId(*(ConvertToInt(FileArray+3)));
+          Psngr.setStartStation(*(ConvertToInt(FileArray+5)));
+          Psngr.setEndStation(*(ConvertToInt(FileArray+5)));
 
-            
-            /// Takes Attrubiutes of Arrive and sets the passenger instance by them
-            Psngr.setId(FileArray[1]);
-            Psngr.setStartStation(FileArray[4]);
-            Psngr.setEndStation(FileArray[5]);
-            //Psngr.setOFFTime(FileArray[1]);
-            //Psngr.setOnTime(FileArray[3]);
-            Psngr.setType(to_string(FileArray[1]));
-
-            Passenger *psgr_ptr = &Psngr;
-
-            PassWait.enqueue(psgr_ptr); /// adding The passenger to linked list
+          Passenger *psgr_ptr = &Psngr;
+          PassWait.enqueue(psgr_ptr); /// adding The passenger to linked list
         }
 };

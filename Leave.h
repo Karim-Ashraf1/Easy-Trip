@@ -7,7 +7,7 @@
 #include <Events.h>
 using namespace std;
 
-class Leave_Event : public Events
+class Leave : public Events
 {
 private:
     bool L;        // means this is a LEAVE event line
@@ -32,7 +32,7 @@ public:
     Passenger* Get_LP() const {return LP;}
 
     /// overloaded Excute() in Events class
-    void Execute(int FileArray[])
+    void Execute(string* FileArray)
     {
         DoubleLinkedList<Passenger *> Passwait;               // List of pointers to passengers
         Passwait.DeleteNodeVal(Passwait.FindPassenger(LP)); //  // delete the leaving passenger if found in passengers

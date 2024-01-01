@@ -5,7 +5,7 @@ class Events{
 private:
     
 public:
-    virtual void Execute(int FileArray[]) =0 {
+    virtual void Execute(string* FileArray) =0 {
         //Pure virtual function to be executed by inherited classes
     }
 };
