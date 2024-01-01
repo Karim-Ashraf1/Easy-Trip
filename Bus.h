@@ -83,49 +83,49 @@ public:
         return getCapacity() - getCurrentLoad();
     }
     
-    void moveBusForward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
-    {
+    // void moveBusForward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+    // {
 
-        Node<Station *> *currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
+    //     Node<Station *> *currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
 
-        if (currentNode != nullptr && currentNode->getNext() != nullptr)
-        {
+    //     if (currentNode != nullptr && currentNode->getNext() != nullptr)
+    //     {
 
-            currentStation.getAvailableBusses().dequeue(*this); // Remove the bus from the current station's
+    //         currentStation.getAvailableBusses().dequeue(*this); // Remove the bus from the current station's
 
-            Station *nextStation = currentNode->getNext()->getItem(); // Move the bus to the next station in the linked list
-            nextStation->getAvailableBusses().enqueue(*this);
+    //         Station *nextStation = currentNode->getNext()->getItem(); // Move the bus to the next station in the linked list
+    //         nextStation->getAvailableBusses().enqueue(*this);
 
-            std::cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() + 1 << ".\n";
-        }
-    }
-    void moveBusBackward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
-    {
+    //         std::cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() + 1 << ".\n";
+    //     }
+    // }
+    // void moveBusBackward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+    // {
 
-        Node<Station *> *currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
+    //     Node<Station *> *currentNode = stationsList.Find(&currentStation); // Find the current station in the linked list
 
-        if (currentNode != nullptr && currentNode->getPrev() != nullptr)
-        {
+    //     if (currentNode != nullptr && currentNode->getPrev() != nullptr)
+    //     {
 
-            currentStation.getAvailableBusses().dequeue(*this); // Remove the bus from the current station's
+    //         currentStation.getAvailableBusses().dequeue(*this); // Remove the bus from the current station's
 
-            Station *nextStation = currentNode->getPrev()->getItem();
-            nextStation->getAvailableBusses().enqueue(*this); // Move the bus to the next station in the linked list
+    //         Station *nextStation = currentNode->getPrev()->getItem();
+    //         nextStation->getAvailableBusses().enqueue(*this); // Move the bus to the next station in the linked list
 
-            std::cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() - 1 << ".\n";
-        }
-    }
+    //         std::cout << "Bus " << id << " moved from Station " << currentStation.getNumber() << " to Station " << currentStation.getNumber() - 1 << ".\n";
+    //     }
+    // }
 
-    void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
-    {
+    // void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+    // {
 
-        Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
+    //     Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
 
-        if (waitingStation != nullptr)
-        {
-            currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
-        }
-    }
+    //     if (waitingStation != nullptr)
+    //     {
+    //         currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
+    //     }
+    // }
 
     void GetPassOn(LinkedList<Passenger *> &PassengersInBus)
     {
