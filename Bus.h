@@ -79,6 +79,10 @@ public:
 
     // int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return ((tDC/(Bcapacity) *N)(tBT/TSim))*100;};
 
+    int getRemainingCapacity() {
+        return getCapacity() - getCurrentLoad();
+    }
+    
     void moveBusForward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
     {
 
