@@ -69,8 +69,18 @@ public:
         }
     }
 
-    void Simulate() {
 
+    void Simulate(const string& fileName) {
+
+        GetFileLine(fileName,1,'O'); //  no. of stations , no. of min between each 2 stations
+        GetFileLine(fileName,2,'O'); //  no. of WBuses , no. of MBuses
+        GetFileLine(fileName,3,'O'); //  Capacity of each bus type (WBus then MBus)
+        GetFileLine(fileName,4,'O'); //  no. of trips before checkup and the checkup durations
+        GetFileLine(fileName,5,'O'); //  maxW (minutes), get on/off time (seconds)
+        GetFileLine(fileName,6,'O'); //  no. of events in this file. This line should be followed by n lines
+        GetFileLine(fileName,7,'R'); //  read all the file
+
+        
         // loop in company
             // 1) bus from station #0 to movingbusses list
             // 2) from checkup to movingbusses list
