@@ -66,7 +66,7 @@ public:
     }
 
     // to be modified later
-    int EventExcute(string fileName){
+    int EventExcute(const string &fileName){
         
         Arrive arival;
         Leave leave;
@@ -79,6 +79,16 @@ public:
             leave.Execute(ArrayPtr); // to be fixed when changed to linked list
         }
     }
+
+    // Bus* AddBusToCheckup(const string &fileName){
+    //     Bus* bus=new Bus;
+    //     int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
+    //     bus->setMaintenanceJourney(*ArrayPtr);
+    //     bus->setWheelBusMaintenanceTime(*(ArrayPtr+1));    
+    //     bus->setMixedBusMaintenanceTime(*(ArrayPtr+2));
+
+    // }
+
 
 
     void Simulate(const string& fileName) {

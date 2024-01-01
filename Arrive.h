@@ -42,12 +42,11 @@ class Arrive : public Events
         void Execute(string* FileArray/*to be changed to linked list*/)
         {
           /// Takes Attrubiutes of Arrive and sets the passenger instance by them
+          Psngr.setOnTime(*FileArray);         
           Psngr.setType(*(FileArray+1));            
           Psngr.setId(*(ConvertToInt(FileArray+3)));
           Psngr.setStartStation(*(ConvertToInt(FileArray+5)));
           Psngr.setEndStation(*(ConvertToInt(FileArray+5)));
-          //Psngr.setOFFTime(FileArray[1]);
-          //Psngr.setOnTime(FileArray[3]);
 
           Passenger *psgr_ptr = &Psngr;
           PassWait.enqueue(psgr_ptr); /// adding The passenger to linked list
