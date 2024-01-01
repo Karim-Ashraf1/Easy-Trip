@@ -72,7 +72,10 @@ public:
             Head = P;
         }
     }
-
+    Node<T> *GetHead() const
+    {
+        return Head;
+    }
     ////////////////     Requirements   ///////////////////
     //
     // Implement the following member functions

@@ -124,4 +124,92 @@ public:
     void GetPassOn(LinkedList<Passenger *> &PassengersInBus)
     {
     }
+
+    
+    void checkEndStationAndRemove(Station &station)
+    {
+        Node<Passenger *> *currentNode = Passengers.GetHead();
+
+        // Go over the linked list
+        while (currentNode != nullptr)
+        {
+            // Create a pointer that points to the current passenger
+            Passenger *pntr = currentNode->getItem();
+            // Create a dummy variable with the same attributes as the passenger
+            Passenger psngr = *pntr;
+            // Check if the end station of the passenger is the station
+            if (psngr.getEndStation() == station.getNumber())
+            {
+                // Remove passenger from the linked list
+                Passengers.DeleteNode(pntr);
+
+                // Update the current load of the bus
+                setCurrentLoad(getCurrentLoad() - 1);
+
+                // Add the removed passenger to the finish list of the station
+                station.AddToFinishList(*pntr);
+            }
+
+            // Move to the next node in the linked list
+            currentNode = currentNode->getNext();
+        }
+    }
+
+    template <typename QueueType>
+    void loadPassengersToBus(QueueType &waitingPassengers)
+    {   
+        int maxPassengers = 45;
+        int availableSeats = maxPassengers - getCurrentLoad();
+
+        while (availableSeats > 0 && !waitingPassengers.isEmpty())
+        {
+            Passenger nextPassenger;
+            if (waitingPassengers.dequeue(nextPassenger))
+            {
+                // Add the pointer to the passenger to the bus's linked list
+                Passengers.InsertEnd(&nextPassenger);
+
+                setCurrentLoad(getCurrentLoad() + 1);
+
+                // Decrease available seats and continue the loop
+                availableSeats--;
+            }
+        }
+    }
+
+        void Bus::boardPassengers(Station &station)
+    {
+        // Check the direction first
+        if (getdirection() == 'F')
+        {
+            // Forward direction
+            if (getType() == "NP")
+            {
+                // Normal bus
+                loadPassengersToBus(station.getNormalWaitingPassengersForward());
+            }
+            else if (getType() == "WP")
+            {
+                // Wheelchair bus                
+                loadPassengersToBus(station.getWheelchairWaitingPassengersForwards());
+            }
+        }
+        else if (getdirection() == 'B')
+        {
+            // Backward direction
+            if (getType() == "NP")
+            {
+                // Normal bus                
+                loadPassengersToBus(station.getNormalWaitingPassengersBackward());
+            }
+            else if (getType() == "WP")
+            {
+                // Wheelchair bus                
+                loadPassengersToBus(station.getWheelchairWaitingPassengersBackwards());
+            }
+        }
+    }
+
+
+
 };

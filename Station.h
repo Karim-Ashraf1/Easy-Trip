@@ -13,9 +13,12 @@ private:
     PriorityQueue<Passenger> NormalWaitingPassengersBackward;
     LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
     LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
-    LinkedQueue<Bus> AvailableBuses;
+    LinkedQueue<Bus*> AvailableBuses;
     LinkedList<Passenger*> FinishList;
-
+    LinkedQueue<Bus*> NormalPassengersMovingBusesForward;
+    LinkedQueue<Bus*> NormalPassengersMovingBusesBackward;
+    LinkedQueue<Bus*> WheelchairPassengersMovingBusesForward;
+    LinkedQueue<Bus*> WheelchairPassengersMovingBusesBackward;
 
 public:
     void setNumber(int newNumber) {
@@ -50,7 +53,7 @@ public:
     void setWheelchairWaitingPassengersBackwards(const LinkedQueue<Passenger>& passengers) {
         WheelchairWaitingPassengersBackwards = passengers;
     }
-     void setAvailableBusses(const LinkedQueue<Bus>& busses) {
+     void setAvailableBusses(const LinkedQueue<Bus*>& busses) {
         AvailableBuses = busses;
     }
     
@@ -66,7 +69,7 @@ public:
       LinkedQueue<Passenger>& getWheelchairWaitingPassengersBackwards() {
         return WheelchairWaitingPassengersBackwards;
     }
-      LinkedQueue<Bus>& getAvailableBusses() {
+      LinkedQueue<Bus*>& getAvailableBusses() {
         return AvailableBuses;
     }
       LinkedList<Passenger*>& getFinishlist() {
@@ -116,53 +119,6 @@ public:
     }
   
 
-    void checkEndStationAndRemove(Station stationx, Bus busx)
-    {
-        int i=0;
-      while ( i < 45)
-       {    
-            //create a pointer that points to the same passenger
-            Passenger* pntr=busx.PassengersInBus[i];
-            //create another passenger with the same attributes
-            Passenger psngr = *pntr;
-            // Check if the end station of the passenger is the current station
-            if (psngr.getEndStation() == stationx.getNumber()) 
-            {
-                //remove passenger from the array
-                busx.PassengersInBus[i]=nullptr;
-                busx.setCurrentLoad((busx.getCurrentLoad()-1));
-           
-            }
-            i++;
-        }
-    }    
-    void loadPassengersToBus(PriorityQueue<Passenger>& waitingPassengers, Bus& bus)
-    {
-        int maxPassengers = 45;
-        int availableSeats = maxPassengers - bus.getCurrentLoad();
-
-             while (availableSeats > 0 && !waitingPassengers.isEmpty())
-            {
-                 Passenger nextPassenger;
-                 if (waitingPassengers.dequeue(nextPassenger))
-                {
-                     for (int i = 0; i < 45; ++i) 
-                    {
-                        Passenger* pntr=bus.PassengersInBus[i];
-                        Passenger psngr = *pntr;    
-                         if (psngr.getId()==0) 
-                        {
-                            Passenger* pntr2 = &nextPassenger;
-                            // Add the pointer to the passenger to the array at the first available index
-                            bus.PassengersInBus[i] = pntr2 ;
-                            bus.setCurrentLoad((bus.getCurrentLoad()+1));
-                            bus.setTDC((bus.getTDC()+1));
-                        }    
-        
-                    }  
-                }          
-            }
-    }
 
     void moveBusFromWatingToMoving() {
         while (!AvailableBuses.isEmpty()) {
@@ -177,7 +133,7 @@ public:
                 currentBus.moveBus();
 
                 // Check if any passengers have reached their destination
-                checkEndStationAndRemove(*this, currentBus);
+                checkEndStationAndRemove( currentBus);
 
                 // Add the bus back to the available buses queue if it still has space
                 if (currentBus.getCurrentLoad() < currentBus.getCapacity()) {
