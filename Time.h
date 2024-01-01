@@ -5,132 +5,138 @@ class Time {
 private:
     int hours;
     int minutes;
-    int seconds;
 
 public:
-      Time()
+    Time() : hours(0), minutes(0) {}
+
+    void setHours(int h)
     {
-        int hours = 0;
-        int minutes = 0;
-        int secound = 0;
+        hours = h;
     }
 
-    Time(int h, int m, int s)
-    {
-        int hours = h;
-        int minutes = m;
-        int secound = s;
+    void setMinutes(int m) {
+        minutes = m;
     }
-    void toString(){
-        std::cout<<hours<<":"<<minutes<< "/n";
+
+    Time(int h, int m) : hours(h), minutes(m) {}
+    int getHours() const {
+        return hours;
     }
-    
+
+    int getMinutes() const {
+        return minutes;
+    }
+    void toString() {
+        std::cout << hours << ":" << minutes << "\n";
+    }
+
     Time& operator=(const Time& other) {
         if (this != &other) {
             hours = other.hours;
             minutes = other.minutes;
-            seconds = other.seconds;
         }
         return *this;
     }
 
-Time operator/(const Time& otherTime) const {
-    // Convert both times to seconds
-    int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
-    int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+    Time operator/(const Time& otherTime) const {
+        int totalMinutes1 = hours * 60 + minutes;
+        int totalMinutes2 = otherTime.hours * 60 + otherTime.minutes;
 
-    // Avoid division by zero
-    if (totalSeconds2 == 0) {
-        std::cerr << "Error: Division by zero!\n";
-        // Return a default-constructed Time object
-        return Time();
+        if (totalMinutes2 == 0) {
+            std::cerr << "Error: Division by zero!\n";
+            return Time();
+        }
+
+        int resultMinutes = totalMinutes1 / totalMinutes2;
+
+        Time resultTime;
+        resultTime.hours = resultMinutes / 60;
+        resultTime.minutes = resultMinutes % 60;
+
+        return resultTime;
     }
 
-    int resultSeconds = totalSeconds1 / totalSeconds2;
+    Time operator*(int multiplier) const {
+        int totalMinutes = hours * 60 + minutes;
+        totalMinutes *= multiplier;
 
-    // Calculate new hours, minutes, and seconds for the result
-    Time resultTime;
-    resultTime.hours = resultSeconds / 3600;
-    resultTime.minutes = (resultSeconds % 3600) / 60;
-    resultTime.seconds = resultSeconds % 60;
+        Time resultTime;
+        resultTime.hours = totalMinutes / 60;
+        resultTime.minutes = totalMinutes % 60;
 
-    return resultTime;
+        return resultTime;
     }
-
-Time operator *(int multiplier) const {
-    // Convert the current time to minutes
-    int totalMinutes = hours * 60 + minutes;
-    
-    // Multiply by the given multiplier
-    totalMinutes *= multiplier;
-
-    // Calculate new hours and minutes for the result
-    Time resultTime;
-    resultTime.hours = totalMinutes / 60;
-    resultTime.minutes = totalMinutes % 60;
-
-    return resultTime;
-}
 
     Time operator-(const Time& otherTime) const {
-        int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
-        int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+        int totalMinutes1 = hours * 60 + minutes;
+        int totalMinutes2 = otherTime.hours * 60 + otherTime.minutes;
 
-        int differenceSeconds = totalSeconds1 - totalSeconds2;
+        int differenceMinutes = totalMinutes1 - totalMinutes2;
 
-        // Calculate new hours, minutes, and seconds for the difference
         Time result;
-        result.hours = differenceSeconds / 3600;
-        result.minutes = (differenceSeconds % 3600) / 60;
-        result.seconds = differenceSeconds % 60;
+        result.hours = differenceMinutes / 60;
+        result.minutes = differenceMinutes % 60;
 
         return result;
     }
 
     Time operator+(const Time& otherTime) const {
-        int totalSeconds1 = hours * 3600 + minutes * 60 + seconds;
-        int totalSeconds2 = otherTime.hours * 3600 + otherTime.minutes * 60 + otherTime.seconds;
+        int totalMinutes1 = hours * 60 + minutes;
+        int totalMinutes2 = otherTime.hours * 60 + otherTime.minutes;
 
-        int totalSeconds = totalSeconds1 + totalSeconds2;
+        int totalMinutes = totalMinutes1 + totalMinutes2;
 
-        // Calculate new hours, minutes, and seconds for the difference
         Time result;
-        result.hours = totalSeconds / 3600;
-        result.minutes = (totalSeconds % 3600) / 60;
-        result.seconds = totalSeconds % 60;
+        result.hours = totalMinutes / 60;
+        result.minutes = totalMinutes % 60;
 
         return result;
     }
-    
+
     Time operator*(int multiplier) const {
-    // Convert the time to seconds
-    int totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        int totalMinutes = hours * 60 + minutes;
+        totalMinutes *= multiplier;
 
-    // Multiply by the integer
-    totalSeconds *= multiplier;
+        Time resultTime;
+        resultTime.hours = totalMinutes / 60;
+        resultTime.minutes = totalMinutes % 60;
 
-    // Calculate new hours, minutes, and seconds for the result
-    Time resultTime;
-    resultTime.hours = totalSeconds / 3600;
-    resultTime.minutes = (totalSeconds % 3600) / 60;
-    resultTime.seconds = totalSeconds % 60;
-
-    return resultTime;
+        return resultTime;
     }
 
+    Time simulateTimePassage(int minutesPassed) const {
+        Time newTime = *this;
 
-    Time simulateTimePassage(const Time &currentTime, int secondsPassed)
-    {
-        Time newTime = currentTime;
+        int totalMinutes = hours * 60 + minutes + minutesPassed;
 
-        // Convert everything to seconds and add the simulated time passage
-        int totalSeconds = currentTime.hours * 3600 + currentTime.minutes * 60 + currentTime.seconds + secondsPassed;
-
-        // Calculate new hours, minutes, and seconds
-        newTime.hours = totalSeconds / 3600 % 24;
-        newTime.minutes = (totalSeconds % 3600) / 60;
-        newTime.seconds = totalSeconds % 60;
+        newTime.hours = totalMinutes / 60 % 24;
+        newTime.minutes = totalMinutes % 60;
 
         return newTime;
     }
+
+
+    void addMinute() 
+    {
+        minutes++;
+        if (minutes == 60) {
+            minutes = 0;
+            hours = (hours + 1) % 24;
+        }
+    }
+
+    int calculateTotalMinutes() 
+    {
+    return  hours * 60 + minutes;
+    }
+
+    Time convertTotalMinutesToTime(int totalMinutes) {
+    Time resultTime;
+
+    // Calculate hours and minutes
+    resultTime.setHours(totalMinutes / 60 % 24);
+    resultTime.setMinutes(totalMinutes % 60);
+
+    return resultTime;
+}
 };
