@@ -54,6 +54,7 @@ public:
     void setCurrentLoad(int CurrentLoadx) { CurrentLoad = CurrentLoadx; }
     void setDirection(char directionx) { direction = directionx; }
     void setPassenger(LinkedList<Passenger *> Passenger) { Passengers = Passenger; }
+    void setCapacity(int cap) { Capacity=cap; }
     // void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
     // void setTDC(int x){tDC = x;}
     // void setN(int n){N=n;}
@@ -69,6 +70,7 @@ public:
     int getCurrentLoad() { return CurrentLoad; }
     char getdirection() { return direction; }
     LinkedList<Passenger *> &GetPassengers() { return Passengers; }
+    int getCapacity() { return Capacity; }
     // int getN() { return N;}
     // static int getTDC() {return tDC;}
     // int getCapacity(){return Capacity;}
@@ -177,7 +179,7 @@ public:
         }
     }
 
-        void Bus::boardPassengers(Station &station)
+    void Bus::boardPassengers(Station &station)
     {
         // Check the direction first
         if (getdirection() == 'F')

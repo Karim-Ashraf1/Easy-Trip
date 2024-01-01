@@ -133,7 +133,7 @@ public:
                 currentBus.moveBus();
 
                 // Check if any passengers have reached their destination
-                checkEndStationAndRemove( currentBus);
+                checkEndStationAndRemove(currentBus);
 
                 // Add the bus back to the available buses queue if it still has space
                 if (currentBus.getCurrentLoad() < currentBus.getCapacity()) {
