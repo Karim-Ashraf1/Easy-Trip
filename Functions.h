@@ -6,7 +6,6 @@ void MoveBus(LinkedQueue<Bus*> &GarageQueue){
     LinkedQueue<Bus*>Moving_WBus;
     LinkedQueue<Bus*>Moving_Mbus;
     Bus* BussCheck;
-    Bus* BussArray[2];
     while(!GarageQueue.isEmpty()){ 
         GarageQueue.dequeue(BussCheck);
         if (BussCheck->getType() == "WB"){
@@ -22,7 +21,7 @@ void MoveBus(LinkedQueue<Bus*> &GarageQueue){
 // conversion from string to integer 
 int* ConvertToInt(string Array[])
 {   
-    int Arr[2];//to be implented using linked list
+    int Arr[3];//to be implented using linked list
     for (int i = 0;i < 2;i++) {
         Arr[i] = stoi(Array[i]);
     }
@@ -34,7 +33,7 @@ int* ConvertToInt(string Array[])
 string* SplitString(string str)
 {
     string word = "";
-    string sentence[2];//to be implmentedby linked list
+    string sentence[7];//to be implmentedby linked list
     int count = 0;
     for (auto x : str)
     {
@@ -52,11 +51,12 @@ string* SplitString(string str)
     return sentence;
 }
 
-string* GetFileLine(const string& fileName,int lineNum,char Functionality/*R to read from, O to read only this line*/)
+template<typename T>
+LinkedList<T*> GetFileLine(const string& fileName,int lineNum,char Functionality/*R to read from, O to read only this line*/)
 {
     // Use the ifstream object file to read the file
     ifstream file;
-    string* FileArray;//to be changed to linked list
+    LinkedList<T*> FileList;//to be changed to linked list
 
     // filename will store the name of the file and line_number the line number
     string filename=fileName;
@@ -90,17 +90,17 @@ string* GetFileLine(const string& fileName,int lineNum,char Functionality/*R to 
         // If current line number of the line we've read in matches the line number 
         // that we're looking for, use break to stop the loop
         if (current_line == line_number)
-           // FileArray=ConvertToInt(SplitString(line));//to be fixed when linked list
+            FileList.InsertBeg(ConvertToInt(SplitString(line)));
             break;
         }
     if (Functionality=='R'){
         // If current line number of the line we've read in matches the line number 
         // that we're looking for, use break to stop the loop
         if (current_line >= line_number) {
-            FileArray=SplitString(line); 
+            FileList.InsertBeg(SplitString(line)); 
         }
     }
     }
-    return FileArray;
+    return FileList;
 
 }
