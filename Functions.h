@@ -1,4 +1,5 @@
 #pragma once
+#include "Time.h"
 #include "Company.h"
 using namespace std;
 
@@ -14,6 +15,20 @@ int* ConvertToInt(string Array[])
     }
     return Arr;
 }
+
+
+
+int GetBoardingTime(string Filename){
+    int y;
+    int* BoardingTime=ConvertToInt((GetFileLine(Filename,5,'O')));
+    y=*(BoardingTime+1);
+    return y;
+    
+
+}
+
+
+
 
 
 // Takes string and slices it by Space and returns an array converted to integer 
@@ -39,6 +54,27 @@ string* SplitString(string str)
 }
 
 
+
+    Time GetTimeFromString(const std::string*& timeStr2) {
+        string timestr=*timeStr2;
+        stringstream ss(timestr);
+		int hours = 0, minutes = 0;
+		char delimiter;
+		if (ss >> hours >> delimiter >> minutes && delimiter == ':') {
+			// Set the OFFTime attribute
+			Time T(hours,minutes);
+		}
+		
+	}
+    int calculateTotalMinutes(const std::string*& timeStr2) 
+    {   int totalMinutes;
+        Time T= GetTimeFromString(timeStr2);
+        totalMinutes=((T.getHours()*60)+T.getMinutes());
+        return totalMinutes;
+    }
+
+
+
 int* CalcCapacity(const string& fileName){
 // Use the ifstream object file to read the file
     ifstream file;
@@ -58,7 +94,6 @@ int* CalcCapacity(const string& fileName){
         cout << "File failed to open." << endl;
         return;
     }
-
 
     int current_line = 0;
     string line;

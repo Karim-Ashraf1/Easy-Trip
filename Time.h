@@ -125,10 +125,7 @@ public:
         }
     }
 
-    int calculateTotalMinutes() 
-    {
-    return  hours * 60 + minutes;
-    }
+    
 
     Time convertTotalMinutesToTime(int totalMinutes) {
     Time resultTime;
