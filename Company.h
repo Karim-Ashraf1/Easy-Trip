@@ -127,10 +127,14 @@ public:
         get_on_or_off_time_seconds = *ConvertToInt(arr5+1);
         no_of_events_in_the_file = *ConvertToInt(arr6);
 
+        int time=0;
         
         // loop in company
             // 1) bus from station #0 to movingbusses list
+            EnqueueGarage(fileName);
+            MoveBus(GarageQueue,time);
             // 2) from checkup to movingbusses list
+
             // 3) bus from movingbusses list to waiting in station
         // loop in stations
             // 4) promotion from np to sp

@@ -119,7 +119,9 @@ public:
         }
     }
   
-
+    void moveBusFromMovingToWaiting() {
+        
+    }
 
     void moveBusFromWatingToMoving() {
         Bus* b;
