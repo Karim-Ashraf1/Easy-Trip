@@ -18,6 +18,19 @@ private:
     LinkedQueue <Events*> EventsList;
     DoubleLinkedList <Station*> StationsList;
     LinkedQueue<Bus*> GarageQueue;
+    int no_of_stations;
+    int time_between_stations;
+    int no_of_WBuses; 
+    int no_of_MBuses;
+    int Capacity_of_Wbus_bus;
+    int Capacity_of_Mbus_bus;
+    int no_of_trips_before_checkup; 
+    int checkup_durations_1;
+    int checkup_durations_2;
+    int maxW_minutes;
+    int get_on_or_off_time_seconds;
+    int no_of_events_in_the_file;
+
 public:
 
 
@@ -80,26 +93,39 @@ public:
         }
     }
 
-    // Bus* AddBusToCheckup(const string &fileName){
-    //     Bus* bus=new Bus;
-    //     int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
-    //     bus->setMaintenanceJourney(*ArrayPtr);
-    //     bus->setWheelBusMaintenanceTime(*(ArrayPtr+1));    
-    //     bus->setMixedBusMaintenanceTime(*(ArrayPtr+2));
-
-    // }
-
-
+     LinkedQueue<Bus*> AddBusToCheckup(const string &fileName,int JourneysTaken,Bus* bus){
+        LinkedQueue<Bus*> MovingQueue;
+        int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
+        bus->setMaintenanceJourney(*ArrayPtr);
+        if(bus->getMaintenanceJourneys()==JourneysTaken)
+            MovingQueue.enqueue(bus);
+        return MovingQueue;
+     }
 
     void Simulate(const string& fileName) {
 
-        GetFileLine(fileName,1,'O'); //  no. of stations , no. of min between each 2 stations
-        GetFileLine(fileName,2,'O'); //  no. of WBuses , no. of MBuses
-        GetFileLine(fileName,3,'O'); //  Capacity of each bus type (WBus then MBus)
-        GetFileLine(fileName,4,'O'); //  no. of trips before checkup and the checkup durations
-        GetFileLine(fileName,5,'O'); //  maxW (minutes), get on/off time (seconds)
-        GetFileLine(fileName,6,'O'); //  no. of events in this file. This line should be followed by n lines
-        GetFileLine(fileName,7,'R'); //  read all the file
+
+        string* arr1 = GetFileLine(fileName,1,'O'); //  no. of stations , no. of min between each 2 stations
+        string* arr2 = GetFileLine(fileName,2,'O'); //  no. of WBuses , no. of MBuses
+        string* arr3 = GetFileLine(fileName,3,'O'); //  Capacity of each bus type (WBus then MBus)
+        string* arr4 = GetFileLine(fileName,4,'O'); //  no. of trips before checkup and the checkup durations
+        string* arr5 = GetFileLine(fileName,5,'O'); //  maxW (minutes), get on/off time (seconds)
+        string* arr6 = GetFileLine(fileName,6,'O'); //  no. of events in this file. This line should be followed by n lines
+        string* arr7 = GetFileLine(fileName,7,'R'); //  read all the file
+
+
+        no_of_stations = *ConvertToInt(arr1);
+        time_between_stations = *ConvertToInt(arr1+1);
+        no_of_WBuses = *ConvertToInt(arr2);
+        no_of_MBuses = *ConvertToInt(arr2+1);
+        Capacity_of_Wbus_bus = *ConvertToInt(arr3);
+        Capacity_of_Mbus_bus = *ConvertToInt(arr3+1);
+        no_of_trips_before_checkup = *ConvertToInt(arr4);
+        checkup_durations_1 = *ConvertToInt(arr4+1);
+        checkup_durations_2 = *ConvertToInt(arr4+2);
+        maxW_minutes = *ConvertToInt(arr5);
+        get_on_or_off_time_seconds = *ConvertToInt(arr5+1);
+        no_of_events_in_the_file = *ConvertToInt(arr6);
 
         
         // loop in company
