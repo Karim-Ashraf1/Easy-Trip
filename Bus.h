@@ -16,6 +16,7 @@ private:
     int MBmaintenanceT; // for time
     int WBmaintenanceT;
     int maintenanceJ; // for journeys
+    int Journy; // number of journies taken by bus
     // static int tDC; // total passengers transported by this bus
     // static int N; // total delivery trips
     // Time tBT; // total busy time
@@ -24,6 +25,8 @@ private:
     LinkedList<Passenger *> Passengers;
 
 public:
+    int getJourney() { return Journy; }
+    void setJourney(int Journeys) { Journy = Journeys; }
     Bus(int id, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
     {
         id = id;
