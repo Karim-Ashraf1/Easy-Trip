@@ -93,16 +93,14 @@ public:
         }
     }
 
-    // Bus* AddBusToCheckup(const string &fileName){
-    //     Bus* bus=new Bus;
-    //     int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
-    //     bus->setMaintenanceJourney(*ArrayPtr);
-    //     bus->setWheelBusMaintenanceTime(*(ArrayPtr+1));    
-    //     bus->setMixedBusMaintenanceTime(*(ArrayPtr+2));
-
-    // }
-
-
+     LinkedQueue<Bus*> AddBusToCheckup(const string &fileName,int JourneysTaken,Bus* bus){
+        LinkedQueue<Bus*> MovingQueue;
+        int* ArrayPtr=ConvertToInt(GetFileLine(fileName,4,'O'));
+        bus->setMaintenanceJourney(*ArrayPtr);
+        if(bus->getMaintenanceJourneys()==JourneysTaken)
+            MovingQueue.enqueue(bus);
+        return MovingQueue;
+     }
 
     void Simulate(const string& fileName) {
 
