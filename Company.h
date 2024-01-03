@@ -16,8 +16,9 @@ using namespace std;
 class Company {
 private:
     LinkedQueue <Events*> EventsList;
-    DoubleLinkedList <Station*> StationsList;
+    LinkedList <Station*> StationsList;
     LinkedQueue<Bus*> GarageQueue;
+    LinkedQueue<Bus*>Moving_Busses;
     int no_of_stations;
     int time_between_stations;
     int no_of_WBuses; 
@@ -30,6 +31,7 @@ private:
     int maxW_minutes;
     int get_on_or_off_time_seconds;
     int no_of_events_in_the_file;
+
 
 public:
 
@@ -63,18 +65,15 @@ public:
         return BusQueue;
     }
 
-    LinkedQueue<Bus*> MoveBus(LinkedQueue<Bus*> &GarageQueue,int Time){
-        LinkedQueue<Bus*>Moving_Busses;
-        Bus* BussCheck;
-        if (Time % 15==0){
-        while(!GarageQueue.isEmpty()){ 
-            GarageQueue.dequeue(BussCheck);    
-            Moving_Busses.enqueue(BussCheck);
-        }    
-        return Moving_Busses;
-        }
-        else {
+    LinkedQueue<Bus*> MoveBusFromGarage(int Time){
+        if(Time <240)
             return;
+        if (Time % 15==0 && !Moving_Busses.isEmpty()){
+            Bus* BussCheck;
+            GarageQueue.dequeue(BussCheck); 
+            BussCheck->setMovingTime(Time);   
+            Moving_Busses.enqueue(BussCheck);   
+        return Moving_Busses;
         }
     }
 
@@ -130,12 +129,10 @@ public:
         int time=0;
         
         // loop in company
-        while (time < 10) {
-            // 1) bus from station #0 to movingbusses list
-            EnqueueGarage(fileName);
-            MoveBus(GarageQueue,time);
-            // 2) from checkup to movingbusses list
-            // to be implemented
+        while (time> 160 && time<1320) //loop while time is between 4 ocklock and 10 ocklock
+        {
+            EnqueueGarage(fileName);//  bus from station #0 to movingbusses list
+            MoveBusFromGarage(time);//  from checkup to movingbusses list
             // 3) bus from movingbusses list to waiting in station
             
         // loop in stations
