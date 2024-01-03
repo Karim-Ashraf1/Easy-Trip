@@ -17,6 +17,7 @@ private:
     int WBmaintenanceT;
     int maintenanceJ; // for journeys
     int Journy; // number of journies taken by bus
+    int checkuptime; //keep track of how long the bus has been in checkup 
     // static int tDC; // total passengers transported by this bus
     // static int N; // total delivery trips
     // Time tBT; // total busy time
