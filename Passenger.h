@@ -21,30 +21,30 @@ private:
 
 public:
     // Constructors
-    Passenger() : id(0), startStation(0), endStation(0), OnTime(), OFFTime(), WaitingTime(), maxW(), type(" "), subtype("") {}
+    Passenger() : id(0), startStation(0), endStation(0), OnTime(00), OFFTime(00), WaitingTime(00), maxW(00), type(" "), subtype("") {}
 
-    Passenger(int idx, int startStationx, int endStationx, Time OnTimex, Time OFFTimex, Time waitingTime, Time MaxW, string &typex, string &subtypex)
+    Passenger(int idx, int startStationx, int endStationx, int OnTimex, int OFFTimex, int waitingTime, int MaxW, string &typex, string &subtypex)
         : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), type(typex), subtype(subtypex) {}
 
     // Getter method for each attribute
     int getId() const { return id; }
     int getStartStation() const { return startStation; }
     int getEndStation() const { return endStation; }
-    Time getOnTime() const { return OnTime; }
-    Time getOFFTime() const { return OFFTime; }
+    int getOnTime() const { return OnTime; }
+    int getOFFTime() const { return OFFTime; }
     string getType() const { return type; }
     string getsubtype() const { return subtype; }
     // Setter method for each attribute
     void setId(int idx) { id = idx; }
     void setStartStation(int startStationx) { startStation = startStationx; }
     void setEndStation(int endStationx) { endStation = endStationx; }
-    void setOnTime(Time getOnTimex) { OnTime = getOnTimex; }
-    void setOFFTime(Time getOFFTimex) { OFFTime = getOFFTimex; }
-    void setMaxWTime(Time maxw, const string &filename)
+    void setOnTime(int getOnTimex) { OnTime = getOnTimex; }
+    void setOFFTime(int getOFFTimex) { OFFTime = getOFFTimex; }
+    void setMaxWTime(int maxw, const string &filename)
     {
         maxw = GetFileLine(filename, 5, 'O');
     }
-    void setWaitingTime(Time wait) { ; }
+    void setWaitingTime(int wait) { ; }
     void setOnTimeFromString(const string &timeStr)
     {
         std::stringstream ss(timeStr);
