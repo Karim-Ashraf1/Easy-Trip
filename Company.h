@@ -130,11 +130,11 @@ public:
         int time=0;
         
         // loop in company
+        while (time < 10) {
             // 1) bus from station #0 to movingbusses list
             EnqueueGarage(fileName);
             MoveBus(GarageQueue,time);
             // 2) from checkup to movingbusses list
-
             // 3) bus from movingbusses list to waiting in station
         // loop in stations
             // 4) promotion from np to sp
@@ -145,7 +145,11 @@ public:
             // 8) check if the bus need checkup if yes will go to checkup if no step 9 will happen
             // 9) boarding passengers accourding to their piriority
             // 10) bus from waiting in station to movingbusses list
-            // 11) 
+            // 11) print output screen
+            // 12) increment time 
+
+        }
+
 
     }
 };
