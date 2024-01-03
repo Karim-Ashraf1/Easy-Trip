@@ -135,7 +135,9 @@ public:
             EnqueueGarage(fileName);
             MoveBus(GarageQueue,time);
             // 2) from checkup to movingbusses list
+            // to be implemented
             // 3) bus from movingbusses list to waiting in station
+            
         // loop in stations
             // 4) promotion from np to sp
             // 5) if there is leave event will remove the passenger
