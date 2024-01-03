@@ -16,11 +16,12 @@ private:
     int MBmaintenanceT; // for time
     int WBmaintenanceT;
     int maintenanceJ; // for journeys
-    int Journy; // number of journies taken by bus
-    // static int tDC; // total passengers transported by this bus
-    // static int N; // total delivery trips
-    // Time tBT; // total busy time
-    // Time TSim; // total Simulation ask zainab
+    int Journy;       // number of journies taken by bus
+    int MovingTime;
+    static int tDC; // total passengers transported by this bus
+    static int N;   // total delivery trips
+    Time tBT;       // total busy time
+    Time TSim;      // total Simulation
     char direction;
     LinkedList<Passenger *> Passengers;
 
@@ -57,12 +58,13 @@ public:
     void setCurrentLoad(int CurrentLoadx) { CurrentLoad = CurrentLoadx; }
     void setDirection(char directionx) { direction = directionx; }
     void setPassenger(LinkedList<Passenger *> Passenger) { Passengers = Passenger; }
-    void setCapacity(int cap) { Capacity=cap; }
-    // void setTotalPassenger(static int TotalPassenger) {tDC = TotalPassenger;}
-    // void setTDC(int x){tDC = x;}
-    // void setN(int n){N=n;}
-    // void setTBT(Time tbt){tBT=tbt;}
-    // void setTSim(Time tsim){TSim=tsim;}
+    void setCapacity(int cap) { Capacity = cap; }
+    void setTotalPassenger(static int TotalPassenger) { tDC = TotalPassenger; }
+    void setTDC(int x) { tDC = x; }
+    void setN(int n) { N = n; }
+    void setTBT(Time tbt) { tBT = tbt; }
+    void setTSim(Time tsim) { TSim = tsim; }
+    void setMovingTime(int timex) { MovingTime = timex; }
 
     // getters for attributes
     int getId() { return id; }
@@ -71,22 +73,23 @@ public:
     int getWheelBusMaintenanceTime() { return WBmaintenanceT; }
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() { return CurrentLoad; }
-    
     char getdirection() { return direction; }
     LinkedList<Passenger *> &GetPassengers() { return Passengers; }
     int getCapacity() { return Capacity; }
-    // int getN() { return N;}
-    // static int getTDC() {return tDC;}
-    // int getCapacity(){return Capacity;}
-    // Time getTBT(){return tBT;}
-    // Time getTsim(){return TSim;}
+    int getN() { return N; }
+    static int getTDC() { return tDC; }
+    int getCapacity() { return Capacity; }
+    Time getTBT() { return tBT; }
+    Time getTsim() { return TSim; }
+    int getMovingTime() { return MovingTime; }
 
-    // int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim){return ((tDC/(Bcapacity) *N)(tBT/TSim))*100;};
+    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim) { return ((tDC / (Bcapacity)*N)(tBT / TSim)) * 100; };
 
-    int getRemainingCapacity() {
+    int getRemainingCapacity()
+    {
         return getCapacity() - getCurrentLoad();
     }
-    
+
     // void moveBusForward(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
     // {
 
@@ -135,18 +138,17 @@ public:
     {
     }
 
-    
     void checkEndStationAndRemove(Station &station)
     {
         int BoardingTime;
-       int loop;
-       loop=60/BoardingTime;
-      for(int i=0;i<loop;i++) 
-       {
+        int loop;
+        loop = 60 / BoardingTime;
+        for (int i = 0; i < loop; i++)
+        {
             Node<Passenger *> *currentNode = Passengers.GetHead();
 
             // Go over the linked list
-             while (currentNode != nullptr)
+            while (currentNode != nullptr)
             {
                 // Create a pointer that points to the current passenger
                 Passenger *pntr = currentNode->getItem();
@@ -168,12 +170,12 @@ public:
                 // Move to the next node in the linked list
                 currentNode = currentNode->getNext();
             }
-       }
+        }
     }
 
     template <typename QueueType>
     void loadPassengersToBus(QueueType &waitingPassengers)
-    {   
+    {
         int maxPassengers = 45;
         int availableSeats = maxPassengers - getCurrentLoad();
 
@@ -197,9 +199,10 @@ public:
     {
         int BoardingTime;
         int loop;
-        loop=60/BoardingTime;
-        for(int i=0; i<loop; i++){
-             // Check the direction first
+        loop = 60 / BoardingTime;
+        for (int i = 0; i < loop; i++)
+        {
+            // Check the direction first
             if (getdirection() == 'F')
             {
                 // Forward direction
@@ -210,7 +213,7 @@ public:
                 }
                 else if (getType() == "WP")
                 {
-                    // Wheelchair bus                
+                    // Wheelchair bus
                     loadPassengersToBus(station.getWheelchairWaitingPassengersForwards());
                 }
             }
@@ -219,18 +222,15 @@ public:
                 // Backward direction
                 if (getType() == "NP")
                 {
-                    // Normal bus                
+                    // Normal bus
                     loadPassengersToBus(station.getNormalWaitingPassengersBackward());
                 }
                 else if (getType() == "WP")
                 {
-                    // Wheelchair bus                
+                    // Wheelchair bus
                     loadPassengersToBus(station.getWheelchairWaitingPassengersBackwards());
                 }
             }
         }
     }
-
-
-
 };
