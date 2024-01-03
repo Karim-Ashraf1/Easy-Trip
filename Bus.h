@@ -13,8 +13,7 @@ private:
     std::string type;
     int Capacity;
     int CurrentLoad;    //
-    int MBmaintenanceT; // for time
-    int WBmaintenanceT;
+    int maintenanceT; // for time
     int maintenanceJ; // for journeys
     int Journy;       // number of journies taken by bus
     int MovingTime;
@@ -43,8 +42,7 @@ public:
         id = 1;
         type = "MBus";
         CurrentLoad = 0;
-        MBmaintenanceT = 0;
-        WBmaintenanceT = 0;
+        maintenanceT = 0;
         maintenanceJ = 0;
         direction = 'F';
     }
@@ -52,8 +50,7 @@ public:
     // setter for current load
     void setId(int idx) { id = idx; }
     void setType(std::string typex) { type = typex; }
-    void setMixedBusMaintenanceTime(int MBMT) { MBmaintenanceT = MBMT; }
-    void setWheelBusMaintenanceTime(int WBMT) { WBmaintenanceT = WBMT; }
+    void setBusMaintenanceTime(int MBMT) { maintenanceT = MBMT; }
     void setMaintenanceJourney(int MJ) { maintenanceJ = MJ; }
     void setCurrentLoad(int CurrentLoadx) { CurrentLoad = CurrentLoadx; }
     void setDirection(char directionx) { direction = directionx; }
@@ -69,8 +66,7 @@ public:
     // getters for attributes
     int getId() { return id; }
     std::string getType() { return type; }
-    int getMixedBusMaintenanceTime() { return MBmaintenanceT; }
-    int getWheelBusMaintenanceTime() { return WBmaintenanceT; }
+    int getMixedBusMaintenanceTime() { return maintenanceT; }
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() { return CurrentLoad; }
     char getdirection() { return direction; }
