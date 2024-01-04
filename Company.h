@@ -94,19 +94,53 @@ private:
         }
         while(!checkUpMixedBus.isEmpty())//adds one minute to the checkuptime of all busses      
         {
-            Bus* bus;
-            Bus Bus;
-            checkUpMixedBus.dequeue(bus);
-            Bus=*bus;
-            Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+            LinkedQueue<Bus*>queue1; 
+            LinkedQueue<Bus*>queue2;
+            while(!checkUpMixedBus.isEmpty()){                             
+                Bus* bus;
+                Bus Bus;
+                checkUpMixedBus.dequeue(bus);
+                Bus=*bus;
+                Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+                bus=&Bus;
+                queue1.enqueue(bus);
+            }
+            while(!queue1.isEmpty()){
+                Bus* bus;
+                queue1.dequeue(bus);
+                queue2.enqueue(bus);
+            }
+            while(!queue2.isEmpty()){
+                Bus* bus;
+                queue2.dequeue(bus);
+                checkUpMixedBus.enqueue(bus);
+            }
+            
         }
         while(!checkUpWheeldBus.isEmpty())//adds one minute to the checkuptime of all busses      
         {
-            Bus* bus;
-            Bus Bus;
-            checkUpWheeldBus.dequeue(bus);
-            Bus=*bus;
-            Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+            LinkedQueue<Bus*>queue1; 
+            LinkedQueue<Bus*>queue2;
+            while(!checkUpWheeldBus.isEmpty()){                             
+                Bus* bus;
+                Bus Bus;
+                checkUpWheeldBus.dequeue(bus);
+                Bus=*bus;
+                Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+                bus=&Bus;
+                queue1.enqueue(bus);
+            }
+            while(!queue1.isEmpty()){
+                Bus* bus;
+                queue1.dequeue(bus);
+                queue2.enqueue(bus);
+            }
+            while(!queue2.isEmpty()){
+                Bus* bus;
+                queue2.dequeue(bus);
+                checkUpWheeldBus.enqueue(bus);
+            }
+            
         }
 
     }
