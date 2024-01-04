@@ -132,7 +132,7 @@ template <typename T>
 T PriorityQueue<T>::dequeue()
 {
     if (isEmpty())
-        throw std::logic_error("Cannot dequeue from an empty priority queue.");
+        return nullptr;
 
     Node<T>* nodeToDeletePtr = frontPtr;
     T frntEntry = frontPtr->getItem();
@@ -166,7 +166,7 @@ template <typename T>
 T PriorityQueue<T>::peek() const
 {
     if (isEmpty())
-        throw std::logic_error("Cannot peek at an empty priority queue.");
+        return nullptr;
 
     return frontPtr->getItem();
 }

@@ -78,10 +78,6 @@ bool LinkedQueue<T>::enqueue(const T &newEntry)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 /*Function: dequeue
 Removes the front of this queue. That is, removes the item that was added
 earliest.
@@ -93,8 +89,8 @@ Output: True if the operation is successful; otherwise false.
 template <typename T>
 T LinkedQueue<T>::dequeue()
 {
-    if (isEmpty())
-        throw std::logic_error("Cannot dequeue from an empty queue.");
+	if (isEmpty())
+		return nullptr;
 
     Node<T>* nodeToDeletePtr = frontPtr;
     T frntEntry = frontPtr->getItem();
@@ -103,8 +99,8 @@ T LinkedQueue<T>::dequeue()
     if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
         backPtr = nullptr;
 
-    // Free memory reserved for the dequeued node
-    delete nodeToDeletePtr;
+	// Free memory reserved for the dequeued node
+	delete nodeToDeletePtr;
 
     return frntEntry;
 }
@@ -124,7 +120,7 @@ template <typename T>
 T LinkedQueue<T>::peek() const
 {
     if (isEmpty())
-        throw std::logic_error("Cannot peek at an empty queue.");
+        return nullptr;
 
     return frontPtr->getItem();
 }
@@ -142,14 +138,14 @@ Input: None.
 Output: elements of the queue.
 */
 
-//template <typename T>
-//void PrintQueue() {
+// template <typename T>
+// void PrintQueue() {
 //	Node<T> *temp = new Node<T>;
 //	temp = frontPtr;
-  //  while (!isEmpty()) {
- //       cout << temp->getItem();
-	//	temp = temp->getNext();
-   // }
+//   while (!isEmpty()) {
+//       cout << temp->getItem();
+//	temp = temp->getNext();
+// }
 
 //}
 
