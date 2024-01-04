@@ -120,11 +120,11 @@ public:
         pntr = &psngr;
         FinishList.InsertEnd(pntr);
     }
-    void printFinishListAttributes() const
-    {
+   template <typename T>
+    void printFinishListAttributes() const {
         std::cout << "Passengers in FinishList at Station " << number << ":\n";
-
-        Node<Passenger *> *current = FinishList.Head;
+        
+        Node<T> *current = FinishList.GetHead();;
 
         while (current != nullptr)
         {
