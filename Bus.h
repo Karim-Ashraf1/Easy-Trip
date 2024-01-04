@@ -83,7 +83,8 @@ public:
     Time getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
 
-    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim) { return ((tDC / (Bcapacity)*N)(tBT / TSim)) * 100; };
+    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim) { 
+        return ((tDC / (Bcapacity)*N)(tBT / TSim)) * 100; };
 
     int getRemainingCapacity()
     {
