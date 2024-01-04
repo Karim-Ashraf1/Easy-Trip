@@ -144,4 +144,24 @@ public:
         }
         else { cout<<"No Busses is waiting"; }
     }
+
+    
+    void addBusses(Bus *bus) {
+        if (bus->getdirection() == 'F' && bus->getType()=="MBus")
+        {
+            NormalPassengersMovingBusesForward.enqueue(bus);
+        }
+        else if (bus->getdirection() == 'F' && bus->getType()=="WBus")
+        {
+           WheelchairPassengersMovingBusesForward.enqueue(bus);
+        }
+        if (bus->getdirection() == 'B' && bus->getType()=="MBus")
+        {
+            NormalPassengersMovingBusesBackward.enqueue(bus);
+        }
+        if (bus->getdirection() == 'B' && bus->getType()=="WBus")
+        {
+           WheelchairPassengersMovingBusesBackward.enqueue(bus);
+        }
+    }
 };
