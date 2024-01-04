@@ -5,112 +5,142 @@
 #include "Bus.h"
 #include "LinkedList.h"
 
-class Station {
+class Station
+{
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger> NormalWaitingPassengersForward;
-    PriorityQueue<Passenger> NormalWaitingPassengersBackward;
-    LinkedQueue<Passenger> WheelchairWaitingPassengersForwards;
-    LinkedQueue<Passenger> WheelchairWaitingPassengersBackwards;
-    LinkedQueue<Bus*> AvailableBuses;
-    LinkedList<Passenger*> FinishList;
-    LinkedQueue<Bus*> NormalPassengersMovingBusesForward;
-    LinkedQueue<Bus*> NormalPassengersMovingBusesBackward;
-    LinkedQueue<Bus*> WheelchairPassengersMovingBusesForward;
-    LinkedQueue<Bus*> WheelchairPassengersMovingBusesBackward;
-    LinkedQueue<Bus*> movingBusses;
+    PriorityQueue<Passenger> NormalWaitingPassFwd;
+    PriorityQueue<Passenger> NormalWaitingPassBwd;
+    PriorityQueue<Passenger> SpecialWaitingPassFwd;
+    PriorityQueue<Passenger> SpecialWaitingPassBwd;
+    LinkedQueue<Passenger> WChairWaitingPassFwd;
+    LinkedQueue<Passenger> WChairWaitingPassBwd;
+    LinkedQueue<Bus *> AvailableBuses;
+    LinkedList<Passenger *> FinishList;
+    LinkedQueue<Bus *> NormalPassengersMovingBusesForward;
+    LinkedQueue<Bus *> NormalPassengersMovingBusesBackward;
+    LinkedQueue<Bus *> WheelchairPassengersMovingBusesForward;
+    LinkedQueue<Bus *> WheelchairPassengersMovingBusesBackward;
+    LinkedQueue<Bus *> movingBusses;
 
 public:
-    void setNumber(int newNumber) {
+    void setNumber(int newNumber)
+    {
         number = newNumber;
     }
 
-    
-    int getNumber() const {
+    int getNumber() const
+    {
         return number;
     }
 
-    
-    void setTimeBetweenStations(int newTime) {
+    void setTimeBetweenStations(int newTime)
+    {
         timeBetweenStations = newTime;
     }
 
-    
-    int getTimeBetweenStations() const {
+    int getTimeBetweenStations() const
+    {
         return timeBetweenStations;
     }
 
-    
-    void setNormalWaitingPassengersForward(const PriorityQueue<Passenger>& passengers) {
-        NormalWaitingPassengersForward = passengers;
+    void setNormalWaitingPassengersForward(const PriorityQueue<Passenger> &passengers)
+    {
+        NormalWaitingPassFwd = passengers;
     }
-    void setNormalWaitingPassengersBackrward(const PriorityQueue<Passenger>& passengers) {
-        NormalWaitingPassengersBackward = passengers;
+    void setNormalWaitingPassengersBackrward(const PriorityQueue<Passenger> &passengers)
+    {
+        NormalWaitingPassBwd = passengers;
     }
-    void setWheelchairWaitingPassengersForwards(const LinkedQueue<Passenger>& passengers) {
-        WheelchairWaitingPassengersForwards = passengers;
+    void setSpecialWaitingPassengersForward(const PriorityQueue<Passenger> &passengers)
+    {
+        SpecialWaitingPassFwd = passengers;
     }
-    void setWheelchairWaitingPassengersBackwards(const LinkedQueue<Passenger>& passengers) {
-        WheelchairWaitingPassengersBackwards = passengers;
+    void setSpecialWaitingPassengersBackward(const PriorityQueue<Passenger> &passengers)
+    {
+        SpecialWaitingPassBwd = passengers;
     }
-     void setAvailableBusses(const LinkedQueue<Bus*>& busses) {
+    void setWheelchairWaitingPassengersForwards(const LinkedQueue<Passenger> &passengers)
+    {
+        WChairWaitingPassFwd = passengers;
+    }
+    void setWheelchairWaitingPassengersBackwards(const LinkedQueue<Passenger> &passengers)
+    {
+        WChairWaitingPassBwd = passengers;
+    }
+    void setAvailableBusses(const LinkedQueue<Bus *> &busses)
+    {
         AvailableBuses = busses;
     }
-    
-    PriorityQueue<Passenger>& getNormalWaitingPassengersForward() {
-        return NormalWaitingPassengersForward;
+
+    PriorityQueue<Passenger> &getNormalWaitingPassengersForward()
+    {
+        return NormalWaitingPassFwd;
     }
-    PriorityQueue<Passenger>& getNormalWaitingPassengersBackward() {
-        return NormalWaitingPassengersBackward;
+    PriorityQueue<Passenger> &getNormalWaitingPassengersBackward()
+    {
+        return NormalWaitingPassBwd;
     }
-    LinkedQueue<Passenger>& getWheelchairWaitingPassengersForwards() {
-        return WheelchairWaitingPassengersForwards;
+    PriorityQueue<Passenger> &getSpecialWaitingPassengersForward()
+    {
+        return SpecialWaitingPassFwd;
     }
-      LinkedQueue<Passenger>& getWheelchairWaitingPassengersBackwards() {
-        return WheelchairWaitingPassengersBackwards;
+    PriorityQueue<Passenger> &getSpecialWaitingPassengersBackward()
+    {
+        return SpecialWaitingPassBwd;
     }
-      LinkedQueue<Bus*>& getAvailableBusses() {
+    LinkedQueue<Passenger> &getWheelchairWaitingPassengersForwards()
+    {
+        return WChairWaitingPassFwd;
+    }
+    LinkedQueue<Passenger> &getWheelchairWaitingPassengersBackwards()
+    {
+        return WChairWaitingPassBwd;
+    }
+    LinkedQueue<Bus *> &getAvailableBusses()
+    {
         return AvailableBuses;
     }
-      LinkedList<Passenger*>& getFinishlist() {
+    LinkedList<Passenger *> &getFinishlist()
+    {
         return FinishList;
     }
-    Station(){
-        number=0;
-        timeBetweenStations=0;
-
+    Station()
+    {
+        number = 0;
+        timeBetweenStations = 0;
     }
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
 
-
-
-    
-
-    void AddToFinishList(Passenger psngr){
-        Passenger* pntr;
-        pntr= &psngr;
+    void AddToFinishList(Passenger psngr)
+    {
+        Passenger *pntr;
+        pntr = &psngr;
         FinishList.InsertEnd(pntr);
     }
-    void printFinishListAttributes() const {
+    void printFinishListAttributes() const
+    {
         std::cout << "Passengers in FinishList at Station " << number << ":\n";
 
-        Node<Passenger*>* current = FinishList.Head; 
+        Node<Passenger *> *current = FinishList.Head;
 
-        while (current != nullptr) {
-            Passenger* passenger = current->getItem();
- 
+        while (current != nullptr)
+        {
+            Passenger *passenger = current->getItem();
+
             // Print attributes of the passenger
             std::cout << "ID: " << passenger->getId() << "\n";
             std::cout << "Start Station: " << passenger->getStartStation() << "\n";
             std::cout << "End Station: " << passenger->getEndStation() << "\n";
-            std::cout << "On Time: " ;
+            std::cout << "On Time: ";
             passenger->getOnTime();
-            std::cout << "OFF Time: " ;
+            std::cout << "OFF Time: ";
             passenger->getOFFTime();
             std::cout << "Type: " << passenger->getType() << "\n";
-            if (passenger->getType()=="SP"){
+            if (passenger->getType() == "SP")
+            {
                 std::cout << "Subtype: " << passenger->getsubtype() << "\n";
             }
 
@@ -118,11 +148,11 @@ public:
             current = current->getNext();
         }
     }
-  
-    void moveBusFromMovingToWaiting() {
 
+    void moveBusFromMovingToWaiting()
+    {
     }
-    
+
     void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
     {
 
@@ -134,63 +164,87 @@ public:
         }
     }
 
-    void moveBusFromWatingToMoving() {
-        Bus* b;
-        if (!AvailableBuses.isEmpty()) {
+    void moveBusFromWatingToMoving()
+    {
+        Bus *b;
+        if (!AvailableBuses.isEmpty())
+        {
             AvailableBuses.peek(b);
             AvailableBuses.dequeue(b);
             b->boardPassengers(*this);
             movingBusses.enqueue(b);
         }
-        else { cout<<"No Busses is waiting"; }
+        else
+        {
+            cout << "No Busses is waiting";
+        }
     }
 
-
-    void addBusses(Bus *bus) {
-        if (bus->getdirection() == 'F' && bus->getType()=="MBus")
+    void addBusses(Bus *bus)
+    {
+        if (bus->getdirection() == 'F' && bus->getType() == "MBus")
         {
             NormalPassengersMovingBusesForward.enqueue(bus);
         }
-        else if (bus->getdirection() == 'F' && bus->getType()=="WBus")
+        else if (bus->getdirection() == 'F' && bus->getType() == "WBus")
         {
-           WheelchairPassengersMovingBusesForward.enqueue(bus);
+            WheelchairPassengersMovingBusesForward.enqueue(bus);
         }
-        if (bus->getdirection() == 'B' && bus->getType()=="MBus")
+        if (bus->getdirection() == 'B' && bus->getType() == "MBus")
         {
             NormalPassengersMovingBusesBackward.enqueue(bus);
         }
-        if (bus->getdirection() == 'B' && bus->getType()=="WBus")
+        if (bus->getdirection() == 'B' && bus->getType() == "WBus")
         {
-           WheelchairPassengersMovingBusesBackward.enqueue(bus);
+            WheelchairPassengersMovingBusesBackward.enqueue(bus);
         }
     }
     // checks passenger type and add it to the relevant qeue
-    void addPassenger (Passenger *psngr) {
-        string PassengerType=psngr->getType();
+    void addPassenger(Passenger *psngr)
+    {
+        string PassengerType = psngr->getType();
 
-        if (PassengerType=="NP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFNP.InsertEnd(psngr);
+        if (PassengerType == "NP")
+        {
+            if (psngr->getStartStation() < psngr->getEndStation())
+            {
+                NormalWaitingPassFwd.priorityEnqueue(*psngr);
             }
-            else{
-                waitingBNP.InsertEnd(psngr);
-            }
-        }
-        else if (PassengerType=="SP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFSP.priorityEnqueue(psngr);
-            }
-            else{
-                waitingBSP.priorityEnqueue(psngr);
+            else
+            {
+                NormalWaitingPassBwd.priorityEnqueue(*psngr);
             }
         }
-        if (PassengerType=="WP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFWP.enqueue(psngr);
+        else if (PassengerType == "SP")
+        {
+            if (psngr->getStartStation() < psngr->getEndStation())
+            {
+                SpecialWaitingPassFwd.priorityEnqueue(*psngr);
             }
-            else{
-                waitingBWP.enqueue(psngr);
+            else
+            {
+                SpecialWaitingPassBwd.priorityEnqueue(*psngr);
             }
+        }
+        if (PassengerType == "WP")
+        {
+            if (psngr->getStartStation() < psngr->getEndStation())
+            {
+                WChairWaitingPassFwd.enqueue(*psngr);
+            }
+            else
+            {
+                WChairWaitingPassBwd.enqueue(*psngr);
+            }
+        }
+    }
+
+    int promotePassenger(int time, int maxW)
+    {
+        int promotedPassCount = 0;
+        LinkedQueue<Passenger *> promotePassengers;
+        while (!promotePassengers.isEmpty())
+        {
         }
     }
 };

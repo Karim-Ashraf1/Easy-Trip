@@ -11,14 +11,6 @@ using namespace std;
 class Passenger
 {
 private:
-    LinkedList<Passenger*> waitingFNP;
-	LinkedList<Passenger*> waitingBNP;
-	PriorityQueue<Passenger*> waitingFSP;
-	PriorityQueue<Passenger*> waitingBSP;
-	LinkedQueue<Passenger*> waitingFWP;
-	LinkedQueue<Passenger*> waitingBWP;
-
-
     int id;
     int startStation;
     int endStation;
@@ -38,8 +30,8 @@ public:
     Passenger(int idx, int startStationx, int endStationx, Time OnTimex, Time OFFTimex, int waitingTime, int MaxW, int Arrival, int TotalTrip, string &typex, string &subtypex)
         : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), arrival(Arrival), totalTrip(TotalTrip), type(typex), subtype(subtypex) {}
 
-    Passenger( int id, int arrival,string type, int startStation, int endStation)
-        : type(type), arrival(arrival), startStation(startStation), endStation(endStation), id(id){}
+    Passenger(int id, int arrival, string type, int startStation, int endStation)
+        : type(type), arrival(arrival), startStation(startStation), endStation(endStation), id(id) {}
 
     // Getter method for each attribute
     int getId() const { return id; }
@@ -93,8 +85,4 @@ public:
     }
     void setType(const string &typex) { type = typex; }
     void setSubtype(const string &subtypex) { subtype = subtypex; }
-
-    
-    
-
 };
