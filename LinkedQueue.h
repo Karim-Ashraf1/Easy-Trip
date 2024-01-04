@@ -1,3 +1,4 @@
+
 #ifndef LINKED_QUEUE_
 #define LINKED_QUEUE_
 
@@ -16,7 +17,7 @@ public:
 	bool isEmpty() const;
 	bool enqueue(const T &newEntry);
 	bool dequeue(T &frntEntry);
-	bool peek(T &frntEntry) const;
+	Node<T>* peek() const;
 	~LinkedQueue();
 };
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -115,14 +116,12 @@ Output: The front of the queue.
 */
 
 template <typename T>
-bool LinkedQueue<T>::peek(T &frntEntry) const
+Node<T>* LinkedQueue<T>::peek() const
 {
-	if (isEmpty())
-		return false;
-
-	frntEntry = frontPtr->getItem();
-	return true;
+    return frontPtr;
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

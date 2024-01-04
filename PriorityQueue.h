@@ -18,7 +18,7 @@ public:
     bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
 	bool dequeue(T &frntEntry);
-	bool peek(T &frntEntry) const;
+	Node<T>* peek() const;
 	~PriorityQueue();
 };
 
@@ -160,14 +160,11 @@ Output: The front of the queue.
 */
 
 template <typename T>
-bool PriorityQueue<T>::peek(T &frntEntry) const
+Node<T>* PriorityQueue<T>::peek() const
 {
-	if (isEmpty())
-		return false;
-
-	frntEntry = frontPtr->getItem();
-	return true;
+    return frontPtr;
 }
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 

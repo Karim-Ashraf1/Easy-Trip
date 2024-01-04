@@ -27,7 +27,9 @@ public:
     @post  The front of the queue has been copied to FrontEntry param , and the
        queue is unchanged.
     @return  The front of the queue. */
-   virtual bool peek(T& FrontEntry) const = 0;
+   // In the QueueADT class
+   virtual Node<T>* peek() const = 0;
+
    
    /** Destroys this queue and frees its memory. */
    virtual ~QueueADT() { }
