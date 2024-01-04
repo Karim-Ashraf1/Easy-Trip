@@ -145,7 +145,7 @@ public:
         else { cout<<"No Busses is waiting"; }
     }
 
-    
+
     void addBusses(Bus *bus) {
         if (bus->getdirection() == 'F' && bus->getType()=="MBus")
         {
@@ -162,6 +162,35 @@ public:
         if (bus->getdirection() == 'B' && bus->getType()=="WBus")
         {
            WheelchairPassengersMovingBusesBackward.enqueue(bus);
+        }
+    }
+    // checks passenger type and add it to the relevant qeue
+    void addPassenger (Passenger *psngr) {
+        string PassengerType=psngr->getType();
+
+        if (PassengerType=="NP"){
+            if (psngr->getStartStation() < psngr->getEndStation()){
+                waitingFNP.InsertEnd(psngr);
+            }
+            else{
+                waitingBNP.InsertEnd(psngr);
+            }
+        }
+        else if (PassengerType=="SP"){
+            if (psngr->getStartStation() < psngr->getEndStation()){
+                waitingFSP.priorityEnqueue(psngr);
+            }
+            else{
+                waitingBSP.priorityEnqueue(psngr);
+            }
+        }
+        if (PassengerType=="WP"){
+            if (psngr->getStartStation() < psngr->getEndStation()){
+                waitingFWP.enqueue(psngr);
+            }
+            else{
+                waitingBWP.enqueue(psngr);
+            }
         }
     }
 };

@@ -95,34 +95,6 @@ public:
     void setSubtype(const string &subtypex) { subtype = subtypex; }
 
     
-    // checks passenger type and add it to the relevant qeue
-    void addPassenger (Passenger *psngr) {
-        string PassengerType=psngr->getType();
-
-        if (PassengerType=="NP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFNP.InsertEnd(psngr);
-            }
-            else{
-                waitingBNP.InsertEnd(psngr);
-            }
-        }
-        else if (PassengerType=="SP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFSP.priorityEnqueue(psngr);
-            }
-            else{
-                waitingBSP.priorityEnqueue(psngr);
-            }
-        }
-        if (PassengerType=="WP"){
-            if (psngr->getStartStation() < psngr->getEndStation()){
-                waitingFWP.enqueue(psngr);
-            }
-            else{
-                waitingBWP.enqueue(psngr);
-            }
-        }
-    }
+    
 
 };
