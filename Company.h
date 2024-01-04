@@ -15,8 +15,8 @@ using namespace std;
 
 class Company {
 private:
+    Station* StationsArray;
     LinkedQueue <Events*> EventsList;
-    LinkedList <Station*> StationsList;
     LinkedQueue<Bus*> GarageQueue;
     LinkedQueue<Bus*>Moving_Busses;
     LinkedQueue<Bus*>checkUpMixedBus;
@@ -46,7 +46,7 @@ private:
                 Bus* BussCheck;
                 GarageQueue.dequeue(BussCheck); 
                 BussCheck->setMovingTime(Time);   
-                Moving_Busses.enqueue(BussCheck);
+                StationsArray[0].addBusses(BussCheck);
             }
         }
 
@@ -71,7 +71,7 @@ private:
             busCheckupQueue.dequeue(bus);
             bus->setChekup(false);
             bus->setDirection('F');
-            Moving_Busses.enqueue(bus);
+            StationsArray[0].addBusses(bus);
         }
     }
 
@@ -100,6 +100,7 @@ private:
             BusQueue.enqueue(WheelChairBus);
         }
     }
+
     int EventExcute(const string &fileName){
         
         Arrive arival;
