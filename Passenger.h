@@ -12,39 +12,45 @@ private:
     int id;
     int startStation;
     int endStation;
-    int OnTime;
-    int OFFTime;
+    Time OnTime;
+    Time OFFTime;
     int WaitingTime;
     int maxW;
+    int arrival;
+    int totalTrip;
     string type;
     string subtype;
 
 public:
     // Constructors
-    Passenger() : id(0), startStation(0), endStation(0), OnTime(00), OFFTime(00), WaitingTime(00), maxW(00), type(" "), subtype("") {}
+    Passenger() : id(0), startStation(0), endStation(0), OnTime(), OFFTime(), WaitingTime(00), maxW(00), arrival(00), totalTrip(00), type(" "), subtype("") {}
 
-    Passenger(int idx, int startStationx, int endStationx, int OnTimex, int OFFTimex, int waitingTime, int MaxW, string &typex, string &subtypex)
-        : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), type(typex), subtype(subtypex) {}
+    Passenger(int idx, int startStationx, int endStationx, Time OnTimex, Time OFFTimex, int waitingTime, int MaxW, int Arrival, int TotalTrip, string &typex, string &subtypex)
+        : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), arrival(Arrival), totalTrip(TotalTrip), type(typex), subtype(subtypex) {}
 
     // Getter method for each attribute
     int getId() const { return id; }
     int getStartStation() const { return startStation; }
     int getEndStation() const { return endStation; }
-    int getOnTime() const { return OnTime; }
-    int getOFFTime() const { return OFFTime; }
+    Time getOnTime() const { return OnTime; }
+    Time getOFFTime() const { return OFFTime; }
+    int getMaxWait() const { return maxW; }
+    int getWaitingTime() const { return OnTime.getMinutes() - arrival; }
+    int getArrival() const { return arrival; }
+    int getTotalTrip() const { return OFFTime.getMinutes() - OnTime.getMinutes(); }
     string getType() const { return type; }
     string getsubtype() const { return subtype; }
     // Setter method for each attribute
     void setId(int idx) { id = idx; }
     void setStartStation(int startStationx) { startStation = startStationx; }
     void setEndStation(int endStationx) { endStation = endStationx; }
-    void setOnTime(int getOnTimex) { OnTime = getOnTimex; }
-    void setOFFTime(int getOFFTimex) { OFFTime = getOFFTimex; }
+    void setOnTime(Time getOnTimex) { OnTime = getOnTimex; }
+    void setOFFTime(Time getOFFTimex) { OFFTime = getOFFTimex; }
     void setMaxWTime(int maxw, const string &filename)
     {
-        maxw = GetFileLine(filename, 5, 'O');
+        maxw = *(ConvertToInt(GetFileLine(filename, 5, 'O')));
+        maxW = maxw;
     }
-    void setWaitingTime(int wait) { ; }
     void setOnTimeFromString(const string &timeStr)
     {
         std::stringstream ss(timeStr);
