@@ -130,7 +130,8 @@ public:
 
         if (waitingStation != nullptr)
         {
-            currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
+            
+            // currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
         }
     }
 
