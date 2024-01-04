@@ -1,29 +1,26 @@
 #pragma once
-#include "Time.h"
-#include "Passenger.h"
-#include "PriorityQueue.h"
-#include "Events.h"
-#include <String>
-using namespace std;
+#include "Company.h"
 
 class Arrive : public Events
 {
     private:
-        Passenger Psngr;// Creating a Passenger instance
         PriorityQueue<Passenger *> PassWait; // list of pointers to passengers
+        string PassenegerType;
+        int startStation;
+        int endStation;
 
     public:
+     Arrive(int Time, int Id, string PassenegerType, int startStation, int endStation)
+        :Events(Time, Id),
+        PassenegerType(PassenegerType), startStation(startStation - 1), endStation(endStation - 1) {}
         /// overloaded Excute() in Events class
-        void Execute(string* FileArray)
+        void Execute(Station *stationsArray)
         {
           /// Takes Attrubiutes of Arrive and sets the passenger instance by them
-          Psngr.setOnTime(*FileArray);         
-          Psngr.setType(*(FileArray+1));            
-          Psngr.setId(*(ConvertToInt(FileArray+3)));
-          Psngr.setStartStation(*(ConvertToInt(FileArray+5)));
-          Psngr.setEndStation(*(ConvertToInt(FileArray+5)));
+          Passenger* Psngr=new Passenger(Id,Time,PassenegerType,startStation, endStation);
+          
+          stationsArray[startStation]
 
-          Passenger *psgr_ptr = &Psngr;
-          PassWait.enqueue(psgr_ptr); /// adding The passenger to linked list
+           /// adding The passenger to linked list
         }
 };

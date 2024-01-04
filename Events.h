@@ -1,13 +1,21 @@
 #include<iostream>
 using namespace std;
+#include "Station.h"
 
 class Events{
-private:
-    
+protected:
+    int Time;
+    int Id;    
 public:
-    virtual void Execute(string* FileArray) =0 {
+    Events(int Id,int Time) {
+        this-> Id = Id;
+        this-> Time = Time;
+    }
+
+    virtual void Execute(Station* StationsArray) =0 {
         //Pure virtual function to be executed by inherited classes
     }
+    int getTime() { return Time; }
 };
 
 
