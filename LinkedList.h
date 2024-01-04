@@ -3,54 +3,43 @@
 
 #include "Node.h"
 #include <iostream>
+using namespace std;
 
 template <typename T>
 class LinkedList
 {
 private:
-    // Node<T> *Head; // Pointer to the head of the list
-    //  You can add tail pointer too (depending on your problem)
+    Node<T> *Head; // Pointer to the head of the list
+    // You can add tail pointer too (depending on your problem)
 public:
-    Node<T> *Head;
     LinkedList()
     {
         Head = nullptr;
     }
-    // getHead() const
-    //{
-    // return Head;
-    //}
+
     // List is being desturcted ==> delete all items in the list
     ~LinkedList()
     {
         DeleteAll();
     }
 
-    /*
-     * Function: PrintList.
-     * prints the values of all nodes in a linked list.
-     */
+    // prints the values of all nodes in a linked list.
+
     void PrintList() const
     {
-        std::cout << "\nprinting list contents:\n\n";
+        cout << "\nprinting list contents:\n\n";
         Node<T> *p = Head;
 
         while (p)
         {
-            std::cout << "[ " << p->getItem() << " ]";
-            std::cout << "--->";
+            cout << "[ " << p->getItem() << " ]";
+            cout << "--->";
             p = p->getNext();
         }
-        std::cout << "*\n";
+        cout << "*\n";
     }
 
-    /*
-     * Function: InsertBeg.
-     * Creates a new node and adds it to the beginning of a linked list.
-     *
-     * Parameters:
-     *	- data : The value to be stored in the new node.
-     */
+    // Creates a new node and adds it to the beginning of a linked list.
     void InsertBeg(const T &data)
     {
         Node<T> *R = new Node<T>(data);
@@ -58,10 +47,7 @@ public:
         Head = R;
     }
 
-    /*
-     * Function: DeleteAll.
-     * Deletes all nodes of the list.
-     */
+    // Deletes all nodes of the list.
     void DeleteAll()
     {
         Node<T> *P = Head;
@@ -72,40 +58,19 @@ public:
             Head = P;
         }
     }
-    Node<T> *GetHead() const
-    {
-        return Head;
-    }
-    ////////////////     Requirements   ///////////////////
-    //
-    // Implement the following member functions
 
-    //[1]InsertEnd
+    // [1]InsertEnd
     // inserts a new node at end if the list
-
-    void InsertEnd(const T &data)
+    void InsertEnd(T value)
     {
-        Node<T> *newnode = new Node<T>;
-        newnode->setNext(nullptr);
-        newnode->setItem(data);
-
-        if (Head == nullptr)
+        Node<T> *temp = Head;
+        Node<T> *next = new Node<T>(value);
+        while (temp->getNext() != nullptr)
         {
-            // If the list is empty, set the new node as the head
-            Head = newnode;
-            return;
+            temp = temp->getNext();
         }
-
-        Node<T> *p = Head;
-
-        // Traverse the list to find the last node
-        while (p->getNext())
-        {
-            p = p->getNext();
-        }
-
-        // Set the next of the last node to the new node
-        p->setNext(newnode);
+        temp->setNext(next);
+        next->setNext(nullptr);
     }
 
     //[2]Find
@@ -113,92 +78,72 @@ public:
 
     bool Find(T key)
     {
-        Node<T> *temp = new Node<T>;
-        temp = Head;
-        while (temp->getNext() != nullptr)
+        Node<T> *curr_node = Head;
+        while (curr_node != nullptr)
         {
-            if (temp->getItem() == key)
-            {
+            if (curr_node->getItem() == key)
                 return true;
-            }
-            temp = temp->setNext();
+            else
+                return false;
+            curr_node = curr_node->getNext();
         }
-        return false;
     }
-    // function to find amd return a node from linked list.
-    // Passenger<T> *FindPassenger(const T &key)
-    //{
-    //	Node<T> *current = head;
-    //	while (current->getNext() != nullptr)
-    //	{
-    //		if (*(current->data) == key)
-    //		{
-    //			return current;
-    //		}
-    //		current = current->next;
-    //	}
-    //	return nullptr;
-    //}
-
     //[3]CountOccurance
-    // returns how many times a certain value appeared in the list
-
     int CountOccurance(T value)
     {
+        Node<T> *temp = Head;
         int count = 0;
-        Node<T> *counter = new Node<T>;
-        counter = Head;
-        while (counter->getNext() != nullptr)
+        while (temp != NULL)
         {
-            if (counter->getItem() == value)
+            if (temp->getItem() == value)
             {
                 count++;
             }
+            temp = temp->getNext();
         }
         return count;
     }
-
     //[4] DeleteFirst
     // Deletes the first node in the list
 
-    void RecPrint(Node<T> *ptr)
+    void DeleteFirst()
     {
-        ptr = Head;
-        if (ptr == nullptr)
-        {
-            std::cout << "list is empty";
-        }
-        while (ptr->getNext() != nullptr)
-        {
-            std::cout << ptr;
-        }
+        Node<T> *temp = new Node<T>;
+        temp = Head;
+        Head = Head->getNext();
+        delete temp;
     }
 
     //[5] DeleteLast
     // Deletes the last node in the list
-
-    void DeleteFirst()
-    {
-        Node<T> *first = new Node<T>;
-        first = Head->getNext();
-        delete Head;
-    }
-
-    //[6] DeleteNode
-    // deletes the first node with the given value (if found) and returns true
-    // if not found, returns false
-    // Note: List is not sorted
-
     void DeleteLast()
     {
-        Node<T> *last = new Node<T>;
-        while (last->getNext() != nullptr)
+        Node<T> *temp = Head;
+        Node<T> *next = new Node<T>;
+        while (temp->getNext()->getNext() != nullptr)
         {
-            if (last->getNext() == nullptr)
+            temp = temp->getNext();
+        }
+        next = temp->getNext();
+        temp->setNext(nullptr);
+        delete next;
+    }
+
+    bool DeleteNode(T value)
+    {
+        Node<T> *temp = Head;
+        Node<T> *next = new Node<T>(value);
+        while (temp != nullptr)
+        {
+            if (temp->getNext()->getItem() == value)
             {
-                delete last;
+                next = (temp->getNext());
+                temp->setNext(next->getNext());
+                delete next;
+                return true;
             }
         }
+        return false;
     }
 
     //[7] DeleteNodes
@@ -206,77 +151,57 @@ public:
     // if not found, returns false
     // Note: List is not sorted
 
-    bool DeleteNode(T value)
+    bool DeleteNodes(T value)
     {
-        Node<T> *temp = new Node<T>;
-        temp = Head;
+        Node<T> *temp = Head;
+        bool check = false;
+
         while (temp->getNext() != nullptr)
         {
-            if (temp->item == value)
+            if (temp->getItem() == value)
             {
-                delete temp->getItem();
-                return true;
+                Node<T> *Delete = new Node<T>(value);
+                Delete = temp;
+                Head = Head->getNext();
+                temp = Head;
+                delete Delete;
+                check = true;
             }
-            temp = temp->setNext();
-        }
-        return false;
-    }
-
-    //[8]Merge
-    // Merges the current list to another list L by making the last Node in the current list
-    // point to the first Node in list L
-
-    void Merge(LinkedList<T> L)
-    {
-        Node<T> *merge = new Node<T>;
-        merge = Head;
-        while (merge->getNext() != nullptr)
-        {
-            if (merge->getItem() == nullptr)
+            else if (temp->getNext()->getItem() == value)
             {
+                Node<T> *Delete = new Node<T>(value);
+                Delete = temp->getNext();
+                temp->setNext(temp->getNext()->getNext());
+                delete Delete;
+                check = true;
             }
-        }
-    }
-
-    //[9] Reverse
-    // Reverses the linked list (without allocating any new Nodes)
-
-    // void Reverse()
-    //{
-    //
-    //		Node *reverseLinkedList(Node * Head)
-    //	{
-    //			Node *prev = nullptr;
-    //			Node *current = Head;
-    //			Node *nextNode = nullptr;
-    //
-    //			while (current != nullptr)
-    //			{
-    //				nextNode = current->next; // Save the next node
-    //				current->next = prev;	  // Reverse the link
-    //
-    // Move to the next pair of nodes
-    //				prev = current;
-    //				current = nextNode;
-    //			}
-
-    // 'prev' now points to the new head of the reversed list
-    // return prev;
-    //}
-    //}
-
-    T FindByIndex(int index)
-    {
-        Node *temp = Head;
-        for (int i = 0; i < index; i++)
-        {
-            if (temp == NULL)
-                return -1;
             else
-                temp = temp->getItem();
+            {
+                temp = temp->getNext();
+            }
         }
-        return temp;
-    };
+        return check;
+    }
+
+    //[8] Reverse
+    // Reverses the linked list (without allocating any new Nodes)
+    void Reverse()
+    {
+        Node<T> *current = Head;
+        Node<T> *prev = nullptr, *next = nullptr;
+
+        while (current != nullptr)
+        {
+            // Store next
+            next = current->getNext();
+            // Reverse current node's pointer
+            current->setNext(prev);
+            // Move pointers one position ahead.
+            prev = current;
+            current = next;
+        }
+        Head = prev;
+    }
 };
 
 #endif
