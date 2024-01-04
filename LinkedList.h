@@ -16,7 +16,9 @@ public:
     {
         Head = nullptr;
     }
-
+    Node GetHead(){
+        return Head;
+    }
     // List is being desturcted ==> delete all items in the list
     ~LinkedList()
     {

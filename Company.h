@@ -61,18 +61,54 @@ private:
             }
             
         }
-
-    void removeBusFromCheckup(int time,LinkedQueue<Bus*>& busCheckupQueue,int checkUpTime){
-        Bus* peekBus;
-        busCheckupQueue.peek(peekBus);
-        while(!busCheckupQueue.isEmpty()&&time - peekBus->getBusMaintenanceTime()==checkUpTime)//checks if the bus to dequed finished its checkup
+    // a function to remove all busses that are done with their checkup and add one minute to the busses that aren't done
+    void removeBusFromCheckup(string Filename){
+        int* time;
+        int wpcheckuptime,npcheckuptime;
+        
+        time=ConvertToInt((GetFileLine(Filename,4,'O')));
+        wpcheckuptime=*(time+1);
+        npcheckuptime=*(time+2);
+        Bus* peekBuswppntr; 
+        Bus* peekBusnppntr;
+        Bus peekbusnp,peekbuswp;        
+        checkUpMixedBus.peek(peekBusnppntr);
+        checkUpWheeldBus.peek(peekBuswppntr);
+        peekbusnp=*peekBusnppntr;
+        peekbuswp=*peekBuswppntr;
+        while(!checkUpMixedBus.isEmpty()&&(peekbusnp.getBusMaintenanceTime()==npcheckuptime))//checks if the bus to dequed finished its checkup       
         {
             Bus* bus;
-            busCheckupQueue.dequeue(bus);
+            checkUpMixedBus.dequeue(bus);
             bus->setChekup(false);
             bus->setDirection('F');
             StationsArray[0].addBusses(bus);
         }
+        while(!checkUpWheeldBus.isEmpty()&&(peekbuswp.getBusMaintenanceTime()==npcheckuptime))//checks if the bus to dequed finished its checkup       
+        {
+            Bus* bus;
+            checkUpMixedBus.dequeue(bus);
+            bus->setChekup(false);
+            bus->setDirection('F');
+            StationsArray[0].addBusses(bus);
+        }
+        while(!checkUpMixedBus.isEmpty())//adds one minute to the checkuptime of all busses      
+        {
+            Bus* bus;
+            Bus Bus;
+            checkUpMixedBus.dequeue(bus);
+            Bus=*bus;
+            Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+        }
+        while(!checkUpWheeldBus.isEmpty())//adds one minute to the checkuptime of all busses      
+        {
+            Bus* bus;
+            Bus Bus;
+            checkUpWheeldBus.dequeue(bus);
+            Bus=*bus;
+            Bus.setBusMaintenanceTime(Bus.getBusMaintenanceTime()+1);
+        }
+
     }
 
     // function to Enque busess to a queue according to their number from the inout file
