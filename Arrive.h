@@ -1,6 +1,7 @@
 #pragma once
 #include "Company.h"
 
+
 class Arrive : public Events
 {
     private:
@@ -19,8 +20,7 @@ class Arrive : public Events
           /// Takes Attrubiutes of Arrive and sets the passenger instance by them
           Passenger* Psngr=new Passenger(Id,Time,PassenegerType,startStation, endStation);
           
-          stationsArray[startStation]
-
+          stationsArray[startStation].addPassenger(Psngr);
            /// adding The passenger to linked list
         }
 };
