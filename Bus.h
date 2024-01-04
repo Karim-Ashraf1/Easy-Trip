@@ -19,9 +19,10 @@ private:
     int MovingTime;
     static int tDC; // total passengers transported by this bus
     static int N;   // total delivery trips
+    bool Checkup; // to determine whether the bus is currently in maintenance
     Time tBT;       // total busy time
     Time TSim;      // total Simulation
-    char direction;
+    char direction; 
     LinkedList<Passenger *> Passengers;
 
 public:
@@ -62,11 +63,14 @@ public:
     void setTBT(Time tbt) { tBT = tbt; }
     void setTSim(Time tsim) { TSim = tsim; }
     void setMovingTime(int timex) { MovingTime = timex; }
+    void setChekup(bool IsCheckup) { Checkup = IsCheckup; }
+
 
     // getters for attributes
     int getId() { return id; }
     std::string getType() { return type; }
-    int getMixedBusMaintenanceTime() { return maintenanceT; }
+    int getBusMaintenanceTime() { return maintenanceT; }
+    bool getIsCheckup() { return Checkup; }
     int getMaintenanceJourneys() { return maintenanceJ; }
     int getCurrentLoad() { return CurrentLoad; }
     char getdirection() { return direction; }
