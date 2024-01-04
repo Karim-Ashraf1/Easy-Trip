@@ -208,33 +208,33 @@ public:
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                NormalWaitingPassFwd.InsertEnd(psngr);
+                NormalWaitingPassFwd.priorityEnqueue(*psngr);
             }
             else
             {
-                NormalWaitingPassBwd.InsertEnd(psngr);
+                NormalWaitingPassBwd.priorityEnqueue(*psngr);
             }
         }
         else if (PassengerType == "SP")
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                SpecialWaitingPassFwd.priorityEnqueue(psngr);
+                SpecialWaitingPassFwd.priorityEnqueue(*psngr);
             }
             else
             {
-                SpecialWaitingPassBwd.priorityEnqueue(psngr);
+                SpecialWaitingPassBwd.priorityEnqueue(*psngr);
             }
         }
         if (PassengerType == "WP")
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                WChairWaitingPassFwd.enqueue(psngr);
+                WChairWaitingPassFwd.enqueue(*psngr);
             }
             else
             {
-                WChairWaitingPassBwd.enqueue(psngr);
+                WChairWaitingPassBwd.enqueue(*psngr);
             }
         }
     }
