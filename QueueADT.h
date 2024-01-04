@@ -20,7 +20,9 @@ public:
     @post  If the operation was successful, the front of the queue
        would be copied to FrontEntry parameter and removed from the queue.
     @return  True if the removal is successful or false if not. */
-   virtual bool dequeue(T& FrontEntry) = 0;
+   // In the class definition
+   Node<T>* dequeue(T& frntEntry);
+
    
    /** Copies the front item of the queue to the passed parameter without removing it from queue
     @pre  The queue is not empty.

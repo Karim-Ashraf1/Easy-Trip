@@ -17,7 +17,8 @@ public:
 	 bool enqueue(const T& newEntry) override;
     bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
-	bool dequeue(T &frntEntry);
+	Node<T>* dequeue(T& frntEntry);
+
 	Node<T>* peek() const;
 	~PriorityQueue();
 };
@@ -128,23 +129,25 @@ int PriorityQueue<T>::getPriority(const T &entry) const
 
 
 template <typename T>
-bool PriorityQueue<T>::dequeue(T &frntEntry)
+Node<T>* PriorityQueue<T>::dequeue(T& frntEntry)
 {
-	if (isEmpty())
-		return false;
+    if (isEmpty())
+        return nullptr;
 
-	Node<T> *nodeToDeletePtr = frontPtr;
-	frntEntry = frontPtr->getItem();
-	frontPtr = frontPtr->getNext();
-	// Queue is not empty; remove front
-	if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
-		backPtr = nullptr;
+    Node<T>* nodeToDeletePtr = frontPtr;
+    frntEntry = frontPtr->getItem();
+    frontPtr = frontPtr->getNext();
 
-	// Free memory reserved for the dequeued node
-	delete nodeToDeletePtr;
+    // Queue is not empty; remove front
+    if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
+        backPtr = nullptr;
 
-	return true;
+    // Free memory reserved for the dequeued node
+    delete nodeToDeletePtr;
+
+    return frontPtr;
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
