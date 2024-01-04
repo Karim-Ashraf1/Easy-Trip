@@ -11,13 +11,6 @@ using namespace std;
 class Passenger
 {
 private:
-    LinkedList<Passenger *> waitingFNP;
-    LinkedList<Passenger *> waitingBNP;
-    PriorityQueue<Passenger *> waitingFSP;
-    PriorityQueue<Passenger *> waitingBSP;
-    LinkedQueue<Passenger *> waitingFWP;
-    LinkedQueue<Passenger *> waitingBWP;
-
     int id;
     int startStation;
     int endStation;
