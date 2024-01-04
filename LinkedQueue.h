@@ -16,10 +16,12 @@ public:
 	LinkedQueue();
 	bool isEmpty() const;
 	bool enqueue(const T &newEntry);
-	// In the class definition
-	Node<T>* dequeue(T &frntEntry);
+	T dequeue();
 
-	Node<T>* peek() const;
+
+
+	T peek() const;
+
 	~LinkedQueue();
 };
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -89,13 +91,13 @@ Output: True if the operation is successful; otherwise false.
 */
 
 template <typename T>
-Node<T>* LinkedQueue<T>::dequeue(T &frntEntry)
+T LinkedQueue<T>::dequeue()
 {
     if (isEmpty())
-        return nullptr;
+        throw std::logic_error("Cannot dequeue from an empty queue.");
 
     Node<T>* nodeToDeletePtr = frontPtr;
-    frntEntry = frontPtr->getItem();
+    T frntEntry = frontPtr->getItem();
     frontPtr = frontPtr->getNext();
     // Queue is not empty; remove front
     if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
@@ -104,8 +106,9 @@ Node<T>* LinkedQueue<T>::dequeue(T &frntEntry)
     // Free memory reserved for the dequeued node
     delete nodeToDeletePtr;
 
-    return frontPtr;
+    return frntEntry;
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -118,10 +121,14 @@ Output: The front of the queue.
 */
 
 template <typename T>
-Node<T>* LinkedQueue<T>::peek() const
+T LinkedQueue<T>::peek() const
 {
-    return frontPtr;
+    if (isEmpty())
+        throw std::logic_error("Cannot peek at an empty queue.");
+
+    return frontPtr->getItem();
 }
+
 
 
 

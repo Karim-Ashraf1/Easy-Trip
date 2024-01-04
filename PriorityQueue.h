@@ -17,9 +17,9 @@ public:
 	 bool enqueue(const T& newEntry) override;
     bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
-	Node<T>* dequeue(T& frntEntry);
+	T dequeue();
+	T peek() const;
 
-	Node<T>* peek() const;
 	~PriorityQueue();
 };
 
@@ -129,15 +129,14 @@ int PriorityQueue<T>::getPriority(const T &entry) const
 
 
 template <typename T>
-Node<T>* PriorityQueue<T>::dequeue(T& frntEntry)
+T PriorityQueue<T>::dequeue()
 {
     if (isEmpty())
-        return nullptr;
+        throw std::logic_error("Cannot dequeue from an empty priority queue.");
 
     Node<T>* nodeToDeletePtr = frontPtr;
-    frntEntry = frontPtr->getItem();
+    T frntEntry = frontPtr->getItem();
     frontPtr = frontPtr->getNext();
-
     // Queue is not empty; remove front
     if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
         backPtr = nullptr;
@@ -145,8 +144,9 @@ Node<T>* PriorityQueue<T>::dequeue(T& frntEntry)
     // Free memory reserved for the dequeued node
     delete nodeToDeletePtr;
 
-    return frontPtr;
+    return frntEntry;
 }
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -163,10 +163,14 @@ Output: The front of the queue.
 */
 
 template <typename T>
-Node<T>* PriorityQueue<T>::peek() const
+T PriorityQueue<T>::peek() const
 {
-    return frontPtr;
+    if (isEmpty())
+        throw std::logic_error("Cannot peek at an empty priority queue.");
+
+    return frontPtr->getItem();
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

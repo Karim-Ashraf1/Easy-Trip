@@ -20,8 +20,8 @@ public:
     @post  If the operation was successful, the front of the queue
        would be copied to FrontEntry parameter and removed from the queue.
     @return  True if the removal is successful or false if not. */
-   // In the class definition
-   Node<T>* dequeue(T& frntEntry);
+   virtual T dequeue() = 0;
+
 
    
    /** Copies the front item of the queue to the passed parameter without removing it from queue
@@ -29,8 +29,9 @@ public:
     @post  The front of the queue has been copied to FrontEntry param , and the
        queue is unchanged.
     @return  The front of the queue. */
-   // In the QueueADT class
-   virtual Node<T>* peek() const = 0;
+
+   virtual T peek() const;
+
 
    
    /** Destroys this queue and frees its memory. */
