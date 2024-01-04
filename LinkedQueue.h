@@ -17,9 +17,9 @@ public:
 	bool isEmpty() const;
 	bool enqueue(const T &newEntry);
 	// In the class definition
-	Node<T>* dequeue(T &frntEntry);
+	Node<T> *dequeue();
 
-	Node<T>* peek() const;
+	Node<T> *peek() const;
 	~LinkedQueue();
 };
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -76,10 +76,6 @@ bool LinkedQueue<T>::enqueue(const T &newEntry)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 /*Function: dequeue
 Removes the front of this queue. That is, removes the item that was added
 earliest.
@@ -89,22 +85,22 @@ Output: True if the operation is successful; otherwise false.
 */
 
 template <typename T>
-Node<T>* LinkedQueue<T>::dequeue(T &frntEntry)
+Node<T> *LinkedQueue<T>::dequeue()
 {
-    if (isEmpty())
-        return nullptr;
+	if (isEmpty())
+		return nullptr;
 
-    Node<T>* nodeToDeletePtr = frontPtr;
-    frntEntry = frontPtr->getItem();
-    frontPtr = frontPtr->getNext();
-    // Queue is not empty; remove front
-    if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
-        backPtr = nullptr;
+	Node<T> *nodeToDeletePtr = frontPtr;
+	frntEntry = frontPtr->getItem();
+	frontPtr = frontPtr->getNext();
+	// Queue is not empty; remove front
+	if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
+		backPtr = nullptr;
 
-    // Free memory reserved for the dequeued node
-    delete nodeToDeletePtr;
+	// Free memory reserved for the dequeued node
+	delete nodeToDeletePtr;
 
-    return frontPtr;
+	return frontPtr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -118,12 +114,10 @@ Output: The front of the queue.
 */
 
 template <typename T>
-Node<T>* LinkedQueue<T>::peek() const
+Node<T> *LinkedQueue<T>::peek() const
 {
-    return frontPtr;
+	return frontPtr;
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -135,14 +129,14 @@ Input: None.
 Output: elements of the queue.
 */
 
-//template <typename T>
-//void PrintQueue() {
+// template <typename T>
+// void PrintQueue() {
 //	Node<T> *temp = new Node<T>;
 //	temp = frontPtr;
-  //  while (!isEmpty()) {
- //       cout << temp->getItem();
-	//	temp = temp->getNext();
-   // }
+//   while (!isEmpty()) {
+//       cout << temp->getItem();
+//	temp = temp->getNext();
+// }
 
 //}
 
