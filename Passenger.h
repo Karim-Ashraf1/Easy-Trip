@@ -28,7 +28,7 @@ public:
     Passenger(int idx, int startStationx, int endStationx, Time OnTimex, Time OFFTimex, int waitingTime, int MaxW, int Arrival, int TotalTrip, string &typex, string &subtypex)
         : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), arrival(Arrival), totalTrip(TotalTrip), type(typex), subtype(subtypex) {}
 
-    Passenger(string type, int id, int arrival, int startStation, int endStation)
+    Passenger( int id, int arrival,string type, int startStation, int endStation)
         : type(type), arrival(arrival), startStation(startStation), endStation(endStation), id(id){}
 
     // Getter method for each attribute
