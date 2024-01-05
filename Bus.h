@@ -56,7 +56,7 @@ public:
     }
 
     // setter for current load
-    void setCurrentState(int CurrentStation){this->CurrentStation=CurrentStation;}
+    void setCurrentStation(int CurrentStation){this->CurrentStation=CurrentStation;}
     void setJourney(int Journeys) { Journy = Journeys; }
     void setId(int idx) { id = idx; }
     void setType(std::string typex) { type = typex; }
@@ -76,6 +76,7 @@ public:
 
 
     // getters for attributes
+    int getCurrentStation() { return CurrentStation; }
     int getJourney() { return Journy; }
     int getId() { return id; }
     std::string getType() { return type; }
