@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 class Time {
 private:
@@ -140,5 +142,28 @@ public:
     resultTime.setMinutes(totalMinutes % 60);
 
     return resultTime;
-}
+    }
+    std::string toStringFormat() const {
+		std::ostringstream oss;
+
+		// Format the hours and minutes and place zeros if needed
+		oss << std::setw(2) << std::setfill('0') << hours << ":"
+			<< std::setw(2) << std::setfill('0') << minutes;
+
+		return oss.str();
+	}
+    string FromTotalMinutesToString(int totalMinutes){
+        Time resultTime;
+
+        // Calculate hours and minutes
+        resultTime.setHours(totalMinutes / 60 % 24);
+        resultTime.setMinutes(totalMinutes % 60);
+        std::ostringstream oss;
+
+        // Format the hours and minutes with leading zeros if needed
+        oss << std::setw(2) << std::setfill('0') << resultTime.getHours() << ":"
+            << std::setw(2) << std::setfill('0') << resultTime.getMinutes();
+
+        return oss.str();
+    }
 };
