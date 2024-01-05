@@ -9,6 +9,7 @@
 #include "LinkedQueue.h"
 #include "DoubleLinkedList.h"
 #include "UI.h"
+#include "Time.h"
 #include "Function.h"
 #include <Functions.h>
 using namespace std;
@@ -24,7 +25,6 @@ private:
     LinkedQueue<Bus *> checkUpWheeldBus;
     LinkedQueue<Bus *> BusQueue;
     LinkedQueue<Passenger *> FinishList;
-
 
     UI ui;
 
@@ -139,8 +139,8 @@ public:
             // 9) boarding passengers accourding to their piriority
             // 10) bus from waiting in station to movingbusses list
             // 11) print output screen
-            
-            ui.PrintSimulation(time,StationsArray,numberOfStations,FinishList,checkUpMixedBus,checkUpMixedBus,Moving_Busses);
+
+            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);
 
             time++; //  increment time
         }
@@ -149,11 +149,13 @@ public:
     void Output()
     {
         ofstream outFile("output.txt");
+        Time time;
         outFile << "FT\t\t\t\tID\t\t\t\tAT\t\t\t\tWT\t\t\t\tTT" << endl; // FT -> Finish Time  AT -> Arrival Time  WT -> Waiting Time  TT -> Trip Time
         int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0;
         while (!FinishList.isEmpty())
         {
             Passenger *pass = FinishList.dequeue();
+            outFile << time.FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
         }
     }
 };
