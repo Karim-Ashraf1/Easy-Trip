@@ -27,8 +27,8 @@ private:
 
     std::string type;
 
-    Time tBT;  // total busy time
-    Time TSim; // total Simulation
+    int tBT;  // total busy time
+    int TSim; // total Simulation
 
     LinkedList<Passenger *> Passengers;
     PriorityQueue<Passenger *> MovingPassengersList;
@@ -69,8 +69,8 @@ public:
     void setTotalPassenger(static int TotalPassenger) { tDC = TotalPassenger; }
     void setTDC(int x) { tDC = x; }
     void setN(int n) { N = n; }
-    void setTBT(Time tbt) { tBT = tbt; }
-    void setTSim(Time tsim) { TSim = tsim; }
+    void setTBT(int tbt) { tBT = tbt; }
+    void setTSim(int tsim) { TSim = tsim; }
     void setMovingTime(int timex) { MovingTime = timex; }
     void setChekup(bool IsCheckup) { Checkup = IsCheckup; }
 
@@ -89,8 +89,8 @@ public:
     int getN() { return N; }
     static int getTDC() { return tDC; }
     int getCapacity() { return Capacity; }
-    Time getTBT() { return tBT; }
-    Time getTsim() { return TSim; }
+    int getTBT() { return tBT; }
+    int getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
 
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim)
