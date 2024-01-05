@@ -168,7 +168,7 @@ public:
         }
 
 
-    template <typename T>
+    
     void checkEndStationAndRemove(Station station,string Filename)
     {
         int BoardingTime=GetBoardingTime(Filename);
@@ -177,13 +177,14 @@ public:
         for (int i = 0; i < loop; i++)
         {
             
-            Node<T> *currentNode = Passengers.GetHead();
+            Node<Passenger*> *currentNode = Passengers.GetHead();
+
 
             // Go over the linked list
             while (currentNode != nullptr)
             {
                 // Create a pointer that points to the current passenger
-                Passenger *pntr = currentNode->getItem();
+                Passenger* pntr = currentNode->getItem();
                 // Create a dummy variable with the same attributes as the passenger
                 Passenger psngr = *pntr;
                 // Check if the end station of the passenger is the station
