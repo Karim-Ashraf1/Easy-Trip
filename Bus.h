@@ -152,6 +152,14 @@ public:
         }
     }
 
+    void JournyIncrement(){
+        Journy++;
+        if (Journy == maintenanceJ){
+            Checkup=true;
+            Journy=0;
+        }
+    }
+
     bool PassengerOff(){
         if(MovingPassengersList.isEmpty())
             return false;
