@@ -280,4 +280,22 @@ public:
 
         return promotedPassCount;
     }
+
+    // checks if there are busses Nedded in the station
+    bool BusNeeded(Bus *bus){
+        if(bus->getType() == "MBus"){
+            if (bus->getdirection() =='F')
+                return !NormalWaitingPassFwd.IsEmpty() || !SpecialWaitingPassFwd.isEmpty();// if there waitng Normal FWD passenger returns true
+            else{
+                return !NormalWaitingPassBwd.IsEmpty() || !SpecialWaitingPassBwd.isEmpty();// if there waitng Normal BWD passenger returns true
+            }
+        }
+        else {
+            if (bus->getdirection() =='F')
+                return !WChairWaitingPassFwd.isEmpty();// if there waitng WheelChair FWD passenger returns true
+            else{
+                return !WChairWaitingPassBwd.isEmpty();// if there waitng WheelChair BWD passenger returns true
+            }
+        }
+        }
 };
