@@ -77,8 +77,12 @@ private:
             if (nextStation <= numberOfStations -1 || nextStation == 0){
                 StationsArray[nextStation].addBusses(bus);
             }
-            else if (StationsArray[nextStation].BusNeeded(bus) || bus->PassengerOff()){
+            else if (StationsArray[nextStation].BusNeeded(bus)){
                 StationsArray[nextStation].addBusses(bus);
+            }
+            else if(bus->PassengerOff()){
+                StationsArray[nextStation].addBusses(bus);
+                bus->checkEndStationAndRemove(nextStation);
             }
             else {
                 bus->setMovingTime(time);
