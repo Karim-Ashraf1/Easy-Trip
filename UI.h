@@ -37,7 +37,7 @@ public:
             cout << bus->getId()<<", ";
         }
         cout <<"\n *******************************"<<endl;
-        cout<<FinishedPassenger.size()<<"Finished Passengers : ";
+        cout<<FinishedPassenger.getSize()<<"Finished Passengers : ";
         for (auto Passenger : FinishedPassenger){
             cout<<Passenger->getId()<<", ";
         }

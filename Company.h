@@ -24,6 +24,10 @@ private:
     LinkedQueue<Bus *> checkUpWheeldBus;
     LinkedQueue<Bus *> BusQueue;
     LinkedQueue<Passenger *> FinishList;
+
+
+    UI ui;
+
     int checkup_durations_Wb;
     int checkup_durations_Mb;
     int TimeFromStationToStation;
@@ -81,14 +85,9 @@ private:
             {
                 StationsArray[nextStation].addBusses(bus);
             }
-            else if (StationsArray[nextStation].BusNeeded(bus))
+            else if (StationsArray[nextStation].BusNeeded(bus) || bus->PassengerOff())
             {
                 StationsArray[nextStation].addBusses(bus);
-            }
-            else if (bus->PassengerOff())
-            {
-                StationsArray[nextStation].addBusses(bus);
-                bus->checkEndStationAndRemove(nextStation);
             }
             else
             {
@@ -119,13 +118,12 @@ public:
     }
     void Simulate(const string &fileName)
     {
-
+        ui.Mode();
         int time = 0;
         // loop in company
         while (time > 240 && time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
         {
-            MoveBusFromGarage(time);
-            ; //  bus from station #0 to movingbusses list
+            MoveBusFromGarage(time); //  bus from station #0 to movingbusses list
 
             removeBusFromCheckup(time, checkUpMixedBus, checkup_durations_Mb);  //  bus from movingbusses list to waiting in station
             removeBusFromCheckup(time, checkUpWheeldBus, checkup_durations_Wb); //  bus from movingbusses list to waiting in station
@@ -141,6 +139,8 @@ public:
             // 9) boarding passengers accourding to their piriority
             // 10) bus from waiting in station to movingbusses list
             // 11) print output screen
+            
+            ui.PrintSimulation(time,StationsArray,numberOfStations,FinishList,checkUpMixedBus,checkUpMixedBus,Moving_Busses);
 
             time++; //  increment time
         }
