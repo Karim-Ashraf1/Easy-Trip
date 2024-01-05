@@ -10,9 +10,9 @@ class Bus
 {
 private:
     int id;
-    
+
     int Capacity;
-    int CurrentLoad;  
+    int CurrentLoad;
     int maintenanceT; // for time
     int maintenanceJ; // for journeys
     int Journy;       // number of journies taken by bus
@@ -23,19 +23,17 @@ private:
     static int N;   // total delivery trips
 
     bool Checkup; // to determine whether the bus is currently in maintenance
-    char direction; 
+    char direction;
 
     std::string type;
 
-    Time tBT;       // total busy time
-    Time TSim;      // total Simulation
+    Time tBT;  // total busy time
+    Time TSim; // total Simulation
 
     LinkedList<Passenger *> Passengers;
-    PriorityQueue<Passenger*> MovingPassengersList;
-
+    PriorityQueue<Passenger *> MovingPassengersList;
 
 public:
-
     Bus(int id, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
     {
         id = id;
@@ -54,11 +52,11 @@ public:
         maintenanceT = 0;
         maintenanceJ = 0;
         direction = 'F';
-        CurrentStation=0;
+        CurrentStation = 0;
     }
 
     // setter for current load
-    void setCurrentStation(int CurrentStation){this->CurrentStation=CurrentStation;}
+    void setCurrentStation(int CurrentStation) { this->CurrentStation = CurrentStation; }
     void setJourney(int Journeys) { Journy = Journeys; }
     void setId(int idx) { id = idx; }
     void setType(std::string typex) { type = typex; }
@@ -75,7 +73,6 @@ public:
     void setTSim(Time tsim) { TSim = tsim; }
     void setMovingTime(int timex) { MovingTime = timex; }
     void setChekup(bool IsCheckup) { Checkup = IsCheckup; }
-
 
     // getters for attributes
     int getCurrentStation() { return CurrentStation; }
@@ -96,11 +93,13 @@ public:
     Time getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
 
-    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim) { 
-        Time time=(tBT / TSim);
-        int minutes=time.calculateTotalMinutes();
-        int x=(tDC / (Bcapacity)*N);
-        return (x*minutes * 100); };
+    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim)
+    {
+        Time time = (tBT / TSim);
+        int minutes = time.calculateTotalMinutes();
+        int x = (tDC / (Bcapacity)*N);
+        return (x * minutes * 100);
+    };
 
     int getRemainingCapacity()
     {
@@ -147,44 +146,44 @@ public:
 
         if (waitingStation != nullptr)
         {
-            
+
             // currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
         }
     }
 
-    void JournyIncrement(){
+    void JournyIncrement()
+    {
         Journy++;
-        if (Journy == maintenanceJ){
-            Checkup=true;
-            Journy=0;
+        if (Journy == maintenanceJ)
+        {
+            Checkup = true;
+            Journy = 0;
         }
     }
 
-    bool PassengerOff(){
-        if(MovingPassengersList.isEmpty())
-            return false;
-        int nextStation=(direction == 'F') ? CurrentStation+1 : CurrentStation-1;
-        return MovingPassengersList.peek()->getEndStation() == nextStation;
-        }
-
-
-    
-    void checkEndStationAndRemove(Station station,string Filename)
+    bool PassengerOff()
     {
-        int BoardingTime=GetBoardingTime(Filename);
+        if (MovingPassengersList.isEmpty())
+            return false;
+        int nextStation = (direction == 'F') ? CurrentStation + 1 : CurrentStation - 1;
+        return MovingPassengersList.peek()->getEndStation() == nextStation;
+    }
+
+    void checkEndStationAndRemove(Station station, string Filename)
+    {
+        int BoardingTime = GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
         {
-            
-            Node<Passenger*> currentNode = Passengers.GetHead();
 
+            Node<Passenger *> *currentNode = Passengers.GetHead();
 
             // Go over the linked list
-            while (currentNode.getNext() != nullptr)
+            while (currentNode != nullptr)
             {
                 // Create a pointer that points to the current passenger
-                Passenger* pntr = currentNode.getItem();
+                Passenger *pntr = currentNode->getItem();
                 // Create a dummy variable with the same attributes as the passenger
                 Passenger psngr = *pntr;
                 // Check if the end station of the passenger is the station
@@ -201,12 +200,10 @@ public:
                 }
 
                 // Move to the next node in the linked list
-                currentNode.setNext(currentNode.getNext());
+                currentNode = currentNode->getNext();
             }
         }
     }
-
-
 
     template <typename QueueType>
     void loadPassengersToBus(QueueType &waitingPassengers)
@@ -232,7 +229,7 @@ public:
 
     void Bus::boardPassengers(Station &station, string Filename)
     {
-        int BoardingTime=GetBoardingTime(Filename);
+        int BoardingTime = GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
