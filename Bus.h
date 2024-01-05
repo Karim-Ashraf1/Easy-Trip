@@ -10,24 +10,30 @@ class Bus
 {
 private:
     int id;
-    std::string type;
+    
     int Capacity;
-    int CurrentLoad;    //
+    int CurrentLoad;  
     int maintenanceT; // for time
     int maintenanceJ; // for journeys
     int Journy;       // number of journies taken by bus
     int MovingTime;
+    int CurrentStation;
+
     static int tDC; // total passengers transported by this bus
     static int N;   // total delivery trips
+
     bool Checkup; // to determine whether the bus is currently in maintenance
+    char direction; 
+
+    std::string type;
+
     Time tBT;       // total busy time
     Time TSim;      // total Simulation
-    char direction; 
+
     LinkedList<Passenger *> Passengers;
 
 public:
-    int getJourney() { return Journy; }
-    void setJourney(int Journeys) { Journy = Journeys; }
+
     Bus(int id, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
     {
         id = id;
@@ -46,9 +52,12 @@ public:
         maintenanceT = 0;
         maintenanceJ = 0;
         direction = 'F';
+        CurrentStation=0;
     }
 
     // setter for current load
+    void setCurrentStation(int CurrentStation){this->CurrentStation=CurrentStation;}
+    void setJourney(int Journeys) { Journy = Journeys; }
     void setId(int idx) { id = idx; }
     void setType(std::string typex) { type = typex; }
     void setBusMaintenanceTime(int MBMT) { maintenanceT = MBMT; }
@@ -67,6 +76,8 @@ public:
 
 
     // getters for attributes
+    int getCurrentStation() { return CurrentStation; }
+    int getJourney() { return Journy; }
     int getId() { return id; }
     std::string getType() { return type; }
     int getBusMaintenanceTime() { return maintenanceT; }
