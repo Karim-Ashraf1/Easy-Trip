@@ -17,6 +17,7 @@ public:
 	bool isEmpty() const;
 	bool enqueue(const T &newEntry);
 	T dequeue();
+	int getSize() const;
 
 
 
@@ -61,6 +62,26 @@ Adds newEntry at the back of this queue.
 Input: newEntry .
 Output: True if the operation is successful; otherwise false.
 */
+
+template <typename T>
+int LinkedQueue<T>::getSize() const
+{
+    int count = 0;
+    Node<T> *current = frontPtr;
+
+    while (current != nullptr)
+    {
+        count++;
+        current = current->getNext();
+    }
+
+    return count;
+}
+
+
+
+
+
 
 template <typename T>
 bool LinkedQueue<T>::enqueue(const T &newEntry)
