@@ -5,7 +5,7 @@
 #include "Time.h"
 #include "Station.h"
 #include "DoubleLinkedLIst.h"
-
+#include "Functions.h"
 class Bus
 {
 private:
@@ -94,7 +94,10 @@ public:
     int getMovingTime() { return MovingTime; }
 
     int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim) { 
-        return ((tDC / (Bcapacity)*N)(tBT / TSim)) * 100; };
+        Time time=(tBT / TSim);
+        int minutes=time.calculateTotalMinutes();
+        int x=(tDC / (Bcapacity)*N);
+        return (x*minutes * 100); };
 
     int getRemainingCapacity()
     {
@@ -149,10 +152,7 @@ public:
     void GetPassOn(LinkedList<Passenger *> &PassengersInBus)
     {
     }
-
-
-
-
+    template <typename T>
     void checkEndStationAndRemove(Station &station)
     {
         int BoardingTime;
@@ -160,7 +160,8 @@ public:
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
         {
-            Node<Passenger *> *currentNode = Passengers.GetHead();
+            
+            Node<T> *currentNode = Passengers.GetHead();
 
             // Go over the linked list
             while (currentNode != nullptr)

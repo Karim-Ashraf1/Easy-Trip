@@ -45,11 +45,11 @@ public:
         return timeBetweenStations;
     }
 
-    void setNormalWaitingPassengersForward(const LinkedList<Passenger> &passengers)
+    void setNormalWaitingPassengersForward(const LinkedList<Passenger*> &passengers)
     {
         NormalWaitingPassFwd = passengers;
     }
-    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger> &passengers)
+    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger*> &passengers)
     {
         NormalWaitingPassBwd = passengers;
     }
@@ -74,11 +74,11 @@ public:
         AvailableBuses = busses;
     }
 
-    LinkedList<Passenger> &getNormalWaitingPassengersForward()
+    LinkedList<Passenger*> &getNormalWaitingPassengersForward()
     {
         return NormalWaitingPassFwd;
     }
-    LinkedList<Passenger> &getNormalWaitingPassengersBackward()
+    LinkedList<Passenger*> &getNormalWaitingPassengersBackward()
     {
         return NormalWaitingPassBwd;
     }
@@ -171,8 +171,8 @@ public:
         Bus *b;
         if (!AvailableBuses.isEmpty())
         {
-            AvailableBuses.peek(b);
-            AvailableBuses.dequeue(b);
+            b=AvailableBuses.peek();
+            b=AvailableBuses.dequeue();
             b->boardPassengers(*this);
             movingBusses.enqueue(b);
         }
@@ -210,11 +210,11 @@ public:
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                NormalWaitingPassFwd.InsertEnd(*psngr);
+                NormalWaitingPassFwd.InsertEnd(psngr);
             }
             else
             {
-                NormalWaitingPassBwd.InsertEnd(*psngr);
+                NormalWaitingPassBwd.InsertEnd(psngr);
             }
         }
         else if (PassengerType == "SP")
@@ -258,7 +258,8 @@ public:
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassFwd.DeleteNode(passenger);
-            SpecialWaitingPassFwd.priorityEnqueue(passenger);
+            Passenger psngr=*passenger;
+            SpecialWaitingPassFwd.priorityEnqueue(psngr);
         }
         for (auto passenger : NormalWaitingPassBwd)
         {
@@ -273,7 +274,8 @@ public:
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassBwd.DeleteNode(passenger);
-            SpecialWaitingPassBwd.priorityEnqueue(passenger);
+            Passenger psngr=*passenger;
+            SpecialWaitingPassBwd.priorityEnqueue(psngr);
         }
 
         return promotedPassCount;
