@@ -16,7 +16,7 @@ public:
     {
         Head = nullptr;
     }
-    Node GetHead(){
+    Node<T> GetHead(){
         return Head;
     }
     // List is being desturcted ==> delete all items in the list
