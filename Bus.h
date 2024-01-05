@@ -177,14 +177,14 @@ public:
         for (int i = 0; i < loop; i++)
         {
             
-            Node<Passenger*> *currentNode = Passengers.GetHead();
+            Node<Passenger*> currentNode = Passengers.GetHead();
 
 
             // Go over the linked list
-            while (currentNode != nullptr)
+            while (currentNode.getNext() != nullptr)
             {
                 // Create a pointer that points to the current passenger
-                Passenger* pntr = currentNode->getItem();
+                Passenger* pntr = currentNode.getItem();
                 // Create a dummy variable with the same attributes as the passenger
                 Passenger psngr = *pntr;
                 // Check if the end station of the passenger is the station
@@ -201,7 +201,7 @@ public:
                 }
 
                 // Move to the next node in the linked list
-                currentNode = currentNode->getNext();
+                currentNode.setNext(currentNode.getNext());
             }
         }
     }
