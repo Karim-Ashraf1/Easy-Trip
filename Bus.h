@@ -31,6 +31,8 @@ private:
     Time TSim;      // total Simulation
 
     LinkedList<Passenger *> Passengers;
+    PriorityQueue<Passenger*> MovingPassengersList;
+
 
 public:
 
@@ -150,9 +152,14 @@ public:
         }
     }
 
-    void GetPassOn(LinkedList<Passenger *> &PassengersInBus)
-    {
-    }
+    bool PassengerOff(Bus* bus){
+        if(MovingPassengersList.isEmpty())
+            return false;
+        int nextStation=(bus->getdirection() == 'F') ? CurrentStation+1 : CurrentStation-1;
+        return MovingPassengersList.peek()->getEndStation() == nextStation;
+        }
+
+
     template <typename T>
     void checkEndStationAndRemove(Station &station)
     {
@@ -189,6 +196,8 @@ public:
             }
         }
     }
+
+
 
     template <typename QueueType>
     void loadPassengersToBus(QueueType &waitingPassengers)
