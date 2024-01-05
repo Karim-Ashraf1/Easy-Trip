@@ -155,14 +155,17 @@ public:
     {
     }
 
-    void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+    void busFromMovingToWaiting(Station* StationsArray, Bus bus,string Filename)
     {
-
-        Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
-
-        if (waitingStation != nullptr)
+        int y;
+        int* movingtime=ConvertToInt((GetFileLine(Filename,1,'O')));
+        y=*(movingtime+1);
+        if(bus.getMovingTime()==y)
         {
-            // currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
+            bus.setCurrentStation((bus.getCurrentStation()+1));
+            Station station=StationsArray[bus.getCurrentStation()];
+            bus.checkEndStationAndRemove(station,Filename);
+
         }
     }
 

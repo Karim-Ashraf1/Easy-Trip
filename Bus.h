@@ -169,9 +169,9 @@ public:
 
 
     template <typename T>
-    void checkEndStationAndRemove(Station &station)
+    void checkEndStationAndRemove(Station station,string Filename)
     {
-        int BoardingTime;
+        int BoardingTime=GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
@@ -229,9 +229,9 @@ public:
         }
     }
 
-    void Bus::boardPassengers(Station &station)
+    void Bus::boardPassengers(Station &station, string Filename)
     {
-        int BoardingTime;
+        int BoardingTime=GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
