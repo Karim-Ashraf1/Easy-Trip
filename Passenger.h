@@ -14,6 +14,7 @@ private:
     int id;
     int startStation;
     int endStation;
+    int priority;
     Time OnTime;
     Time OFFTime;
     int WaitingTime;
@@ -30,8 +31,8 @@ public:
     Passenger(int idx, int startStationx, int endStationx, Time OnTimex, Time OFFTimex, int waitingTime, int MaxW, int Arrival, int TotalTrip, string &typex, string &subtypex)
         : id(idx), startStation(startStationx), endStation(endStationx), OnTime(OnTimex), OFFTime(OFFTimex), WaitingTime(waitingTime), maxW(MaxW), arrival(Arrival), totalTrip(TotalTrip), type(typex), subtype(subtypex) {}
 
-    Passenger(int id, int arrival, string type, int startStation, int endStation)
-        : type(type), arrival(arrival), startStation(startStation), endStation(endStation), id(id) {}
+    Passenger(int id, int arrival, string type, int startStation, int endStation,int priority)
+        : type(type), arrival(arrival), startStation(startStation), endStation(endStation), id(id),priority(priority) {}
 
     // Getter method for each attribute
     int getId() const { return id; }
