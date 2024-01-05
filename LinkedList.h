@@ -60,6 +60,11 @@ public:
             Head = P;
         }
     }
+    
+    bool IsEmpty() const {
+    return Head == nullptr;
+    }
+
 
     // [1]InsertEnd
     // inserts a new node at end if the list
