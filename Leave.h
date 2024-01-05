@@ -18,7 +18,7 @@ public:
     void Execute(Station* stationsArray)
     {
         for (int i = 0; i < numberOfStations;i++){
-            stationsArray[0].PassengerLeave(Id); 
+            stationsArray[i].PassengerLeave(Id); 
         }
     }
 };
