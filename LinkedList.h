@@ -16,7 +16,8 @@ public:
     {
         Head = nullptr;
     }
-    Node<T> GetHead(){
+    Node<T> *GetHead()
+    {
         return Head;
     }
     // List is being desturcted ==> delete all items in the list
@@ -60,11 +61,11 @@ public:
             Head = P;
         }
     }
-    
-    bool IsEmpty() const {
-    return Head == nullptr;
-    }
 
+    bool IsEmpty() const
+    {
+        return Head == nullptr;
+    }
 
     // [1]InsertEnd
     // inserts a new node at end if the list
