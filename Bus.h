@@ -152,10 +152,10 @@ public:
         }
     }
 
-    bool PassengerOff(Bus* bus){
+    bool PassengerOff(){
         if(MovingPassengersList.isEmpty())
             return false;
-        int nextStation=(bus->getdirection() == 'F') ? CurrentStation+1 : CurrentStation-1;
+        int nextStation=(direction == 'F') ? CurrentStation+1 : CurrentStation-1;
         return MovingPassengersList.peek()->getEndStation() == nextStation;
         }
 
