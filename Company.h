@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <sstream>
 #include "Events.h"
 #include "Leave.h"
@@ -157,5 +158,19 @@ public:
             Passenger *pass = FinishList.dequeue();
             outFile << time.FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
         }
+    }
+    string FromTotalMinutesToString(int totalMinutes){
+        Time resultTime;
+
+        // Calculate hours and minutes
+        resultTime.setHours(totalMinutes / 60 % 24);
+        resultTime.setMinutes(totalMinutes % 60);
+        std::ostringstream oss;
+
+        // Format the hours and minutes with leading zeros if needed
+        oss << std::setw(2) << std::setfill('0') << resultTime.getHours() << ":"
+            << std::setw(2) << std::setfill('0') << resultTime.getMinutes();
+
+        return oss.str();
     }
 };
