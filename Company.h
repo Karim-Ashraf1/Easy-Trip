@@ -25,6 +25,8 @@ private:
 
     int checkup_durations_Wb;
     int checkup_durations_Mb;
+    int TimeFromStationToStation;
+    int numberOfStations;
 
 
 
@@ -65,6 +67,28 @@ private:
     }
 
    
+    void addBusToStation(int time){
+        while(!Moving_Busses.isEmpty() && time - Moving_Busses.peek()->getMovingTime()  == TimeFromStationToStation){
+            Bus* bus = Moving_Busses.dequeue();
+            int currentStation = bus->getCurrentStation();
+            int nextStation = (bus->getdirection()=='F') ? 1:-1;//if forward it will increment one station if backward it will decrement one station
+            nextStation = nextStation + currentStation;
+            bus->setCurrentStation(nextStation);
+            if (nextStation <= numberOfStations -1 || nextStation == 0){
+                StationsArray[nextStation].addBusses(bus);
+            }
+            else if (StationsArray[nextStation].BusNeeded(bus) || bus->PassengerOff()){
+                StationsArray[nextStation].addBusses(bus);
+            }
+            else {
+                bus->setMovingTime(time);
+                Moving_Busses.enqueue(bus);
+            }
+        }
+    }
+
+
+
 
     void EventExcute(int Time){
         if (Time > 1320 ) //1320 = 22:00 which is when the company is closed
@@ -88,6 +112,8 @@ public:
 
             removeBusFromCheckup( time,checkUpMixedBus,checkup_durations_Mb);//  bus from movingbusses list to waiting in station
             removeBusFromCheckup( time,checkUpWheeldBus,checkup_durations_Wb);//  bus from movingbusses list to waiting in station
+
+            addBusToStation(time);// Adding busses to their equivalent station
 
             EventExcute(time);// Excutes which Event has been received
         // loop in stations
