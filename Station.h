@@ -10,8 +10,8 @@ class Station
 private:
     int number;
     int timeBetweenStations;
-    PriorityQueue<Passenger> NormalWaitingPassFwd;
-    PriorityQueue<Passenger> NormalWaitingPassBwd;
+    LinkedList<Passenger *> NormalWaitingPassFwd; /* not the best data structure was needed to implement promotePassenger function*/
+    LinkedList<Passenger *> NormalWaitingPassBwd;
     PriorityQueue<Passenger> SpecialWaitingPassFwd;
     PriorityQueue<Passenger> SpecialWaitingPassBwd;
     LinkedQueue<Passenger> WChairWaitingPassFwd;
@@ -45,11 +45,11 @@ public:
         return timeBetweenStations;
     }
 
-    void setNormalWaitingPassengersForward(const PriorityQueue<Passenger> &passengers)
+    void setNormalWaitingPassengersForward(const LinkedList<Passenger> &passengers)
     {
         NormalWaitingPassFwd = passengers;
     }
-    void setNormalWaitingPassengersBackrward(const PriorityQueue<Passenger> &passengers)
+    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger> &passengers)
     {
         NormalWaitingPassBwd = passengers;
     }
@@ -74,11 +74,11 @@ public:
         AvailableBuses = busses;
     }
 
-    PriorityQueue<Passenger> &getNormalWaitingPassengersForward()
+    LinkedList<Passenger> &getNormalWaitingPassengersForward()
     {
         return NormalWaitingPassFwd;
     }
-    PriorityQueue<Passenger> &getNormalWaitingPassengersBackward()
+    LinkedList<Passenger> &getNormalWaitingPassengersBackward()
     {
         return NormalWaitingPassBwd;
     }
@@ -120,11 +120,13 @@ public:
         pntr = &psngr;
         FinishList.InsertEnd(pntr);
     }
-   template <typename T>
-    void printFinishListAttributes() const {
+    template <typename T>
+    void printFinishListAttributes() const
+    {
         std::cout << "Passengers in FinishList at Station " << number << ":\n";
-        
-        Node<T> *current = FinishList.GetHead();;
+
+        Node<T> *current = FinishList.GetHead();
+        ;
 
         while (current != nullptr)
         {
@@ -208,11 +210,11 @@ public:
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                NormalWaitingPassFwd.priorityEnqueue(*psngr);
+                NormalWaitingPassFwd.InsertEnd(*psngr);
             }
             else
             {
-                NormalWaitingPassBwd.priorityEnqueue(*psngr);
+                NormalWaitingPassBwd.InsertEnd(*psngr);
             }
         }
         else if (PassengerType == "SP")
@@ -243,8 +245,37 @@ public:
     {
         int promotedPassCount = 0;
         LinkedQueue<Passenger *> promotePassengers;
+        for (auto passenger : NormalWaitingPassFwd)
+        {
+            int waitingTime = time - passenger->getArrival();
+            if (waitingTime > maxW)
+            {
+                promotedPassCount++;
+                promotePassengers.enqueue(passenger);
+            }
+        }
         while (!promotePassengers.isEmpty())
         {
+            Passenger *passenger = promotePassengers.dequeue();
+            NormalWaitingPassFwd.DeleteNode(passenger);
+            SpecialWaitingPassFwd.priorityEnqueue(passenger);
         }
+        for (auto passenger : NormalWaitingPassBwd)
+        {
+            int waitingTime = time - passenger->getArrival();
+            if (waitingTime > maxW)
+            {
+                promotedPassCount++;
+                promotePassengers.enqueue(passenger);
+            }
+        }
+        while (!promotePassengers.isEmpty())
+        {
+            Passenger *passenger = promotePassengers.dequeue();
+            NormalWaitingPassBwd.DeleteNode(passenger);
+            SpecialWaitingPassBwd.priorityEnqueue(passenger);
+        }
+
+        return promotedPassCount;
     }
 };
