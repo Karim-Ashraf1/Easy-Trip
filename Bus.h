@@ -10,7 +10,7 @@ class Bus
 {
 private:
     int id;
-    int FirstOnTime,LastOffTime;
+    int FirstOnTime, LastOffTime;
     int BusyTime;
     int Capacity;
     int CurrentLoad;
@@ -67,7 +67,7 @@ public:
     void setDirection(char directionx) { direction = directionx; }
     void setPassenger(LinkedList<Passenger *> Passenger) { Passengers = Passenger; }
     void setCapacity(int cap) { Capacity = cap; }
-    void setTotalPassenger(static int TotalPassenger) { tDC = TotalPassenger; }
+    void setTotalPassenger(int TotalPassenger) { tDC = TotalPassenger; }
     void setTDC(int x) { tDC = x; }
     void setN(int n) { N = n; }
     void setTBT(int tbt) { tBT = tbt; }
@@ -93,14 +93,18 @@ public:
     int getTBT() { return tBT; }
     int getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
-    int getBusyTime(){ return BusyTime}
-    
+    int getBusyTime() { return BusyTime; }
+
+    int BusBusyTime()
+    {
+        BusyTime = LastOffTime - FirstOnTime;
+    }
     int BusUtilization()
     {
         Time time;
         time.convertTotalMinutesToTime(tBT / TSim);
         int minutes = time.calculateTotalMinutes();
-        int x = (tDC / (Capacity)*N);
+        int x = (tDC * N / (Capacity));
         return (x * minutes * 100);
     };
 
@@ -172,7 +176,7 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
+    void checkEndStationAndRemove(Station station, string Filename, int currenttime, LinkedQueue<Passenger *> FinishList)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -198,16 +202,16 @@ public:
                     // Update the current load of the bus
                     setCurrentLoad(getCurrentLoad() - 1);
 
-                    //set the passenger get off time as current time
+                    // set the passenger get off time as current time
                     psngr.setOFFTime(currenttime);
 
                     // Add the removed passenger to the finish list of the station
                     FinishList.enqueue(pntr);
-                    if(psngr.getOFFTime()>LastOffTime){
-                        LastOffTime=psngr.getOFFTime();
-                        BusyTime=LastOffTime-FirstOnTime;
+                    if (psngr.getOFFTime() > LastOffTime)
+                    {
+                        LastOffTime = psngr.getOFFTime();
+                        BusyTime = LastOffTime - FirstOnTime;
                     }
-                
                 }
 
                 // Move to the next node in the linked list
@@ -229,14 +233,15 @@ public:
             {
                 // Add the pointer to the passenger to the bus's linked list
                 Passengers.InsertEnd(&nextPassenger);
-                //set the passenger get on time as current time
+                // set the passenger get on time as current time
                 nextPassenger.setOnTime(currenttime)
-                setCurrentLoad(getCurrentLoad() + 1);
+                    setCurrentLoad(getCurrentLoad() + 1);
 
                 // Decrease available seats and continue the loop
                 availableSeats--;
-                if(nextPassenger.getOnTime()<FirstOnTime){
-                    FirstOnTime=nextPassenger.getOnTime()
+                if (nextPassenger.getOnTime() < FirstOnTime)
+                {
+                    FirstOnTime = nextPassenger.getOnTime()
                 }
             }
         }

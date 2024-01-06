@@ -36,105 +36,113 @@ private:
     int MaxWaitingTime;
 
     // class' functions
-// function to Enque busess to a queue according to their number from the inout file
-    void EnqueueGarage(int WbusCount, int MbusCount,int journeysToCheckup)
+    // function to Enque busess to a queue according to their number from the inout file
+    void EnqueueGarage(int WbusCount, int MbusCount, int journeysToCheckup)
     {
 
-    // create objects according to number of busses available
-        for (int i=0; i < MbusCount; i++)
+        // create objects according to number of busses available
+        for (int i = 0; i < MbusCount; i++)
         {
-            Bus *MixedBus = new Bus ();
+            Bus *MixedBus = new Bus();
             MixedBus->setDirection('F');
             MixedBus->setType("MBus");
-            MixedBus->setMaintenanceJourney(journeysToCheckup); 
+            MixedBus->setMaintenanceJourney(journeysToCheckup);
             GarageQueue.enqueue(MixedBus);
         }
 
-        for (int i=0; i < WbusCount; i++)
+        for (int i = 0; i < WbusCount; i++)
         {
             Bus *WheelChairBus = new Bus();
             WheelChairBus->setDirection('F');
-            WheelChairBus->setMaintenanceJourney(journeysToCheckup); 
+            WheelChairBus->setMaintenanceJourney(journeysToCheckup);
             WheelChairBus->setType("WBus");
             GarageQueue.enqueue(WheelChairBus);
         }
     }
-    void GetPassengersOff(int time,string Filename){
-        for (int i = 0; i < numberOfStations; i++) {
-            Station Station=StationsArray[i];
+    void GetPassengersOff(int time, string Filename)
+    {
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            Station Station = StationsArray[i];
             // Loop through NormalPassengersMovingBusesForward
             LinkedQueue<Bus *> &normalMovingBusesForward = Station.getNormalPassengersMovingBusesForward();
-                while (!normalMovingBusesForward.isEmpty()) {
-                 Bus *bus = normalMovingBusesForward.dequeue();
-                 Bus Bus=*bus;
-                 Bus.checkEndStationAndRemove(Station,Filename,time,FinishList);
-                }
+            while (!normalMovingBusesForward.isEmpty())
+            {
+                Bus *bus = normalMovingBusesForward.dequeue();
+                Bus Bus = *bus;
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+            }
 
-                // Loop through NormalPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &normalMovingBusesBackward =Station.getNormalPassengersMovingBusesBackward();
-            while (!normalMovingBusesBackward.isEmpty()) {
+            // Loop through NormalPassengersMovingBusesBackward
+            LinkedQueue<Bus *> &normalMovingBusesBackward = Station.getNormalPassengersMovingBusesBackward();
+            while (!normalMovingBusesBackward.isEmpty())
+            {
                 Bus *bus = normalMovingBusesBackward.dequeue();
-                Bus Bus=*bus;
-                Bus.boardPassengers(Station,Filename,time);
-            }             
+                Bus Bus = *bus;
+                Bus.boardPassengers(Station, Filename, time);
+            }
 
-                // Loop through WheelchairPassengersMovingBusesForward
+            // Loop through WheelchairPassengersMovingBusesForward
             LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
-                while (!wheelchairMovingBusesForward.isEmpty()) {
-                    Bus *bus = wheelchairMovingBusesForward.dequeue();
-                    Bus Bus=*bus;
-                    Bus.checkEndStationAndRemove(Station,Filename,time,FinishList);
-                }
+            while (!wheelchairMovingBusesForward.isEmpty())
+            {
+                Bus *bus = wheelchairMovingBusesForward.dequeue();
+                Bus Bus = *bus;
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+            }
 
-                // Loop through WheelchairPassengersMovingBusesBackward
+            // Loop through WheelchairPassengersMovingBusesBackward
             LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
-                while (!wheelchairMovingBusesBackward.isEmpty()) {
-                    Bus *bus = wheelchairMovingBusesBackward.dequeue();
-                    Bus Bus=*bus;
-                    Bus.checkEndStationAndRemove(Station,Filename,time,FinishList);
-                }
-        }    
+            while (!wheelchairMovingBusesBackward.isEmpty())
+            {
+                Bus *bus = wheelchairMovingBusesBackward.dequeue();
+                Bus Bus = *bus;
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+            }
+        }
     }
 
     void boardPassengers(int time, string Filename)
-	{
-		for (int i = 0; i < numberOfStations; i++) {
-            Station Station=StationsArray[i];
+    {
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            Station Station = StationsArray[i];
             // Loop through NormalPassengersMovingBusesForward
             LinkedQueue<Bus *> &normalMovingBusesForward = Station.getNormalPassengersMovingBusesForward();
-                while (!normalMovingBusesForward.isEmpty()) {
-                 Bus *bus = normalMovingBusesForward.dequeue();
-                 Bus Bus=*bus;
-                 Bus.boardPassengers(Station,Filename,time);
-                }
-
-                // Loop through NormalPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &normalMovingBusesBackward =Station.getNormalPassengersMovingBusesBackward();
-            while (!normalMovingBusesBackward.isEmpty()) {
-                Bus *bus = normalMovingBusesBackward.dequeue();
-                Bus Bus=*bus;
-                Bus.boardPassengers(Station,Filename,time);
-            }             
-
-                // Loop through WheelchairPassengersMovingBusesForward
-            LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
-                while (!wheelchairMovingBusesForward.isEmpty()) {
-                    Bus *bus = wheelchairMovingBusesForward.dequeue();
-                    Bus Bus=*bus;
-                    Bus.boardPassengers(Station,Filename,time);
-                }
-
-                // Loop through WheelchairPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
-                while (!wheelchairMovingBusesBackward.isEmpty()) {
-                    Bus *bus = wheelchairMovingBusesBackward.dequeue();
-                    Bus Bus=*bus;
-                    Bus.boardPassengers(Station,Filename,time);
-                }
-
-
+            while (!normalMovingBusesForward.isEmpty())
+            {
+                Bus *bus = normalMovingBusesForward.dequeue();
+                Bus Bus = *bus;
+                Bus.boardPassengers(Station, Filename, time);
             }
-        
+
+            // Loop through NormalPassengersMovingBusesBackward
+            LinkedQueue<Bus *> &normalMovingBusesBackward = Station.getNormalPassengersMovingBusesBackward();
+            while (!normalMovingBusesBackward.isEmpty())
+            {
+                Bus *bus = normalMovingBusesBackward.dequeue();
+                Bus Bus = *bus;
+                Bus.boardPassengers(Station, Filename, time);
+            }
+
+            // Loop through WheelchairPassengersMovingBusesForward
+            LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
+            while (!wheelchairMovingBusesForward.isEmpty())
+            {
+                Bus *bus = wheelchairMovingBusesForward.dequeue();
+                Bus Bus = *bus;
+                Bus.boardPassengers(Station, Filename, time);
+            }
+
+            // Loop through WheelchairPassengersMovingBusesBackward
+            LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
+            while (!wheelchairMovingBusesBackward.isEmpty())
+            {
+                Bus *bus = wheelchairMovingBusesBackward.dequeue();
+                Bus Bus = *bus;
+                Bus.boardPassengers(Station, Filename, time);
+            }
+        }
     };
 
     void MoveBusFromGarage(int Time)
@@ -163,10 +171,11 @@ private:
         }
     }
 
-
-    void PromotePassengers(int time){
-        for (int i = 0; i < numberOfStations; i++){
-            StationsArray[i].promotePassenger(time,MaxWaitingTime);
+    void PromotePassengers(int time)
+    {
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            StationsArray[i].promotePassenger(time, MaxWaitingTime);
         }
     }
     // a function to remove all busses that are done with their checkup and add one minute to the busses that aren't done
@@ -229,7 +238,7 @@ public:
     void Simulate(const string &fileName)
     {
         ui.Mode();
-        int time =240; // Equivelent to 4 oclock
+        int time = 240; // Equivelent to 4 oclock
         // loop in company
         while (time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
         {
@@ -241,44 +250,41 @@ public:
             addBusToStation(time); // Adding busses to their equivalent station
 
             EventExcute(time); // Excutes which Event has been received
-            
-            PromotePassengers(time);// promotion from np to sp
 
-            GetPassengersOff(time,fileName);//loop through all busses in all stations and remove the passengers that have arrived at their destanation 
-            boardPassengers(time, fileName);//loop through all the busses an all the stations and board the passengers
+            PromotePassengers(time); // promotion from np to sp
 
-            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);//print output screen
+            GetPassengersOff(time, fileName); // loop through all busses in all stations and remove the passengers that have arrived at their destanation
+            boardPassengers(time, fileName);  // loop through all the busses an all the stations and board the passengers
+
+            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses); // print output screen
 
             time++; //  increment time
         }
     }
 
-
-    void ReadFile(string fileName){
-        //Read Number Of Station
-        numberOfStations=*(ConvertToInt(GetFileLine(fileName,1,'O')));
-        //Read Time Between Stations
-        TimeFromStationToStation=*(ConvertToInt(GetFileLine(fileName,1,'O'))+1);
-        StationsArray=new Station[numberOfStations];
-        for (int i=0; i<numberOfStations;i++){
-            StationsArray[i]=Station(i,TimeFromStationToStation);
+    void ReadFile(string fileName)
+    {
+        // Read Number Of Station
+        numberOfStations = *(ConvertToInt(GetFileLine(fileName, 1, 'O')));
+        // Read Time Between Stations
+        TimeFromStationToStation = *(ConvertToInt(GetFileLine(fileName, 1, 'O')) + 1);
+        StationsArray = new Station[numberOfStations];
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            StationsArray[i] = Station(i, TimeFromStationToStation);
         }
-        //Read Number Of Mixed Busses
+        // Read Number Of Mixed Busses
         int MixedBusCount, WheelBusCount;
-        MixedBusCount=*(ConvertToInt(GetFileLine(fileName,2,'O'))+1);
-        //Read Number Of Mixed Busses
-        WheelBusCount=*(ConvertToInt(GetFileLine(fileName,2,'O')));
-        
+        MixedBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')) + 1);
+        // Read Number Of Mixed Busses
+        WheelBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')));
     }
-
-
-
 
     void Output()
     {
         ofstream outFile("output.txt");
         outFile << "FT\t\t\t\tID\t\t\t\tAT\t\t\t\tWT\t\t\t\tTT" << endl; // FT -> Finish Time  AT -> Arrival Time  WT -> Waiting Time  TT -> Trip Time
-        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0, TotalPass = 0, TotalTrip = 0, MBus = 0, WBus = 0, totalBuses = 0, totalUtilize = 0;
+        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0, TotalPass = 0, TotalTrip = 0, MBus = 0, WBus = 0, totalBuses = 0, totalUtilize = 0, totalBusyTime = 0;
         while (!FinishList.isEmpty())
         {
             Passenger *pass = FinishList.dequeue();
@@ -309,6 +315,7 @@ public:
             Bus *bus = GarageQueue.dequeue();
             string busType = bus->getType();
             totalUtilize += bus->BusUtilization();
+            totalBusyTime += bus->BusBusyTime();
             if (busType == "MBus")
             {
                 MBus++;
@@ -327,6 +334,7 @@ public:
 
         totalBuses = MBus + WBus;
         outFile << "Buses : " << totalBuses << "\t {MBus :" << MBus << "\t WBus :" << WBus << "}\n";
+        outFile << "Avg Busy Time : " << totalBusyTime / totalBuses * 100 << "%\n";
         outFile << "Avg Utilization : " << totalUtilize / totalBuses * 100 << "%\n";
     }
     string FromTotalMinutesToString(int totalMinutes)
