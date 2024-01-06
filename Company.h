@@ -12,7 +12,7 @@
 #include "UI.h"
 #include "Time.h"
 #include "Function.h"
-#include <Functions.h>
+#include "Functions.h"
 using namespace std;
 
 class Company
@@ -24,7 +24,6 @@ private:
     LinkedQueue<Bus *> Moving_Busses;
     LinkedQueue<Bus *> checkUpMixedBus;
     LinkedQueue<Bus *> checkUpWheeldBus;
-    LinkedQueue<Bus *> BusQueue;
     LinkedQueue<Passenger *> FinishList;
 
     UI ui;
@@ -37,7 +36,29 @@ private:
     int MaxWaitingTime;
 
     // class' functions
+// function to Enque busess to a queue according to their number from the inout file
+    void EnqueueGarage(int WbusCount, int MbusCount,int journeysToCheckup)
+    {
 
+    // create objects according to number of busses available
+        for (int i=0; i < MbusCount; i++)
+        {
+            Bus *MixedBus = new Bus ();
+            MixedBus->setDirection('F');
+            MixedBus->setType("MBus");
+            MixedBus->setMaintenanceJourney(journeysToCheckup); 
+            GarageQueue.enqueue(MixedBus);
+        }
+
+        for (int i=0; i < WbusCount; i++)
+        {
+            Bus *WheelChairBus = new Bus();
+            WheelChairBus->setDirection('F');
+            WheelChairBus->setMaintenanceJourney(journeysToCheckup); 
+            WheelChairBus->setType("WBus");
+            GarageQueue.enqueue(WheelChairBus);
+        }
+    }
     void GetPassengersOff(int time,string Filename){
         for (int i = 0; i < numberOfStations; i++) {
             Station Station=StationsArray[i];
@@ -208,9 +229,9 @@ public:
     void Simulate(const string &fileName)
     {
         ui.Mode();
-        int time = 0;
+        int time =240; // Equivelent to 4 oclock
         // loop in company
-        while (time > 240 && time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
+        while (time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
         {
             MoveBusFromGarage(time); //  bus from station #0 to movingbusses list
 
@@ -222,19 +243,36 @@ public:
             EventExcute(time); // Excutes which Event has been received
             
             PromotePassengers(time);// promotion from np to sp
-            // loop in busses
-            // 7) passengers getoff to finish list
-            // 8) check if the bus need checkup if yes will go to checkup if no step 9 will happen
-            // 9) boarding passengers accourding to their piriority
-            // 10) bus from waiting in station to movingbusses list
-            // 11) print output screen
-            GetPassengersOff(time,fileName);//loop through all busses in all stations and remove the passengers that have arrived at their destination
+
+            GetPassengersOff(time,fileName);//loop through all busses in all stations and remove the passengers that have arrived at their destanation 
             boardPassengers(time, fileName);//loop through all the busses an all the stations and board the passengers
-            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);
+
+            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);//print output screen
 
             time++; //  increment time
         }
     }
+
+
+    void ReadFile(string fileName){
+        //Read Number Of Station
+        numberOfStations=*(ConvertToInt(GetFileLine(fileName,1,'O')));
+        //Read Time Between Stations
+        TimeFromStationToStation=*(ConvertToInt(GetFileLine(fileName,1,'O'))+1);
+        StationsArray=new Station[numberOfStations];
+        for (int i=0; i<numberOfStations;i++){
+            StationsArray[i]=Station(i,TimeFromStationToStation);
+        }
+        //Read Number Of Mixed Busses
+        int MixedBusCount, WheelBusCount;
+        MixedBusCount=*(ConvertToInt(GetFileLine(fileName,2,'O'))+1);
+        //Read Number Of Mixed Busses
+        WheelBusCount=*(ConvertToInt(GetFileLine(fileName,2,'O')));
+        
+    }
+
+
+
 
     void Output()
     {
