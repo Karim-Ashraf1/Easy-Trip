@@ -34,6 +34,7 @@ private:
     int TimeFromStationToStation;
     int numberOfStations;
     int promotedPassengers;
+    int MaxWaitingTime;
 
     // class' functions
     void MoveBusFromGarage(int Time)
@@ -59,6 +60,13 @@ private:
         else
         {
             checkUpWheeldBus.enqueue(bus);
+        }
+    }
+
+
+    void PromotePassengers(int time){
+        for (int i = 0; i < numberOfStations; i++){
+            StationsArray[i].promotePassenger(time,MaxWaitingTime);
         }
     }
     // a function to remove all busses that are done with their checkup and add one minute to the busses that aren't done
@@ -133,8 +141,8 @@ public:
             addBusToStation(time); // Adding busses to their equivalent station
 
             EventExcute(time); // Excutes which Event has been received
-                               // loop in stations
-            // 4) promotion from np to sp
+            
+            PromotePassengers(time);// promotion from np to sp
             // loop in busses
             // 7) passengers getoff to finish list
             // 8) check if the bus need checkup if yes will go to checkup if no step 9 will happen
