@@ -10,13 +10,13 @@ class Station
 private:
     int number;
     int timeBetweenStations;
-    LinkedList<Passenger*> NormalWaitingPassFwd;
+    LinkedList<Passenger *> NormalWaitingPassFwd;
     /* not the best data structure was needed to implement promotePassenger function */
-    LinkedList<Passenger*> NormalWaitingPassBwd;
-    PriorityQueue<Passenger*> SpecialWaitingPassFwd;
-    PriorityQueue<Passenger*> SpecialWaitingPassBwd;
-    LinkedQueue<Passenger*> WChairWaitingPassFwd;
-    LinkedQueue<Passenger*> WChairWaitingPassBwd;
+    LinkedList<Passenger *> NormalWaitingPassBwd;
+    PriorityQueue<Passenger *> SpecialWaitingPassFwd;
+    PriorityQueue<Passenger *> SpecialWaitingPassBwd;
+    LinkedQueue<Passenger *> WChairWaitingPassFwd;
+    LinkedQueue<Passenger *> WChairWaitingPassBwd;
     LinkedQueue<Bus *> AvailableBuses;
     LinkedList<Passenger *> FinishList;
     LinkedQueue<Bus *> NormalPassengersMovingBusesForward;
@@ -166,39 +166,43 @@ public:
     {
         int promotedPassCount = 0;
         LinkedQueue<Passenger *> promotePassengers;
-        Node<Passenger*> *pass = NormalWaitingPassFwd.GetHead();
-        Node<Passenger *> *passenger = NormalWaitingPassBwd.GetHead();
-        while (pass != nullptr)
+        Node<Passenger *> *passFwd = NormalWaitingPassFwd.GetHead();
+        Node<Passenger *> *passBwd = NormalWaitingPassBwd.GetHead();
+        while (passFwd != nullptr)
         {
-            int waitingTime = time - pass->getItem()->getArrival();
+            int waitingTime = time - passFwd->getItem()->getArrival();
             if (waitingTime > maxW)
             {
                 promotedPassCount++;
-                promotePassengers.enqueue(pass);
+                promotePassengers.enqueue(passFwd->getItem());
+                passFwd = passFwd->getNext();
             }
+            else
+                passFwd = passFwd->getNext();
         }
         while (!promotePassengers.isEmpty())
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassFwd.DeleteNode(passenger);
-            Passenger psngr = *passenger;
-            SpecialWaitingPassFwd.priorityEnqueue(psngr);
+            SpecialWaitingPassFwd.priorityEnqueue(passenger);
         }
-        while (passenger != nullptr)
+        while (passBwd != nullptr)
         {
-            int waitingTime = time - passenger->getItem()->getArrival();
+            int waitingTime = time - passBwd->getItem()->getArrival();
             if (waitingTime > maxW)
             {
                 promotedPassCount++;
-                promotePassengers.enqueue(passenger);
+                promotePassengers.enqueue(passBwd->getItem());
+                passBwd = passBwd->getNext();
             }
+            else
+                passBwd = passBwd->getNext();
         }
         while (!promotePassengers.isEmpty())
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassBwd.DeleteNode(passenger);
-            Passenger psngr = *passenger;
-            SpecialWaitingPassBwd.priorityEnqueue(psngr);
+            SpecialWaitingPassBwd.priorityEnqueue(passenger);
         }
 
         return promotedPassCount;
