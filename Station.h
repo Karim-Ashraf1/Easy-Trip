@@ -123,20 +123,7 @@ public:
             current = current->getNext();
         }
     }
-
-    void busFromMovingToWaiting(Station *StationsArray, Bus bus, string Filename)
-    {
-        int y;
-        int *movingtime = ConvertToInt((GetFileLine(Filename, 1, 'O')));
-        y = *(movingtime + 1);
-        if (bus.getMovingTime() == y)
-        {
-            bus.setCurrentStation((bus.getCurrentStation() + 1));
-            Station station = StationsArray[bus.getCurrentStation()];
-            bus.checkEndStationAndRemove(station, Filename);
-        }
-    }
-
+    
     void addBusses(Bus *bus)
     {
         if (bus->getdirection() == 'F' && bus->getType() == "MBus")
