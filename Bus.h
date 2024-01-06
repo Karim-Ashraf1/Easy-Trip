@@ -93,11 +93,12 @@ public:
     int getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
 
-    int BusUtilization(int tDC, int Bcapacity, int N, Time tBT, Time TSim)
+    int BusUtilization()
     {
-        Time time = (tBT / TSim);
+        Time time;
+        time.convertTotalMinutesToTime(tBT / TSim);
         int minutes = time.calculateTotalMinutes();
-        int x = (tDC / (Bcapacity)*N);
+        int x = (tDC / (Capacity)*N);
         return (x * minutes * 100);
     };
 

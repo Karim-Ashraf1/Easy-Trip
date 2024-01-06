@@ -33,6 +33,7 @@ private:
     int checkup_durations_Mb;
     int TimeFromStationToStation;
     int numberOfStations;
+    int promotedPassengers;
 
     // class' functions
     void MoveBusFromGarage(int Time)
@@ -150,16 +151,60 @@ public:
     void Output()
     {
         ofstream outFile("output.txt");
-        Time time;
         outFile << "FT\t\t\t\tID\t\t\t\tAT\t\t\t\tWT\t\t\t\tTT" << endl; // FT -> Finish Time  AT -> Arrival Time  WT -> Waiting Time  TT -> Trip Time
-        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0;
+        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0, TotalPass = 0, TotalTrip = 0, MBus = 0, WBus = 0, totalBuses = 0, totalUtilize = 0;
         while (!FinishList.isEmpty())
         {
             Passenger *pass = FinishList.dequeue();
-            outFile << time.FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getId()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getArrival()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getWaitingTime()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getOFFTime() - pass->getArrival()) << "\t\t\t\t\n";
+
+            TotalWait += pass->getWaitingTime();
+            TotalTrip += (pass->getOFFTime() - pass->getArrival());
+            string passType = pass->getType();
+            if (passType == "NP")
+            {
+                NPCount++;
+            }
+            else if (passType == "SP")
+            {
+                SPCount++;
+            }
+            else
+            {
+                WPCount++;
+            }
         }
+        while (!GarageQueue.isEmpty())
+        {
+            Bus *bus = GarageQueue.dequeue();
+            string busType = bus->getType();
+            totalUtilize += bus->BusUtilization();
+            if (busType == "MBus")
+            {
+                MBus++;
+            }
+            else
+            {
+                WBus++;
+            }
+        }
+
+        TotalPass = NPCount + SPCount + WPCount;
+        outFile << "Total Passengers : " << TotalPass << "\t {NP :" << NPCount << "\t SP :" << SPCount << "\t WP :" << WPCount << "}\n";
+        outFile << "Avg Waiting Time for Passengers : " << FromTotalMinutesToString(TotalWait / TotalPass) << "\n";
+        outFile << "Avg Trip Time for Passengers : " << FromTotalMinutesToString(TotalTrip / TotalPass) << "\n";
+        outFile << "Auto Promoted Passengers : " << promotedPassengers / TotalPass * 100 << "%\n";
+
+        totalBuses = MBus + WBus;
+        outFile << "Buses : " << totalBuses << "\t {MBus :" << MBus << "\t WBus :" << WBus << "}\n";
+        outFile << "Avg Utilization : " << totalUtilize / totalBuses * 100 << "%\n";
     }
-    string FromTotalMinutesToString(int totalMinutes){
+    string FromTotalMinutesToString(int totalMinutes)
+    {
         Time resultTime;
 
         // Calculate hours and minutes
