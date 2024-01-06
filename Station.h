@@ -5,13 +5,13 @@
 #include "Bus.h"
 #include "LinkedList.h"
 
-
 class Station
 {
 private:
     int number;
     int timeBetweenStations;
-    LinkedList<Passenger *> NormalWaitingPassFwd; /* not the best data structure was needed to implement promotePassenger function*/
+    LinkedList<Passenger> NormalWaitingPassFwd;
+    /* not the best data structure was needed to implement promotePassenger function */
     LinkedList<Passenger *> NormalWaitingPassBwd;
     PriorityQueue<Passenger> SpecialWaitingPassFwd;
     PriorityQueue<Passenger> SpecialWaitingPassBwd;
@@ -46,11 +46,11 @@ public:
         return timeBetweenStations;
     }
 
-    void setNormalWaitingPassengersForward(const LinkedList<Passenger*> &passengers)
+    void setNormalWaitingPassengersForward(const LinkedList<Passenger *> &passengers)
     {
         NormalWaitingPassFwd = passengers;
     }
-    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger*> &passengers)
+    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger *> &passengers)
     {
         NormalWaitingPassBwd = passengers;
     }
@@ -75,11 +75,11 @@ public:
         AvailableBuses = busses;
     }
 
-    LinkedList<Passenger*> &getNormalWaitingPassengersForward()
+    LinkedList<Passenger *> &getNormalWaitingPassengersForward()
     {
         return NormalWaitingPassFwd;
     }
-    LinkedList<Passenger*> &getNormalWaitingPassengersBackward()
+    LinkedList<Passenger *> &getNormalWaitingPassengersBackward()
     {
         return NormalWaitingPassBwd;
     }
@@ -156,17 +156,16 @@ public:
     {
     }
 
-    void busFromMovingToWaiting(Station* StationsArray, Bus bus,string Filename)
+    void busFromMovingToWaiting(Station *StationsArray, Bus bus, string Filename)
     {
         int y;
-        int* movingtime=ConvertToInt((GetFileLine(Filename,1,'O')));
-        y=*(movingtime+1);
-        if(bus.getMovingTime()==y)
+        int *movingtime = ConvertToInt((GetFileLine(Filename, 1, 'O')));
+        y = *(movingtime + 1);
+        if (bus.getMovingTime() == y)
         {
-            bus.setCurrentStation((bus.getCurrentStation()+1));
-            Station station=StationsArray[bus.getCurrentStation()];
-            bus.checkEndStationAndRemove(station,Filename);
-
+            bus.setCurrentStation((bus.getCurrentStation() + 1));
+            Station station = StationsArray[bus.getCurrentStation()];
+            bus.checkEndStationAndRemove(station, Filename);
         }
     }
 
@@ -175,8 +174,8 @@ public:
         Bus *b;
         if (!AvailableBuses.isEmpty())
         {
-            b=AvailableBuses.peek();
-            b=AvailableBuses.dequeue();
+            b = AvailableBuses.peek();
+            b = AvailableBuses.dequeue();
             b->boardPassengers(*this);
             movingBusses.enqueue(b);
         }
@@ -249,25 +248,27 @@ public:
     {
         int promotedPassCount = 0;
         LinkedQueue<Passenger *> promotePassengers;
-        for (auto passenger : NormalWaitingPassFwd)
+        Node<Passenger> *pass = NormalWaitingPassFwd.GetHead();
+        Node<Passenger *> *passenger = NormalWaitingPassBwd.GetHead();
+        while (pass != nullptr)
         {
-            int waitingTime = time - passenger->getArrival();
+            int waitingTime = time - pass->getItem()->getArrival();
             if (waitingTime > maxW)
             {
                 promotedPassCount++;
-                promotePassengers.enqueue(passenger);
+                promotePassengers.enqueue(pass);
             }
         }
         while (!promotePassengers.isEmpty())
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassFwd.DeleteNode(passenger);
-            Passenger psngr=*passenger;
+            Passenger psngr = *passenger;
             SpecialWaitingPassFwd.priorityEnqueue(psngr);
         }
-        for (auto passenger : NormalWaitingPassBwd)
+        while (passenger != nullptr)
         {
-            int waitingTime = time - passenger->getArrival();
+            int waitingTime = time - passenger->getItem()->getArrival();
             if (waitingTime > maxW)
             {
                 promotedPassCount++;
@@ -278,7 +279,7 @@ public:
         {
             Passenger *passenger = promotePassengers.dequeue();
             NormalWaitingPassBwd.DeleteNode(passenger);
-            Passenger psngr=*passenger;
+            Passenger psngr = *passenger;
             SpecialWaitingPassBwd.priorityEnqueue(psngr);
         }
 
@@ -286,20 +287,25 @@ public:
     }
 
     // checks if there are busses Nedded in the station
-    bool BusNeeded(Bus *bus){
-        if(bus->getType() == "MBus"){
-            if (bus->getdirection() =='F')
-                return !NormalWaitingPassFwd.IsEmpty() || !SpecialWaitingPassFwd.isEmpty();// if there waitng Normal FWD passenger returns true
-            else{
-                return !NormalWaitingPassBwd.IsEmpty() || !SpecialWaitingPassBwd.isEmpty();// if there waitng Normal BWD passenger returns true
+    bool BusNeeded(Bus *bus)
+    {
+        if (bus->getType() == "MBus")
+        {
+            if (bus->getdirection() == 'F')
+                return !NormalWaitingPassFwd.IsEmpty() || !SpecialWaitingPassFwd.isEmpty(); // if there waitng Normal FWD passenger returns true
+            else
+            {
+                return !NormalWaitingPassBwd.IsEmpty() || !SpecialWaitingPassBwd.isEmpty(); // if there waitng Normal BWD passenger returns true
             }
         }
-        else {
-            if (bus->getdirection() =='F')
-                return !WChairWaitingPassFwd.isEmpty();// if there waitng WheelChair FWD passenger returns true
-            else{
-                return !WChairWaitingPassBwd.isEmpty();// if there waitng WheelChair BWD passenger returns true
+        else
+        {
+            if (bus->getdirection() == 'F')
+                return !WChairWaitingPassFwd.isEmpty(); // if there waitng WheelChair FWD passenger returns true
+            else
+            {
+                return !WChairWaitingPassBwd.isEmpty(); // if there waitng WheelChair BWD passenger returns true
             }
         }
-        }
+    }
 };
