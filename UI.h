@@ -30,6 +30,13 @@ public:
             return;
         }
         cout << "Time =  "<< time/60 << ":" << time%60 <<endl;
+        Node<Bus*> *BusData= CheckupMbus.peek();
+            while (BusData!=nullptr)
+            {
+                cout<<BusData->getItem()->getId()<<", ";
+                BusData=BusData->getNext();
+            }
+            
         for (Bus* bus : CheckupMbus){
             cout << bus->getId()<< ", ";
         }
