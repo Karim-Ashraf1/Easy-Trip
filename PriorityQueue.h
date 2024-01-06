@@ -19,11 +19,15 @@ public:
 	int getPriority(const T &entry) const;
 	T dequeue();
 	T peek() const;
-
+	Node<T>* getFrontPtr() const;
 	~PriorityQueue();
 };
 
-
+	template <typename T>
+ const Node<T>* getFrontPtr() 
+    {
+        return frontPtr;
+    }
 
 /*
 Function: Queue()
