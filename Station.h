@@ -45,6 +45,36 @@ public:
     {
         return timeBetweenStations;
     }
+    LinkedQueue<Bus *> getNormalPassengersMovingBusesForward(){
+        return NormalPassengersMovingBusesForward;
+    }
+    LinkedQueue<Bus *> getNormalPassengersMovingBusesBackward(){
+        return NormalPassengersMovingBusesBackward;
+    }
+    LinkedQueue<Bus *> getWheelchairPassengersMovingBusesForward(){
+        return WheelchairPassengersMovingBusesForward;
+    }
+      LinkedQueue<Bus *> getWheelchairPassengersMovingBusesBackward(){
+        return WheelchairPassengersMovingBusesBackward;
+    }
+    LinkedList<Passenger *> getNormalWaitingPassengersForward(){
+        return NormalWaitingPassFwd;
+    }
+    LinkedList<Passenger *> getNormalWaitingPassengersBackward(){
+        return NormalWaitingPassBwd;
+    }
+    PriorityQueue<Passenger *> getSpecialWaitingPassFwd(){
+        return SpecialWaitingPassFwd;
+    }
+    PriorityQueue<Passenger *> getSpecialWaitingPassBwd(){
+        return SpecialWaitingPassBwd;
+    }
+    LinkedQueue<Passenger *> getWChairWaitingPassFwd(){
+        return WChairWaitingPassFwd;
+    }
+     LinkedQueue<Passenger *> getWChairWaitingPassBwd(){
+        return WChairWaitingPassBwd;
+    }
     Station()
     {
         number = 0;
@@ -53,12 +83,7 @@ public:
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
 
-    void AddToFinishList(Passenger psngr)
-    {
-        Passenger *pntr;
-        pntr = &psngr;
-        FinishList.InsertEnd(pntr);
-    }
+
     template <typename T>
     void printFinishListAttributes() const
     {

@@ -15,6 +15,7 @@ private:
     int startStation;
     int endStation;
     int priority;
+    int OnTime;
     int OFFTime;
     int maxW;
     int arrival;
@@ -36,6 +37,7 @@ public:
     int getStartStation() const { return startStation; }
     int getEndStation() const { return endStation; }
     int getOFFTime() const { return OFFTime; }
+    int getOnTime() const { return OnTime; }
     int getMaxWait() const { return maxW; }
     // int getWaitingTime() const { return OnTime.getMinutes() - arrival; }
     int getArrival() const { return arrival; }
@@ -50,8 +52,8 @@ public:
     void setId(int idx) { id = idx; }
     void setStartStation(int startStationx) { startStation = startStationx; }
     void setEndStation(int endStationx) { endStation = endStationx; }
-    void setOFFTime(int getOFFTimex) { OFFTime = getOFFTimex; }
-
+    void setOFFTime(int OFFTimex) { OFFTime = OFFTimex; }
+    void setOnTime(int OnTimex) { OnTime = OnTimex; }
     void setMaxWTime(int maxw, const string &filename)
     {
         maxw = *(ConvertToInt(GetFileLine(filename, 5, 'O')));

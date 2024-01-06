@@ -37,6 +37,48 @@ private:
     int MaxWaitingTime;
 
     // class' functions
+
+    void boardPassengers(int time, string Filename)
+	{
+		for (int i = 0; i < numberOfStations; i++) {
+            Station Station=StationsArray[i];
+            // Loop through NormalPassengersMovingBusesForward
+            LinkedQueue<Bus *> &normalMovingBusesForward = Station.getNormalPassengersMovingBusesForward();
+                while (!normalMovingBusesForward.isEmpty()) {
+                 Bus *bus = normalMovingBusesForward.dequeue();
+                 Bus Bus=*bus;
+                Bus.boardPassengers(Station,Filename,time);
+                }
+
+                // Loop through NormalPassengersMovingBusesBackward
+            LinkedQueue<Bus *> &normalMovingBusesBackward =Station.getNormalPassengersMovingBusesBackward();
+            while (!normalMovingBusesBackward.isEmpty()) {
+                Bus *bus = normalMovingBusesBackward.dequeue();
+                Bus Bus=*bus;
+                Bus.boardPassengers(Station,Filename,time);
+            }             
+
+                // Loop through WheelchairPassengersMovingBusesForward
+            LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
+                while (!wheelchairMovingBusesForward.isEmpty()) {
+                    Bus *bus = wheelchairMovingBusesForward.dequeue();
+                    Bus Bus=*bus;
+                    Bus.boardPassengers(Station,Filename,time);
+                }
+
+                // Loop through WheelchairPassengersMovingBusesBackward
+            LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
+                while (!wheelchairMovingBusesBackward.isEmpty()) {
+                    Bus *bus = wheelchairMovingBusesBackward.dequeue();
+                    Bus Bus=*bus;
+                    Bus.boardPassengers(Station,Filename,time);
+                }
+
+
+            }
+        
+    };
+
     void MoveBusFromGarage(int Time)
     {
         if (Time < 240)
@@ -149,7 +191,7 @@ public:
             // 9) boarding passengers accourding to their piriority
             // 10) bus from waiting in station to movingbusses list
             // 11) print output screen
-
+            boardPassengers(time, fileName);//loop through all the busses an all the stations and board the passengers
             ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);
 
             time++; //  increment time

@@ -170,8 +170,9 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station station, string Filename)
+    void checkEndStationAndRemove(Station *StationsArray, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
     {
+        Station station=StationsArray[CurrentStation];
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
@@ -196,8 +197,11 @@ public:
                     // Update the current load of the bus
                     setCurrentLoad(getCurrentLoad() - 1);
 
+                    //set the passenger get off time as current time
+                    psngr.setOFFTime(currenttime);
+
                     // Add the removed passenger to the finish list of the station
-                    station.AddToFinishList(*pntr);
+                    FinishList.enqueue(pntr);
                 }
 
                 // Move to the next node in the linked list
@@ -207,9 +211,9 @@ public:
     }
 
     template <typename QueueType>
-    void loadPassengersToBus(QueueType &waitingPassengers)
+    void loadPassengersToBus(QueueType &waitingPassengers, int currenttime)
     {
-        int maxPassengers = 45;
+        int maxPassengers = Capacity;
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
@@ -219,7 +223,8 @@ public:
             {
                 // Add the pointer to the passenger to the bus's linked list
                 Passengers.InsertEnd(&nextPassenger);
-
+                //set the passenger get on time as current time
+                nextPassenger.setOnTime(currenttime)
                 setCurrentLoad(getCurrentLoad() + 1);
 
                 // Decrease available seats and continue the loop
@@ -228,7 +233,7 @@ public:
         }
     }
 
-    void Bus::boardPassengers(Station &station, string Filename)
+    void Bus::boardPassengers(Station &station, string Filename, int currenttime)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -242,12 +247,13 @@ public:
                 if (getType() == "NP")
                 {
                     // Normal bus
-                    loadPassengersToBus(station.getNormalWaitingPassengersForward());
+                    loadPassengersToBus(station.getSpecialWaitingPassFwd(), currenttime);
+                    loadPassengersToBus(station.getNormalWaitingPassengersForward(), currenttime);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    loadPassengersToBus(station.getWheelchairWaitingPassengersForwards());
+                    loadPassengersToBus(station.getWChairWaitingPassFwd(), currenttime);
                 }
             }
             else if (getdirection() == 'B')
@@ -256,12 +262,13 @@ public:
                 if (getType() == "NP")
                 {
                     // Normal bus
-                    loadPassengersToBus(station.getNormalWaitingPassengersBackward());
+                    loadPassengersToBus(station.getSpecialWaitingPassFwd(), currenttime);
+                    loadPassengersToBus(station.getNormalWaitingPassengersBackward(), currenttime);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    loadPassengersToBus(station.getWheelchairWaitingPassengersBackwards());
+                    loadPassengersToBus(station.getWChairWaitingPassBwd(), currenttime);
                 }
             }
         }
