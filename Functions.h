@@ -92,7 +92,7 @@ int* CalcCapacity(const string& fileName){
     if (file.fail())
     {
         cout << "File failed to open." << endl;
-        return;
+        return 0;
     }
 
     int current_line = 0;
@@ -134,7 +134,7 @@ string* GetFileLine(const string& fileName,int lineNum,char Functionality/*R to 
     if (file.fail())
     {
         cout << "File failed to open." << endl;
-        return;
+        return 0;
     }
 
 

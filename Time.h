@@ -95,17 +95,7 @@ public:
         return result;
     }
 
-    Time operator*(int multiplier) const {
-        int totalMinutes = hours * 60 + minutes;
-        totalMinutes *= multiplier;
-
-        Time resultTime;
-        resultTime.hours = totalMinutes / 60;
-        resultTime.minutes = totalMinutes % 60;
-
-        return resultTime;
-    }
-
+    
     Time simulateTimePassage(int minutesPassed) const {
         Time newTime = *this;
 

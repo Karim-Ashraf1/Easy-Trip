@@ -23,11 +23,11 @@ public:
 	~PriorityQueue();
 };
 
-	template <typename T>
- const Node<T>* getFrontPtr() 
-    {
+template <typename T>
+const Node<T>* getFrontPtr() 
+{
         return frontPtr;
-    }
+}
 
 /*
 Function: Queue()

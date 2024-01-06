@@ -89,7 +89,6 @@ public:
     int getCapacity() { return Capacity; }
     int getN() { return N; }
     static int getTDC() { return tDC; }
-    int getCapacity() { return Capacity; }
     int getTBT() { return tBT; }
     int getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
