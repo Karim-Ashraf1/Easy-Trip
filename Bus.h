@@ -170,9 +170,8 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station *StationsArray, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
+    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
     {
-        Station station=StationsArray[CurrentStation];
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
         loop = 60 / BoardingTime;
