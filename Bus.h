@@ -176,7 +176,7 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station station, string Filename, int currenttime, LinkedQueue<Passenger *> FinishList)
+    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -202,16 +202,16 @@ public:
                     // Update the current load of the bus
                     setCurrentLoad(getCurrentLoad() - 1);
 
-                    // set the passenger get off time as current time
+                    //set the passenger get off time as current time
                     psngr.setOFFTime(currenttime);
 
                     // Add the removed passenger to the finish list of the station
                     FinishList.enqueue(pntr);
-                    if (psngr.getOFFTime() > LastOffTime)
-                    {
-                        LastOffTime = psngr.getOFFTime();
-                        BusyTime = LastOffTime - FirstOnTime;
+                    if(psngr.getOFFTime()>LastOffTime){
+                        LastOffTime=psngr.getOFFTime();
+                        BusyTime=LastOffTime-FirstOnTime;
                     }
+                
                 }
 
                 // Move to the next node in the linked list
@@ -219,9 +219,7 @@ public:
             }
         }
     }
-
-    template <typename QueueType>
-    void loadPassengersToBus(QueueType &waitingPassengers, int currenttime)
+    void loadChairPassengersToBus(LinkedQueue <Passenger*>& waitingPassengers, int currenttime)
     {
         int maxPassengers = Capacity;
         int availableSeats = maxPassengers - getCurrentLoad();
@@ -229,25 +227,76 @@ public:
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
         {
             Passenger nextPassenger;
-            if (waitingPassengers.dequeue(nextPassenger))
-            {
+
+
+            nextPassenger = *waitingPassengers.dequeue();
+            // Add the pointer to the passenger to the bus's linked list
+            Passengers.InsertEnd(&nextPassenger);
+            //set the passenger get on time as current time
+            nextPassenger.setOnTime(currenttime);
+            setCurrentLoad(getCurrentLoad() + 1);
+
+            // Decrease available seats and continue the loop
+            availableSeats--;
+            if (nextPassenger.getOnTime() < FirstOnTime) {
+                FirstOnTime = nextPassenger.getOnTime();
+            }
+
+        }
+    }
+    
+    void loadNormalPassengersToBus(LinkedList <Passenger*> &waitingPassengers, int currenttime)
+    {
+        int maxPassengers = Capacity;
+        int availableSeats = maxPassengers - getCurrentLoad();
+
+        while (availableSeats > 0 && !waitingPassengers.IsEmpty())
+        {
+            Passenger nextPassenger;
+            
+            
+                nextPassenger = *waitingPassengers.GetHead()->getItem();
                 // Add the pointer to the passenger to the bus's linked list
                 Passengers.InsertEnd(&nextPassenger);
-                // set the passenger get on time as current time
-                nextPassenger.setOnTime(currenttime)
-                    setCurrentLoad(getCurrentLoad() + 1);
+                //set the passenger get on time as current time
+                nextPassenger.setOnTime(currenttime);
+                setCurrentLoad(getCurrentLoad() + 1);
 
                 // Decrease available seats and continue the loop
                 availableSeats--;
-                if (nextPassenger.getOnTime() < FirstOnTime)
-                {
-                    FirstOnTime = nextPassenger.getOnTime()
+                if(nextPassenger.getOnTime()<FirstOnTime){
+                    FirstOnTime = nextPassenger.getOnTime();
                 }
+            
+        }
+    }
+    void loadSpecialPassengersToBus(PriorityQueue <Passenger*>& waitingPassengers, int currenttime)
+    {
+        int maxPassengers = Capacity;
+        int availableSeats = maxPassengers - getCurrentLoad();
+
+        while (availableSeats > 0 && !waitingPassengers.isEmpty())
+        {
+            Passenger nextPassenger;
+
+
+            nextPassenger = *waitingPassengers.dequeue();
+            // Add the pointer to the passenger to the bus's linked list
+            Passengers.InsertEnd(&nextPassenger);
+            //set the passenger get on time as current time
+            nextPassenger.setOnTime(currenttime);
+            setCurrentLoad(getCurrentLoad() + 1);
+
+            // Decrease available seats and continue the loop
+            availableSeats--;
+            if (nextPassenger.getOnTime() < FirstOnTime) {
+                FirstOnTime = nextPassenger.getOnTime();
             }
+
         }
     }
 
-    void Bus::boardPassengers(Station &station, string Filename, int currenttime)
+    void boardPassengers(Station &station, string Filename, int currenttime)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -260,14 +309,17 @@ public:
                 // Forward direction
                 if (getType() == "NP")
                 {
+                    PriorityQueue<Passenger*> queue= station.getSpecialWaitingPassFwd();
                     // Normal bus
-                    loadPassengersToBus(station.getSpecialWaitingPassFwd(), currenttime);
-                    loadPassengersToBus(station.getNormalWaitingPassengersForward(), currenttime);
+                    loadSpecialPassengersToBus(queue, currenttime);
+                    LinkedList <Passenger*> List = station.getNormalWaitingPassengersForward();
+                    loadNormalPassengersToBus(List, currenttime);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    loadPassengersToBus(station.getWChairWaitingPassFwd(), currenttime);
+                    LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassFwd();
+                    loadChairPassengersToBus(Lqueue, currenttime);
                 }
             }
             else if (getdirection() == 'B')
@@ -276,13 +328,16 @@ public:
                 if (getType() == "NP")
                 {
                     // Normal bus
-                    loadPassengersToBus(station.getSpecialWaitingPassFwd(), currenttime);
-                    loadPassengersToBus(station.getNormalWaitingPassengersBackward(), currenttime);
+                    PriorityQueue<Passenger*> queue = station.getSpecialWaitingPassBwd();
+                    loadSpecialPassengersToBus(queue, currenttime);
+                    LinkedList <Passenger*> List = station.getNormalWaitingPassengersBackward();
+                    loadNormalPassengersToBus(List, currenttime);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    loadPassengersToBus(station.getWChairWaitingPassBwd(), currenttime);
+                    LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassBwd();
+                    loadChairPassengersToBus(Lqueue, currenttime);
                 }
             }
         }
