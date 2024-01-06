@@ -30,23 +30,26 @@ public:
             return;
         }
         cout << "Time =  "<< time/60 << ":" << time%60 <<endl;
-        Node<Bus*> *BusData= CheckupMbus.getFrontPtr();
-            while (BusData!=nullptr)
-            {
-                cout<<BusData->getItem()->getId()<<", ";
-                BusData=BusData->getNext();
-            }
-            
-        for (Bus* bus : CheckupMbus){
-            cout << bus->getId()<< ", ";
+        Node<Bus*> *MBusData= CheckupMbus.getFrontPtr();
+        Node<Bus*> *WBusData= CheckupMbus.getFrontPtr();
+        Node<Passenger*> *PassengerData= FinishedPassenger.getFrontPtr();
+
+        while (MBusData!=nullptr)
+        {
+            cout<<MBusData->getItem()->getId()<<", ";
+            MBusData=MBusData->getNext();
         }
-        for (Bus* bus : CheckupWBus){
-            cout << bus->getId()<<", ";
+        while (WBusData!=nullptr)
+        {
+            cout<<WBusData->getItem()->getId()<<", ";
+            WBusData=WBusData->getNext();
         }
         cout <<"\n *******************************"<<endl;
         cout<<FinishedPassenger.getSize()<<"Finished Passengers : ";
-        for (auto Passenger : FinishedPassenger){
-            cout<<Passenger->getId()<<", ";
+        while (PassengerData!=nullptr)
+        {
+            cout<<PassengerData->getItem()->getId()<<", ";
+            PassengerData=PassengerData->getNext();
         }
         cout<<endl;
         system("pause");
