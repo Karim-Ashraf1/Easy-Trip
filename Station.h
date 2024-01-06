@@ -46,7 +46,7 @@ public:
         return timeBetweenStations;
     }
 
-    void setNormalWaitingPassengersForward(const LinkedList<Passenger *> &passengers)
+    void setNormalWaitingPassengersForward(const LinkedList<Passenger> &passengers)
     {
         NormalWaitingPassFwd = passengers;
     }
@@ -75,7 +75,7 @@ public:
         AvailableBuses = busses;
     }
 
-    LinkedList<Passenger *> &getNormalWaitingPassengersForward()
+    LinkedList<Passenger> &getNormalWaitingPassengersForward()
     {
         return NormalWaitingPassFwd;
     }
@@ -152,10 +152,6 @@ public:
         }
     }
 
-    void moveBusFromMovingToWaiting()
-    {
-    }
-
     void busFromMovingToWaiting(Station *StationsArray, Bus bus, string Filename)
     {
         int y;
@@ -166,22 +162,6 @@ public:
             bus.setCurrentStation((bus.getCurrentStation() + 1));
             Station station = StationsArray[bus.getCurrentStation()];
             bus.checkEndStationAndRemove(station, Filename);
-        }
-    }
-
-    void moveBusFromWatingToMoving()
-    {
-        Bus *b;
-        if (!AvailableBuses.isEmpty())
-        {
-            b = AvailableBuses.peek();
-            b = AvailableBuses.dequeue();
-            b->boardPassengers(*this);
-            movingBusses.enqueue(b);
-        }
-        else
-        {
-            cout << "No Busses is waiting";
         }
     }
 
