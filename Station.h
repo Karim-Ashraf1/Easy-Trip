@@ -10,13 +10,13 @@ class Station
 private:
     int number;
     int timeBetweenStations;
-    LinkedList<Passenger> NormalWaitingPassFwd;
+    LinkedList<Passenger*> NormalWaitingPassFwd;
     /* not the best data structure was needed to implement promotePassenger function */
-    LinkedList<Passenger *> NormalWaitingPassBwd;
-    PriorityQueue<Passenger> SpecialWaitingPassFwd;
-    PriorityQueue<Passenger> SpecialWaitingPassBwd;
-    LinkedQueue<Passenger> WChairWaitingPassFwd;
-    LinkedQueue<Passenger> WChairWaitingPassBwd;
+    LinkedList<Passenger*> NormalWaitingPassBwd;
+    PriorityQueue<Passenger*> SpecialWaitingPassFwd;
+    PriorityQueue<Passenger*> SpecialWaitingPassBwd;
+    LinkedQueue<Passenger*> WChairWaitingPassFwd;
+    LinkedQueue<Passenger*> WChairWaitingPassBwd;
     LinkedQueue<Bus *> AvailableBuses;
     LinkedList<Passenger *> FinishList;
     LinkedQueue<Bus *> NormalPassengersMovingBusesForward;
@@ -44,68 +44,6 @@ public:
     int getTimeBetweenStations() const
     {
         return timeBetweenStations;
-    }
-
-    void setNormalWaitingPassengersForward(const LinkedList<Passenger> &passengers)
-    {
-        NormalWaitingPassFwd = passengers;
-    }
-    void setNormalWaitingPassengersBackrward(const LinkedList<Passenger *> &passengers)
-    {
-        NormalWaitingPassBwd = passengers;
-    }
-    void setSpecialWaitingPassengersForward(const PriorityQueue<Passenger> &passengers)
-    {
-        SpecialWaitingPassFwd = passengers;
-    }
-    void setSpecialWaitingPassengersBackward(const PriorityQueue<Passenger> &passengers)
-    {
-        SpecialWaitingPassBwd = passengers;
-    }
-    void setWheelchairWaitingPassengersForwards(const LinkedQueue<Passenger> &passengers)
-    {
-        WChairWaitingPassFwd = passengers;
-    }
-    void setWheelchairWaitingPassengersBackwards(const LinkedQueue<Passenger> &passengers)
-    {
-        WChairWaitingPassBwd = passengers;
-    }
-    void setAvailableBusses(const LinkedQueue<Bus *> &busses)
-    {
-        AvailableBuses = busses;
-    }
-
-    LinkedList<Passenger> &getNormalWaitingPassengersForward()
-    {
-        return NormalWaitingPassFwd;
-    }
-    LinkedList<Passenger *> &getNormalWaitingPassengersBackward()
-    {
-        return NormalWaitingPassBwd;
-    }
-    PriorityQueue<Passenger> &getSpecialWaitingPassengersForward()
-    {
-        return SpecialWaitingPassFwd;
-    }
-    PriorityQueue<Passenger> &getSpecialWaitingPassengersBackward()
-    {
-        return SpecialWaitingPassBwd;
-    }
-    LinkedQueue<Passenger> &getWheelchairWaitingPassengersForwards()
-    {
-        return WChairWaitingPassFwd;
-    }
-    LinkedQueue<Passenger> &getWheelchairWaitingPassengersBackwards()
-    {
-        return WChairWaitingPassBwd;
-    }
-    LinkedQueue<Bus *> &getAvailableBusses()
-    {
-        return AvailableBuses;
-    }
-    LinkedList<Passenger *> &getFinishlist()
-    {
-        return FinishList;
     }
     Station()
     {
@@ -204,22 +142,22 @@ public:
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                SpecialWaitingPassFwd.priorityEnqueue(*psngr);
+                SpecialWaitingPassFwd.priorityEnqueue(psngr);
             }
             else
             {
-                SpecialWaitingPassBwd.priorityEnqueue(*psngr);
+                SpecialWaitingPassBwd.priorityEnqueue(psngr);
             }
         }
         if (PassengerType == "WP")
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
-                WChairWaitingPassFwd.enqueue(*psngr);
+                WChairWaitingPassFwd.enqueue(psngr);
             }
             else
             {
-                WChairWaitingPassBwd.enqueue(*psngr);
+                WChairWaitingPassBwd.enqueue(psngr);
             }
         }
     }
@@ -228,7 +166,7 @@ public:
     {
         int promotedPassCount = 0;
         LinkedQueue<Passenger *> promotePassengers;
-        Node<Passenger> *pass = NormalWaitingPassFwd.GetHead();
+        Node<Passenger*> *pass = NormalWaitingPassFwd.GetHead();
         Node<Passenger *> *passenger = NormalWaitingPassBwd.GetHead();
         while (pass != nullptr)
         {
