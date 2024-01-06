@@ -45,34 +45,44 @@ public:
     {
         return timeBetweenStations;
     }
-    LinkedQueue<Bus *> getNormalPassengersMovingBusesForward(){
+    LinkedQueue<Bus *> getNormalPassengersMovingBusesForward()
+    {
         return NormalPassengersMovingBusesForward;
     }
-    LinkedQueue<Bus *> getNormalPassengersMovingBusesBackward(){
+    LinkedQueue<Bus *> getNormalPassengersMovingBusesBackward()
+    {
         return NormalPassengersMovingBusesBackward;
     }
-    LinkedQueue<Bus *> getWheelchairPassengersMovingBusesForward(){
+    LinkedQueue<Bus *> getWheelchairPassengersMovingBusesForward()
+    {
         return WheelchairPassengersMovingBusesForward;
     }
-      LinkedQueue<Bus *> getWheelchairPassengersMovingBusesBackward(){
+    LinkedQueue<Bus *> getWheelchairPassengersMovingBusesBackward()
+    {
         return WheelchairPassengersMovingBusesBackward;
     }
-    LinkedList<Passenger *> getNormalWaitingPassengersForward(){
+    LinkedList<Passenger *> getNormalWaitingPassengersForward()
+    {
         return NormalWaitingPassFwd;
     }
-    LinkedList<Passenger *> getNormalWaitingPassengersBackward(){
+    LinkedList<Passenger *> getNormalWaitingPassengersBackward()
+    {
         return NormalWaitingPassBwd;
     }
-    PriorityQueue<Passenger *> getSpecialWaitingPassFwd(){
+    PriorityQueue<Passenger *> getSpecialWaitingPassFwd()
+    {
         return SpecialWaitingPassFwd;
     }
-    PriorityQueue<Passenger *> getSpecialWaitingPassBwd(){
+    PriorityQueue<Passenger *> getSpecialWaitingPassBwd()
+    {
         return SpecialWaitingPassBwd;
     }
-    LinkedQueue<Passenger *> getWChairWaitingPassFwd(){
+    LinkedQueue<Passenger *> getWChairWaitingPassFwd()
+    {
         return WChairWaitingPassFwd;
     }
-     LinkedQueue<Passenger *> getWChairWaitingPassBwd(){
+    LinkedQueue<Passenger *> getWChairWaitingPassBwd()
+    {
         return WChairWaitingPassBwd;
     }
     Station()
@@ -82,7 +92,6 @@ public:
     }
     Station(int number, int timeBetweenStations)
         : number(number), timeBetweenStations(timeBetweenStations) {}
-
 
     template <typename T>
     void printFinishListAttributes() const
@@ -112,6 +121,19 @@ public:
 
             // Move to the next node in the linked list
             current = current->getNext();
+        }
+    }
+
+    void busFromMovingToWaiting(Station *StationsArray, Bus bus, string Filename)
+    {
+        int y;
+        int *movingtime = ConvertToInt((GetFileLine(Filename, 1, 'O')));
+        y = *(movingtime + 1);
+        if (bus.getMovingTime() == y)
+        {
+            bus.setCurrentStation((bus.getCurrentStation() + 1));
+            Station station = StationsArray[bus.getCurrentStation()];
+            bus.checkEndStationAndRemove(station, Filename);
         }
     }
 
@@ -170,6 +192,28 @@ public:
             else
             {
                 WChairWaitingPassBwd.enqueue(psngr);
+            }
+        }
+    }
+
+    void PassengerLeave(int ID)
+    {
+        Node<Passenger *> *rakeb = NormalWaitingPassFwd.GetHead();
+        Node<Passenger *> *passenger = NormalWaitingPassBwd.GetHead();
+        while (rakeb != nullptr)
+        {
+            if (rakeb->getItem()->getId() == ID)
+            {
+                NormalWaitingPassFwd.DeleteNode(rakeb->getItem());
+                return;
+            }
+        }
+        while (passenger != nullptr)
+        {
+            if (passenger->getItem()->getId() == ID)
+            {
+                NormalWaitingPassBwd.DeleteNode(passenger->getItem());
+                return;
             }
         }
     }
