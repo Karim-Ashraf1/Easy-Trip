@@ -18,7 +18,7 @@ public:
 	bool enqueue(const T &newEntry);
 	T dequeue();
 	int getSize() const;
-
+	 Node<T>* getFrontPtr() const;
 
 
 	T peek() const;
@@ -78,8 +78,11 @@ int LinkedQueue<T>::getSize() const
     return count;
 }
 
-
-
+	template <typename T>
+ const Node<T>* getFrontPtr() 
+    {
+        return frontPtr;
+    }
 
 
 
