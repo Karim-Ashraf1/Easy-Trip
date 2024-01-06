@@ -10,7 +10,8 @@ class Bus
 {
 private:
     int id;
-
+    int FirstOnTime,LastOffTime;
+    int BusyTime;
     int Capacity;
     int CurrentLoad;
     int maintenanceT; // for time
@@ -92,7 +93,8 @@ public:
     int getTBT() { return tBT; }
     int getTsim() { return TSim; }
     int getMovingTime() { return MovingTime; }
-
+    int getBusyTime(){ return BusyTime}
+    
     int BusUtilization()
     {
         Time time;
@@ -201,6 +203,11 @@ public:
 
                     // Add the removed passenger to the finish list of the station
                     FinishList.enqueue(pntr);
+                    if(psngr.getOFFTime()>LastOffTime){
+                        LastOffTime=psngr.getOFFTime();
+                        BusyTime=LastOffTime-FirstOnTime;
+                    }
+                
                 }
 
                 // Move to the next node in the linked list
@@ -228,6 +235,9 @@ public:
 
                 // Decrease available seats and continue the loop
                 availableSeats--;
+                if(nextPassenger.getOnTime()<FirstOnTime){
+                    FirstOnTime=nextPassenger.getOnTime()
+                }
             }
         }
     }

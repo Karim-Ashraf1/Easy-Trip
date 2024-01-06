@@ -228,7 +228,7 @@ public:
             // 9) boarding passengers accourding to their piriority
             // 10) bus from waiting in station to movingbusses list
             // 11) print output screen
-            GetPassengersOff(time,fileName);//loop through all busses in all stations and remove the passengers that have arrived at their destanation 
+            GetPassengersOff(time,fileName);//loop through all busses in all stations and remove the passengers that have arrived at their destination
             boardPassengers(time, fileName);//loop through all the busses an all the stations and board the passengers
             ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses);
 
