@@ -95,39 +95,39 @@ private:
         {
             Station Station = StationsArray[i];
             // Loop through NormalPassengersMovingBusesForward
-            LinkedQueue<Bus *> &normalMovingBusesForward = Station.getNormalPassengersMovingBusesForward();
-            while (!normalMovingBusesForward.isEmpty())
+            
+            while (!Station.getNormalPassengersMovingBusesForward().isEmpty())
             {
-                Bus *bus = normalMovingBusesForward.dequeue();
+                Bus *bus = Station.getNormalPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList,BoardingTime);
             }
 
             // Loop through NormalPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &normalMovingBusesBackward = Station.getNormalPassengersMovingBusesBackward();
-            while (!normalMovingBusesBackward.isEmpty())
+           
+            while (!Station.getNormalPassengersMovingBusesBackward().isEmpty())
             {
-                Bus *bus = normalMovingBusesBackward.dequeue();
+                Bus *bus = Station.getNormalPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time);
+                Bus.boardPassengers(Station, Filename, time,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesForward
-            LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
-            while (!wheelchairMovingBusesForward.isEmpty())
+            ;
+            while (!Station.getWheelchairPassengersMovingBusesForward().isEmpty())
             {
-                Bus *bus = wheelchairMovingBusesForward.dequeue();
+                Bus *bus = Station.getWheelchairPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
-            while (!wheelchairMovingBusesBackward.isEmpty())
+          
+            while (!Station.getWheelchairPassengersMovingBusesBackward().isEmpty())
             {
-                Bus *bus = wheelchairMovingBusesBackward.dequeue();
+                Bus *bus = Station.getWheelchairPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList);
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList,BoardingTime);
             }
         }
     }
@@ -138,39 +138,39 @@ private:
         {
             Station Station = StationsArray[i];
             // Loop through NormalPassengersMovingBusesForward
-            LinkedQueue<Bus *> &normalMovingBusesForward = Station.getNormalPassengersMovingBusesForward();
-            while (!normalMovingBusesForward.isEmpty())
+            
+            while (!Station.getNormalPassengersMovingBusesForward().isEmpty())
             {
-                Bus *bus = normalMovingBusesForward.dequeue();
+                Bus *bus = Station.getNormalPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time);
+                Bus.boardPassengers(Station, Filename, time,BoardingTime);
             }
 
             // Loop through NormalPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &normalMovingBusesBackward = Station.getNormalPassengersMovingBusesBackward();
-            while (!normalMovingBusesBackward.isEmpty())
+            
+            while (!Station.getNormalPassengersMovingBusesBackward().isEmpty())
             {
-                Bus *bus = normalMovingBusesBackward.dequeue();
+                Bus *bus =  Station.getNormalPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time);
+                Bus.boardPassengers(Station, Filename, time,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesForward
-            LinkedQueue<Bus *> &wheelchairMovingBusesForward = Station.getWheelchairPassengersMovingBusesForward();
-            while (!wheelchairMovingBusesForward.isEmpty())
+           
+            while (!Station.getWheelchairPassengersMovingBusesForward().isEmpty())
             {
-                Bus *bus = wheelchairMovingBusesForward.dequeue();
+                Bus *bus = Station.getWheelchairPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time);
+                Bus.boardPassengers(Station, Filename, time,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesBackward
-            LinkedQueue<Bus *> &wheelchairMovingBusesBackward = Station.getWheelchairPassengersMovingBusesBackward();
-            while (!wheelchairMovingBusesBackward.isEmpty())
+            
+            while (!Station.getWheelchairPassengersMovingBusesBackward().isEmpty())
             {
-                Bus *bus = wheelchairMovingBusesBackward.dequeue();
+                Bus *bus = Station.getWheelchairPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time);
+                Bus.boardPassengers(Station, Filename, time,BoardingTime);
             }
         }
     };
