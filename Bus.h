@@ -183,9 +183,9 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList)
+    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList, int BoardingTime)
     {
-        int BoardingTime = GetBoardingTime(Filename);
+        
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
@@ -226,9 +226,9 @@ public:
             }
         }
     }
-    void loadChairPassengersToBus(LinkedQueue <Passenger*>& waitingPassengers, int currenttime)
+    void loadChairPassengersToBus(LinkedQueue <Passenger*>& waitingPassengers, int currenttime, int maxPassengers)
     {
-        int maxPassengers = Capacity;
+       
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
@@ -252,9 +252,9 @@ public:
         }
     }
     
-    void loadNormalPassengersToBus(LinkedList <Passenger*> &waitingPassengers, int currenttime)
+    void loadNormalPassengersToBus(LinkedList <Passenger*> &waitingPassengers, int currenttime,int maxPassengers)
     {
-        int maxPassengers = Capacity;
+       
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.IsEmpty())
@@ -277,9 +277,9 @@ public:
             
         }
     }
-    void loadSpecialPassengersToBus(PriorityQueue <Passenger*>& waitingPassengers, int currenttime)
+    void loadSpecialPassengersToBus(PriorityQueue <Passenger*>& waitingPassengers, int currenttime,int maxPassengers)
     {
-        int maxPassengers = Capacity;
+       
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
@@ -303,7 +303,7 @@ public:
         }
     }
 
-    void boardPassengers(Station &station, string Filename, int currenttime)
+    void boardPassengers(Station &station, string Filename, int currenttime,int maxPassengers)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -318,15 +318,15 @@ public:
                 {
                     PriorityQueue<Passenger*> queue= station.getSpecialWaitingPassFwd();
                     // Normal bus
-                    loadSpecialPassengersToBus(queue, currenttime);
+                    loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
                     LinkedList <Passenger*> List = station.getNormalWaitingPassengersForward();
-                    loadNormalPassengersToBus(List, currenttime);
+                    loadNormalPassengersToBus(List, currenttime,maxPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
                     LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassFwd();
-                    loadChairPassengersToBus(Lqueue, currenttime);
+                    loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
                 }
             }
             else if (getdirection() == 'B')
@@ -336,15 +336,15 @@ public:
                 {
                     // Normal bus
                     PriorityQueue<Passenger*> queue = station.getSpecialWaitingPassBwd();
-                    loadSpecialPassengersToBus(queue, currenttime);
+                    loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
                     LinkedList <Passenger*> List = station.getNormalWaitingPassengersBackward();
-                    loadNormalPassengersToBus(List, currenttime);
+                    loadNormalPassengersToBus(List, currenttime, maxPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
                     LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassBwd();
-                    loadChairPassengersToBus(Lqueue, currenttime);
+                    loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
                 }
             }
         }
