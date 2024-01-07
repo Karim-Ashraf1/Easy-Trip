@@ -145,17 +145,17 @@ public:
     //     }
     // }
 
-    void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
-    {
-
-        Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
-
-        if (waitingStation != nullptr)
-        {
-
-            // currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
-        }
-    }
+    //void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+ //    {
+ //
+  //       Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
+ //
+ //        if (waitingStation != nullptr)
+ //        {
+  //
+ //             currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
+ //        }
+ //    }
 
     void JournyIncrement()
     {
