@@ -10,9 +10,8 @@ class Station
 private:
     int number;
     int timeBetweenStations;
-    LinkedList<Passenger *> NormalWaitingPassFwd;
-    /* not the best data structure was needed to implement promotePassenger function */
-    LinkedList<Passenger *> NormalWaitingPassBwd;
+    LinkedList<Passenger *> NormalWaitingPassFwd;/* not the best data structure was needed to implement promotePassenger function */
+    LinkedList<Passenger *> NormalWaitingPassBwd;/* not the best data structure was needed to implement promotePassenger function */
     PriorityQueue<Passenger *> SpecialWaitingPassFwd;
     PriorityQueue<Passenger *> SpecialWaitingPassBwd;
     LinkedQueue<Passenger *> WChairWaitingPassFwd;
@@ -309,5 +308,65 @@ public:
         }
         else
             return nullptr;
+    }
+    LinkedQueue<Bus *>LastStationHandlerNormal(){
+        LinkedQueue<Bus*> checkupBuses;
+        while (!NormalPassengersMovingBusesForward.isEmpty()){
+            Bus* bus = NormalPassengersMovingBusesForward.dequeue();
+            bus->JournyIncrement();
+            bus->setDirection('F');
+            if (bus->getIsCheckup()){
+                checkupBuses.enqueue(bus);
+            }
+            else{
+                NormalPassengersMovingBusesBackward.enqueue(bus);
+            }
+        }
+        return checkupBuses;
+    }
+    LinkedQueue<Bus *>LastStationHandlerWheel(){
+        LinkedQueue<Bus*> checkupBuses;
+        while (!WheelchairPassengersMovingBusesForward.isEmpty()){
+            Bus* bus = WheelchairPassengersMovingBusesForward.dequeue();
+            bus->JournyIncrement();
+            bus->setDirection('F');
+            if (bus->getIsCheckup()){
+                checkupBuses.enqueue(bus);
+            }
+            else{
+                WheelchairPassengersMovingBusesBackward.enqueue(bus);
+            }
+        }
+        return checkupBuses;
+    }
+    LinkedQueue<Bus *>FirstStationHandlerNormal(){
+        LinkedQueue<Bus*> checkupBuses;
+        while (!WheelchairPassengersMovingBusesBackward.isEmpty()){
+            Bus* bus = WheelchairPassengersMovingBusesBackward.dequeue();
+            bus->JournyIncrement();
+            bus->setDirection('B');
+            if (bus->getIsCheckup()){
+                checkupBuses.enqueue(bus);
+            }
+            else{
+                WheelchairPassengersMovingBusesForward.enqueue(bus);
+            }
+        }
+        return checkupBuses;
+    }
+    LinkedQueue<Bus *>FirstStationHandlerNormal(){
+        LinkedQueue<Bus*> checkupBuses;
+        while (!NormalPassengersMovingBusesForward.isEmpty()){
+            Bus* bus = NormalPassengersMovingBusesForward.dequeue();
+            bus->JournyIncrement();
+            bus->setDirection('B');
+            if (bus->getIsCheckup()){
+                checkupBuses.enqueue(bus);
+            }
+            else{
+                NormalPassengersMovingBusesBackward.enqueue(bus);
+            }
+        }
+        return checkupBuses;
     }
 };
