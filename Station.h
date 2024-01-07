@@ -123,7 +123,7 @@ public:
             current = current->getNext();
         }
     }
-    
+
     void addBusses(Bus *bus)
     {
         if (bus->getdirection() == 'F' && bus->getType() == "MBus")
@@ -273,5 +273,41 @@ public:
                 return !WChairWaitingPassBwd.isEmpty(); // if there waitng WheelChair BWD passenger returns true
             }
         }
+    }
+    Bus *removeNPFwdBus()
+    {
+        if (!NormalPassengersMovingBusesForward.isEmpty() && (!NormalPassengersMovingBusesForward.peek()->checkAddPassenger() || !BusNeeded(NormalPassengersMovingBusesForward.peek())))
+        {
+            return NormalPassengersMovingBusesForward.dequeue();
+        }
+        else
+            return nullptr;
+    }
+    Bus *removeWCPFwdBus()
+    {
+        if (!WheelchairPassengersMovingBusesForward.isEmpty() && (!WheelchairPassengersMovingBusesForward.peek()->checkAddPassenger() || !BusNeeded(WheelchairPassengersMovingBusesForward.peek())))
+        {
+            return WheelchairPassengersMovingBusesForward.dequeue();
+        }
+        else
+            return nullptr;
+    }
+    Bus *removeNPBwdBus()
+    {
+        if (!NormalPassengersMovingBusesBackward.isEmpty() && (!NormalPassengersMovingBusesBackward.peek()->checkAddPassenger() || !BusNeeded(NormalPassengersMovingBusesBackward.peek())))
+        {
+            return NormalPassengersMovingBusesBackward.dequeue();
+        }
+        else
+            return nullptr;
+    }
+    Bus *removeWCPFwdBus()
+    {
+        if (!WheelchairPassengersMovingBusesBackward.isEmpty() && (!WheelchairPassengersMovingBusesBackward.peek()->checkAddPassenger() || !BusNeeded(WheelchairPassengersMovingBusesBackward.peek())))
+        {
+            return WheelchairPassengersMovingBusesBackward.dequeue();
+        }
+        else
+            return nullptr;
     }
 };
