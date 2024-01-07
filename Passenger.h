@@ -7,6 +7,7 @@
 using namespace std;
 #include "LinkedQueue.h"
 #include "linkedlist.h"
+#include "Company.h"
 
 class Passenger
 {
@@ -54,12 +55,8 @@ public:
     void setEndStation(int endStationx) { endStation = endStationx; }
     void setOFFTime(int OFFTimex) { OFFTime = OFFTimex; }
     void setOnTime(int OnTimex) { OnTime = OnTimex; }
-    void setMaxWTime(int maxw, const string &filename)
-    {
-        maxw = *(ConvertToInt(GetFileLine(filename, 5, 'O')));
-        maxW = maxw;
-    }
-
+   
+   
 
 
 

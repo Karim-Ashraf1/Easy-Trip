@@ -162,6 +162,13 @@ public:
         {
             if (psngr->getStartStation() < psngr->getEndStation())
             {
+                if(psngr->getsubtype()=="aged"){
+
+
+                }
+                else if(psngr->getsubtype()=="POD"){
+
+                }
                 SpecialWaitingPassFwd.priorityEnqueue(psngr);
             }
             else
@@ -354,7 +361,7 @@ public:
         }
         return checkupBuses;
     }
-    LinkedQueue<Bus *>FirstStationHandlerNormal(){
+    LinkedQueue<Bus *>FirstStationHandlerNWheel(){
         LinkedQueue<Bus*> checkupBuses;
         while (!NormalPassengersMovingBusesForward.isEmpty()){
             Bus* bus = NormalPassengersMovingBusesForward.dequeue();
