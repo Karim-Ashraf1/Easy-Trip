@@ -301,9 +301,9 @@ public:
         }
     }
 
-    void boardPassengers(Station &station, string Filename, int currenttime, int maxPassengers)
+    void boardPassengers(Station &station, string Filename, int currenttime, int maxMixPassengers,int maxWheelPassengers, int BoardingTime)
     {
-        int BoardingTime = GetBoardingTime(Filename);
+        
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
@@ -316,15 +316,15 @@ public:
                 {
                     PriorityQueue<Passenger *> queue = station.getSpecialWaitingPassFwd();
                     // Normal bus
-                    loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
+                    loadSpecialPassengersToBus(queue, currenttime, maxMixPassengers);
                     LinkedList<Passenger *> List = station.getNormalWaitingPassengersForward();
-                    loadNormalPassengersToBus(List, currenttime, maxPassengers);
+                    loadNormalPassengersToBus(List, currenttime, maxMixPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
                     LinkedQueue<Passenger *> Lqueue = station.getWChairWaitingPassFwd();
-                    loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
+                    loadChairPassengersToBus(Lqueue, currenttime, maxWheelPassengers);
                 }
             }
             else if (getdirection() == 'B')
@@ -334,15 +334,15 @@ public:
                 {
                     // Normal bus
                     PriorityQueue<Passenger *> queue = station.getSpecialWaitingPassBwd();
-                    loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
+                    loadSpecialPassengersToBus(queue, currenttime, maxMixPassengers);
                     LinkedList<Passenger *> List = station.getNormalWaitingPassengersBackward();
-                    loadNormalPassengersToBus(List, currenttime, maxPassengers);
+                    loadNormalPassengersToBus(List, currenttime, maxMixPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
                     LinkedQueue<Passenger *> Lqueue = station.getWChairWaitingPassBwd();
-                    loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
+                    loadChairPassengersToBus(Lqueue, currenttime, maxWheelPassengers);
                 }
             }
         }

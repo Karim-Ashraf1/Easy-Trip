@@ -109,7 +109,7 @@ private:
             {
                 Bus *bus = Station.getNormalPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time,BoardingTime);
+                Bus.checkEndStationAndRemove(Station, Filename, time, FinishList,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesForward
@@ -143,7 +143,7 @@ private:
             {
                 Bus *bus = Station.getNormalPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time,BoardingTime);
+                Bus.boardPassengers(Station, Filename, time,MixedBusCapacity,WheelBusCapacity,BoardingTime);
             }
 
             // Loop through NormalPassengersMovingBusesBackward
@@ -152,7 +152,7 @@ private:
             {
                 Bus *bus =  Station.getNormalPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time,BoardingTime);
+                Bus.boardPassengers(Station, Filename, time,MixedBusCapacity,WheelBusCapacity,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesForward
@@ -161,7 +161,7 @@ private:
             {
                 Bus *bus = Station.getWheelchairPassengersMovingBusesForward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time,BoardingTime);
+                Bus.boardPassengers(Station, Filename, time,MixedBusCapacity,WheelBusCapacity,BoardingTime);
             }
 
             // Loop through WheelchairPassengersMovingBusesBackward
@@ -170,7 +170,7 @@ private:
             {
                 Bus *bus = Station.getWheelchairPassengersMovingBusesBackward().dequeue();
                 Bus Bus = *bus;
-                Bus.boardPassengers(Station, Filename, time,BoardingTime);
+                Bus.boardPassengers(Station, Filename, time,MixedBusCapacity,WheelBusCapacity,BoardingTime);
             }
         }
     };
