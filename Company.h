@@ -47,22 +47,48 @@ private:
         // create objects according to number of busses available
         for (int i = 0; i < MbusCount; i++)
         {
-            Bus *MixedBus = new Bus();
-            MixedBus->setDirection('F');
-            MixedBus->setType("MBus");
-            MixedBus->setMaintenanceJourney(journeysToCheckup);
+            Bus *MixedBus = new Bus("MBus",MixedBusCapacity,JourneysToCheckup);
             GarageQueue.enqueue(MixedBus);
         }
 
         for (int i = 0; i < WbusCount; i++)
         {
-            Bus *WheelChairBus = new Bus();
-            WheelChairBus->setDirection('F');
-            WheelChairBus->setMaintenanceJourney(journeysToCheckup);
-            WheelChairBus->setType("WBus");
-            GarageQueue.enqueue(WheelChairBus);
+           Bus *MixedBus = new Bus("WBus",WheelBusCapacity,JourneysToCheckup);
+            GarageQueue.enqueue(MixedBus);
         }
     }
+
+    Events* CreateArrive(ifstream& file){
+        string PassengerType;
+        int hour, minute,id,startStation,EndStation,Priority=-1;
+        char colon;
+        file>>PassengerType>>hour>>colon>>minute>>id>>startStation>>EndStation;
+        if (PassengerType=="SP"){
+            string subType;
+            file>>subType;
+            if(subType== "aged"){
+                Priority=2;
+            }
+            else if(subType=="POD"){
+                Priority=1;
+            }
+            else 
+            {
+                Priority=0;
+            }
+        }
+        int time = hour * 60 +minute;
+        return new Arrive(time,id,PassengerType,startStation,EndStation,Priority);
+    }
+
+    Events* CreateLeave(ifstream& file){
+        int hour,min,id;
+        char colon;
+        file>>hour>>colon>>min>>id;
+        int time =hour *60 +min;
+        return new Leave(numberOfStations,id,time);
+    }
+
     void GetPassengersOff(int time, string Filename)
     {
         for (int i = 0; i < numberOfStations; i++)
@@ -306,6 +332,8 @@ private:
         outFile << "Avg Utilization : " << totalUtilize / totalBuses * 100 << "%\n";
     }
 
+    
+
 public:
     LinkedQueue<Passenger *> &getFinishlist()
     {
@@ -350,7 +378,7 @@ public:
     }
 
 
-    string* GetFileLine(const string& fileName,int lineNum,char Functionality/*E to read Events, O to read only this line*/)
+    string* GetFileLine(string& fileName,int lineNum,char Functionality/*E to read Events, O to read only this line*/)
     {
     // Use the ifstream object file to read the file
     ifstream file;
@@ -396,7 +424,7 @@ public:
         while(NumberOfEvents<=0){
             char EventType;
             file>>EventType;
-            Events * Event = EventType == 'A' ? createArrivalEvent(File) : createLeaveEvent(File);
+            Events * Event = EventType == 'A' ? CreateArrive(file) : CreateLeave(file);
             EventsList.enqueue(Event);
         }
     }
