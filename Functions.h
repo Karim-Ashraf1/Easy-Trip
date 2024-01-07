@@ -18,14 +18,6 @@ int* ConvertToInt(string Array[])
 
 
 
-int GetBoardingTime(string Filename){
-    int y;
-    int* BoardingTime=ConvertToInt((GetFileLine(Filename,5,'O')));
-    y=*(BoardingTime+1);
-    return y;
-    
-
-}
 
 
 
