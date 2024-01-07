@@ -2,8 +2,6 @@
 #include "Node.h"
 #include "QueueADT.h"
 
-
-
 template <typename T>
 class PriorityQueue : public QueueADT<T>
 {
@@ -12,21 +10,22 @@ private:
 	Node<T> *frontPtr;
 
 public:
-    PriorityQueue();
-    bool isEmpty() const;
-	 bool enqueue(const T& newEntry) override;
-    bool priorityEnqueue(const T &newEntry);
+	PriorityQueue();
+	bool isEmpty() const;
+	bool enqueue(const T &newEntry) override;
+	bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
+	int getSize() const;
 	T dequeue();
 	T peek() const;
-	Node<T>* getFrontPtr() const;
+	Node<T> *getFrontPtr() const;
 	~PriorityQueue();
 };
 
 template <typename T>
-const Node<T>* getFrontPtr() 
+const Node<T> *getFrontPtr()
 {
-        return frontPtr;
+	return frontPtr;
 }
 
 /*
@@ -43,16 +42,12 @@ PriorityQueue<T>::PriorityQueue()
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
 /*Function: isEmpty
 Sees whether this queue is empty.
 
 Input: None.
 Output: True if the queue is empty; otherwise false.
 */
-
 
 template <typename T>
 bool PriorityQueue<T>::isEmpty() const
@@ -61,7 +56,6 @@ bool PriorityQueue<T>::isEmpty() const
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
 
 /*Function:prioritiy-enqueue
 Adds newEntry in the queue accourding to its priority.
@@ -109,6 +103,20 @@ bool PriorityQueue<T>::priorityEnqueue(const T &newEntry)
 	return true;
 }
 
+template <typename T>
+int PriorityQueue<T>::getSize() const
+{
+	int count = 0;
+	Node<T> *current = frontPtr;
+
+	while (current != nullptr)
+	{
+		count++;
+		current = current->getNext();
+	}
+	return count;
+}
+
 /*Function:getPriority
 checks the input priority.
 
@@ -124,39 +132,33 @@ int PriorityQueue<T>::getPriority(const T &entry) const
 		return 1;
 	}
 	else if (entry == "NP")
-	{ 
+	{
 		return 0;
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 template <typename T>
 T PriorityQueue<T>::dequeue()
 {
-    if (isEmpty())
-        return nullptr;
+	if (isEmpty())
+		return nullptr;
 
-    Node<T>* nodeToDeletePtr = frontPtr;
-    T frntEntry = frontPtr->getItem();
-    frontPtr = frontPtr->getNext();
-    // Queue is not empty; remove front
-    if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
-        backPtr = nullptr;
+	Node<T> *nodeToDeletePtr = frontPtr;
+	T frntEntry = frontPtr->getItem();
+	frontPtr = frontPtr->getNext();
+	// Queue is not empty; remove front
+	if (nodeToDeletePtr == backPtr) // Special case: last node in the queue
+		backPtr = nullptr;
 
-    // Free memory reserved for the dequeued node
-    delete nodeToDeletePtr;
+	// Free memory reserved for the dequeued node
+	delete nodeToDeletePtr;
 
-    return frntEntry;
+	return frntEntry;
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 /*
 Function: peek
@@ -169,17 +171,13 @@ Output: The front of the queue.
 template <typename T>
 T PriorityQueue<T>::peek() const
 {
-    if (isEmpty())
-        return nullptr;
+	if (isEmpty())
+		return nullptr;
 
-    return frontPtr->getItem();
+	return frontPtr->getItem();
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 template <typename T>
 PriorityQueue<T>::~PriorityQueue()
