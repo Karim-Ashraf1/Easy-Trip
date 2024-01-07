@@ -204,6 +204,43 @@ private:
             checkUpWheeldBus.enqueue(bus);
         }
     }
+    void addToMovingListNP(int time)
+    {
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            Bus *bus = StationsArray[i].removeNPFwdBus();
+            if (bus)
+            {
+                bus->setMovingTime(time);
+                Moving_Busses.enqueue(bus);
+            }
+            bus = StationsArray[i].removeNPBwdBus();
+            if (bus)
+            {
+                bus->setMovingTime(time);
+                Moving_Busses.enqueue(bus);
+            }
+        }
+    }
+
+    void addToMovingListWCP(int time)
+    {
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            Bus *bus = StationsArray[i].removeWCPFwdBus();
+            if (bus)
+            {
+                bus->setMovingTime(time);
+                Moving_Busses.enqueue(bus);
+            }
+            bus = StationsArray[i].removeWCPBwdBus();
+            if (bus)
+            {
+                bus->setMovingTime(time);
+                Moving_Busses.enqueue(bus);
+            }
+        }
+    }
 
     void PromotePassengers(int time)
     {
@@ -247,6 +284,44 @@ private:
                 bus->setMovingTime(time);
                 Moving_Busses.enqueue(bus);
             }
+        }
+    }
+
+
+    void IsCheckupNormal(int time){
+        for (int i=0;i<numberOfStations;i++){
+            if(i==0){
+                LinkedQueue<Bus*> checkupBus=StationsArray[0].FirstStationHandlerNormal();
+                while(!checkupBus.isEmpty()){
+                    Bus* bus = checkupBus.dequeue();
+                    AddBusToCheckup(time, bus);
+                }
+            }
+            else if(i==numberOfStations-1){
+                LinkedQueue<Bus*> checkupBus=StationsArray[0].LastStationHandlerNormal();
+                while(!checkupBus.isEmpty()){
+                    Bus* bus = checkupBus.dequeue();
+                    AddBusToCheckup(time, bus);
+            }
+        }
+    }
+    }
+    void IsCheckupWheel(int time){
+        for (int i=0;i<numberOfStations;i++){
+            if(i==0){
+                LinkedQueue<Bus*> checkupBus=StationsArray[0].FirstStationHandlerNWheel();
+                while(!checkupBus.isEmpty()){
+                    Bus* bus = checkupBus.dequeue();
+                    AddBusToCheckup(time, bus);
+                }
+            }
+            else if(i==numberOfStations-1){
+                LinkedQueue<Bus*> checkupBus=StationsArray[0].LastStationHandlerWheel();
+                while(!checkupBus.isEmpty()){
+                    Bus* bus = checkupBus.dequeue();
+                    AddBusToCheckup(time, bus);
+            }
+        }
         }
     }
 
@@ -448,12 +523,22 @@ public:
 
             addBusToStation(time); // Adding busses to their equivalent station
 
+            
+
             EventExcute(time); // Excutes which Event has been received
 
             PromotePassengers(time); // promotion from np to sp
 
             GetPassengersOff(time, fileName); // loop through all busses in all stations and remove the passengers that have arrived at their destanation
+           
+            IsCheckupNormal(time); //checking if bus is going to need checkup
+            IsCheckupWheel(time); //checking if bus is going to need checkup
+
+            addToMovingListNP(time);
+            addToMovingListWCP(time); 
+
             boardPassengers(time, fileName);  // loop through all the busses an all the stations and board the passengers
+
 
             ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses); // print output screen
 
@@ -461,41 +546,5 @@ public:
         }
     }
 
-    void addToMovingListNP(int time)
-    {
-        for (int i = 0; i < numberOfStations; i++)
-        {
-            Bus *bus = StationsArray[i].removeNPFwdBus();
-            if (bus)
-            {
-                bus->setMovingTime(time);
-                Moving_Busses.enqueue(bus);
-            }
-            bus = StationsArray[i].removeNPBwdBus();
-            if (bus)
-            {
-                bus->setMovingTime(time);
-                Moving_Busses.enqueue(bus);
-            }
-        }
-    }
-
-    void addToMovingListWCP(int time)
-    {
-        for (int i = 0; i < numberOfStations; i++)
-        {
-            Bus *bus = StationsArray[i].removeWCPFwdBus();
-            if (bus)
-            {
-                bus->setMovingTime(time);
-                Moving_Busses.enqueue(bus);
-            }
-            bus = StationsArray[i].removeWCPBwdBus();
-            if (bus)
-            {
-                bus->setMovingTime(time);
-                Moving_Busses.enqueue(bus);
-            }
-        }
-    }
+    
 };
