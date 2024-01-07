@@ -227,11 +227,20 @@ private:
         while (!EventsList.isEmpty() && EventsList.peek()->getTime() == Time)
             EventsList.dequeue()->Execute(StationsArray);
     }
-
-public:
-    LinkedQueue<Passenger *> &getFinishlist()
+    string FromTotalMinutesToString(int totalMinutes)
     {
-        return FinishList;
+        Time resultTime;
+
+        // Calculate hours and minutes
+        resultTime.setHours(totalMinutes / 60 % 24);
+        resultTime.setMinutes(totalMinutes % 60);
+        std::ostringstream oss;
+
+        // Format the hours and minutes with leading zeros if needed
+        oss << std::setw(2) << std::setfill('0') << resultTime.getHours() << ":"
+            << std::setw(2) << std::setfill('0') << resultTime.getMinutes();
+
+        return oss.str();
     }
     void AddToFinishList(Passenger psngr)
     {
@@ -239,32 +248,106 @@ public:
         pntr = &psngr;
         FinishList.enqueue(pntr);
     }
-    void Simulate(const string &fileName)
+        void Output()
     {
-        ui.Mode();
-        int time = 240; // Equivelent to 4 oclock
-        while (time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
+        ofstream outFile("output.txt");
+        outFile << "FT\t\t\t\tID\t\t\t\tAT\t\t\t\tWT\t\t\t\tTT" << endl; // FT -> Finish Time  AT -> Arrival Time  WT -> Waiting Time  TT -> Trip Time
+        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0, TotalPass = 0, TotalTrip = 0, MBus = 0, WBus = 0, totalBuses = 0, totalUtilize = 0, totalBusyTime = 0;
+        while (!FinishList.isEmpty())
         {
-            MoveBusFromGarage(time); //  bus from station #0 to movingbusses list
+            Passenger *pass = FinishList.dequeue();
+            outFile << FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getId()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getArrival()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getWaitingTime()) << "\t\t\t\t";
+            outFile << FromTotalMinutesToString(pass->getOFFTime() - pass->getArrival()) << "\t\t\t\t\n";
 
-            removeBusFromCheckup(time, checkUpMixedBus, checkup_durations_Mb);  //  bus from movingbusses list to waiting in station
-            removeBusFromCheckup(time, checkUpWheeldBus, checkup_durations_Wb); //  bus from movingbusses list to waiting in station
-
-            addBusToStation(time); // Adding busses to their equivalent station
-
-            EventExcute(time); // Excutes which Event has been received
-
-            PromotePassengers(time); // promotion from np to sp
-
-            GetPassengersOff(time, fileName); // loop through all busses in all stations and remove the passengers that have arrived at their destanation
-            boardPassengers(time, fileName);  // loop through all the busses an all the stations and board the passengers
-
-            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses); // print output screen
-
-            time++; //  increment time
+            TotalWait += pass->getWaitingTime();
+            TotalTrip += (pass->getOFFTime() - pass->getArrival());
+            string passType = pass->getType();
+            if (passType == "NP")
+            {
+                NPCount++;
+            }
+            else if (passType == "SP")
+            {
+                SPCount++;
+            }
+            else
+            {
+                WPCount++;
+            }
         }
+        while (!GarageQueue.isEmpty())
+        {
+            Bus *bus = GarageQueue.dequeue();
+            string busType = bus->getType();
+            totalUtilize += bus->BusUtilization();
+            totalBusyTime += bus->BusBusyTime();
+            if (busType == "MBus")
+            {
+                MBus++;
+            }
+            else
+            {
+                WBus++;
+            }
+        }
+
+        TotalPass = NPCount + SPCount + WPCount;
+        outFile << "Total Passengers : " << TotalPass << "\t {NP :" << NPCount << "\t SP :" << SPCount << "\t WP :" << WPCount << "}\n";
+        outFile << "Avg Waiting Time for Passengers : " << FromTotalMinutesToString(TotalWait / TotalPass) << "\n";
+        outFile << "Avg Trip Time for Passengers : " << FromTotalMinutesToString(TotalTrip / TotalPass) << "\n";
+        outFile << "Auto Promoted Passengers : " << promotedPassengers / TotalPass * 100 << "%\n";
+
+        totalBuses = MBus + WBus;
+        outFile << "Buses : " << totalBuses << "\t {MBus :" << MBus << "\t WBus :" << WBus << "}\n";
+        outFile << "Avg Busy Time : " << totalBusyTime / totalBuses * 100 << "%\n";
+        outFile << "Avg Utilization : " << totalUtilize / totalBuses * 100 << "%\n";
     }
 
+public:
+    LinkedQueue<Passenger *> &getFinishlist()
+    {
+        return FinishList;
+    }
+    
+    void ReadFile(string fileName)
+    {
+        // Read Number Of Station
+        numberOfStations = *(ConvertToInt(GetFileLine(fileName, 1, 'O')));
+        // Read Time Between Stations
+        TimeFromStationToStation = *(ConvertToInt(GetFileLine(fileName, 1, 'O')) + 1);
+        StationsArray = new Station[numberOfStations];
+        for (int i = 0; i < numberOfStations; i++)
+        {
+            StationsArray[i] = Station(i, TimeFromStationToStation);
+        }
+        // Read Number Of Mixed Busses
+        int MixedBusCount, WheelBusCount;
+        MixedBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')) + 1);
+        // Read Number Of Mixed Busses
+        WheelBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')));
+        //Read Capacity of Mixed Bus
+        MixedBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O')));
+        //Read Capacity of Wheel Bus
+        WheelBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O'))+1);
+        // Read Number of jornyes needed before Checkup
+        JourneysToCheckup = *(ConvertToInt(GetFileLine(fileName, 4, 'O')));
+        // Read duration of checkup for Wbus
+        checkup_durations_Wb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+1);
+        // Read duration of checkup for Mbus
+        checkup_durations_Mb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+2);
+        EnqueueGarage(WheelBusCount,MixedBusCount,JourneysToCheckup);
+        // Read MAx Waiting Time
+        MaxWaitingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O')));
+        // Read Boarding Time
+        BoardingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O'))+1);
+        // Read Number OF Events
+        NumberOfEvents=*(ConvertToInt(GetFileLine(fileName,6, 'O')));
+        // Read File Events
+        GetFileLine(fileName,7,'E');
+    }
 
 
     string* GetFileLine(const string& fileName,int lineNum,char Functionality/*E to read Events, O to read only this line*/)
@@ -323,113 +406,32 @@ public:
 
     }
 
-    void ReadFile(string fileName)
+    void Simulate(const string &fileName)
     {
-        // Read Number Of Station
-        numberOfStations = *(ConvertToInt(GetFileLine(fileName, 1, 'O')));
-        // Read Time Between Stations
-        TimeFromStationToStation = *(ConvertToInt(GetFileLine(fileName, 1, 'O')) + 1);
-        StationsArray = new Station[numberOfStations];
-        for (int i = 0; i < numberOfStations; i++)
+        ui.Mode();
+        int time = 240; // Equivelent to 4 oclock
+        while (time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
         {
-            StationsArray[i] = Station(i, TimeFromStationToStation);
+            MoveBusFromGarage(time); //  bus from station #0 to movingbusses list
+
+            removeBusFromCheckup(time, checkUpMixedBus, checkup_durations_Mb);  //  bus from movingbusses list to waiting in station
+            removeBusFromCheckup(time, checkUpWheeldBus, checkup_durations_Wb); //  bus from movingbusses list to waiting in station
+
+            addBusToStation(time); // Adding busses to their equivalent station
+
+            EventExcute(time); // Excutes which Event has been received
+
+            PromotePassengers(time); // promotion from np to sp
+
+            GetPassengersOff(time, fileName); // loop through all busses in all stations and remove the passengers that have arrived at their destanation
+            boardPassengers(time, fileName);  // loop through all the busses an all the stations and board the passengers
+
+            ui.PrintSimulation(time, StationsArray, numberOfStations, FinishList, checkUpMixedBus, checkUpMixedBus, Moving_Busses); // print output screen
+
+            time++; //  increment time
         }
-        // Read Number Of Mixed Busses
-        int MixedBusCount, WheelBusCount;
-        MixedBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')) + 1);
-        // Read Number Of Mixed Busses
-        WheelBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')));
-        //Read Capacity of Mixed Bus
-        MixedBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O')));
-        //Read Capacity of Wheel Bus
-        WheelBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O'))+1);
-        // Read Number of jornyes needed before Checkup
-        JourneysToCheckup = *(ConvertToInt(GetFileLine(fileName, 4, 'O')));
-        // Read duration of checkup for Wbus
-        checkup_durations_Wb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+1);
-        // Read duration of checkup for Mbus
-        checkup_durations_Mb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+2);
-        EnqueueGarage(WheelBusCount,MixedBusCount,JourneysToCheckup);
-        // Read MAx Waiting Time
-        MaxWaitingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O')));
-        // Read Boarding Time
-        BoardingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O'))+1);
-        // Read Number OF Events
-        NumberOfEvents=*(ConvertToInt(GetFileLine(fileName,6, 'O')));
-        // Read File Events
-        GetFileLine(fileName,7,'E');
     }
 
-    void Output()
-    {
-        ofstream outFile("output.txt");
-        outFile << "FT\t\t\t\tID\t\t\t\tAT\t\t\t\tWT\t\t\t\tTT" << endl; // FT -> Finish Time  AT -> Arrival Time  WT -> Waiting Time  TT -> Trip Time
-        int NPCount = 0, SPCount = 0, WPCount = 0, TotalWait = 0, TotalPass = 0, TotalTrip = 0, MBus = 0, WBus = 0, totalBuses = 0, totalUtilize = 0, totalBusyTime = 0;
-        while (!FinishList.isEmpty())
-        {
-            Passenger *pass = FinishList.dequeue();
-            outFile << FromTotalMinutesToString(pass->getOFFTime()) << "\t\t\t\t";
-            outFile << FromTotalMinutesToString(pass->getId()) << "\t\t\t\t";
-            outFile << FromTotalMinutesToString(pass->getArrival()) << "\t\t\t\t";
-            outFile << FromTotalMinutesToString(pass->getWaitingTime()) << "\t\t\t\t";
-            outFile << FromTotalMinutesToString(pass->getOFFTime() - pass->getArrival()) << "\t\t\t\t\n";
 
-            TotalWait += pass->getWaitingTime();
-            TotalTrip += (pass->getOFFTime() - pass->getArrival());
-            string passType = pass->getType();
-            if (passType == "NP")
-            {
-                NPCount++;
-            }
-            else if (passType == "SP")
-            {
-                SPCount++;
-            }
-            else
-            {
-                WPCount++;
-            }
-        }
-        while (!GarageQueue.isEmpty())
-        {
-            Bus *bus = GarageQueue.dequeue();
-            string busType = bus->getType();
-            totalUtilize += bus->BusUtilization();
-            totalBusyTime += bus->BusBusyTime();
-            if (busType == "MBus")
-            {
-                MBus++;
-            }
-            else
-            {
-                WBus++;
-            }
-        }
-
-        TotalPass = NPCount + SPCount + WPCount;
-        outFile << "Total Passengers : " << TotalPass << "\t {NP :" << NPCount << "\t SP :" << SPCount << "\t WP :" << WPCount << "}\n";
-        outFile << "Avg Waiting Time for Passengers : " << FromTotalMinutesToString(TotalWait / TotalPass) << "\n";
-        outFile << "Avg Trip Time for Passengers : " << FromTotalMinutesToString(TotalTrip / TotalPass) << "\n";
-        outFile << "Auto Promoted Passengers : " << promotedPassengers / TotalPass * 100 << "%\n";
-
-        totalBuses = MBus + WBus;
-        outFile << "Buses : " << totalBuses << "\t {MBus :" << MBus << "\t WBus :" << WBus << "}\n";
-        outFile << "Avg Busy Time : " << totalBusyTime / totalBuses * 100 << "%\n";
-        outFile << "Avg Utilization : " << totalUtilize / totalBuses * 100 << "%\n";
-    }
-    string FromTotalMinutesToString(int totalMinutes)
-    {
-        Time resultTime;
-
-        // Calculate hours and minutes
-        resultTime.setHours(totalMinutes / 60 % 24);
-        resultTime.setMinutes(totalMinutes % 60);
-        std::ostringstream oss;
-
-        // Format the hours and minutes with leading zeros if needed
-        oss << std::setw(2) << std::setfill('0') << resultTime.getHours() << ":"
-            << std::setw(2) << std::setfill('0') << resultTime.getMinutes();
-
-        return oss.str();
-    }
+    
 };
