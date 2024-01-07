@@ -301,7 +301,7 @@ public:
         else
             return nullptr;
     }
-    Bus *removeWCPFwdBus()
+    Bus *removeWCPBwdBus()
     {
         if (!WheelchairPassengersMovingBusesBackward.isEmpty() && (!WheelchairPassengersMovingBusesBackward.peek()->checkAddPassenger() || !BusNeeded(WheelchairPassengersMovingBusesBackward.peek())))
         {
