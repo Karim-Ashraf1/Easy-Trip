@@ -34,6 +34,11 @@ private:
     int numberOfStations;
     int promotedPassengers;
     int MaxWaitingTime;
+    int JourneysToCheckup;
+    int MixedBusCapacity;
+    int WheelBusCapacity;
+    int BoardingTime;
+    int NumberOfEvents;
 
     // class' functions
     // function to Enque busess to a queue according to their number from the inout file
@@ -239,7 +244,6 @@ public:
     {
         ui.Mode();
         int time = 240; // Equivelent to 4 oclock
-        // loop in company
         while (time < 1320) // loop while time is between 4 am oclock and 10 pm oclock
         {
             MoveBusFromGarage(time); //  bus from station #0 to movingbusses list
@@ -262,6 +266,64 @@ public:
         }
     }
 
+
+
+    string* GetFileLine(const string& fileName,int lineNum,char Functionality/*E to read Events, O to read only this line*/)
+    {
+    // Use the ifstream object file to read the file
+    ifstream file;
+    // filename will store the name of the file and line_number the line number
+    string filename=fileName;
+    int Capacity=*(CalcCapacity(filename));
+    string* FileArray = new string[Capacity] ;//to be changed to linked list
+    int line_number=lineNum;
+    
+
+    // Open the file with the provided filename
+    file.open(filename);
+
+    // If there was a failure opening the file (perhaps it does not exist) then
+    // exit with an error message and status.
+    if (file.fail())
+    {
+        cout << "File failed to open." << endl;
+        return 0;
+    }
+
+
+    int current_line = 0;
+    string line;
+
+    // Continue to read the file one line at a time, unless we reach the end of 
+    while (!file.eof())
+    {
+    // Increment the current line number being read as we are reading in the 
+        current_line++;
+
+    // Read the next line from the 'file' into the 'line' string 
+    getline(file, line);
+
+    if (Functionality=='O'){
+        // If current line number of the line we've read in matches the line number 
+        // that we're looking for, use break to stop the loop
+        if (current_line == line_number)
+           FileArray=SplitString(line);//to be fixed when linked list
+            break;
+        }
+    if (Functionality=='E'){
+        while(NumberOfEvents<=0){
+            char EventType;
+            file>>EventType;
+            Events * Event = EventType == 'A' ? createArrivalEvent(File) : createLeaveEvent(File);
+            EventsList.enqueue(Event);
+        }
+    }
+    }
+    file.close();
+    return FileArray;
+
+    }
+
     void ReadFile(string fileName)
     {
         // Read Number Of Station
@@ -278,6 +340,25 @@ public:
         MixedBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')) + 1);
         // Read Number Of Mixed Busses
         WheelBusCount = *(ConvertToInt(GetFileLine(fileName, 2, 'O')));
+        //Read Capacity of Mixed Bus
+        MixedBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O')));
+        //Read Capacity of Wheel Bus
+        WheelBusCapacity=*(ConvertToInt(GetFileLine(fileName, 3, 'O'))+1);
+        // Read Number of jornyes needed before Checkup
+        JourneysToCheckup = *(ConvertToInt(GetFileLine(fileName, 4, 'O')));
+        // Read duration of checkup for Wbus
+        checkup_durations_Wb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+1);
+        // Read duration of checkup for Mbus
+        checkup_durations_Mb=*(ConvertToInt(GetFileLine(fileName, 4, 'O'))+2);
+        EnqueueGarage(WheelBusCount,MixedBusCount,JourneysToCheckup);
+        // Read MAx Waiting Time
+        MaxWaitingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O')));
+        // Read Boarding Time
+        BoardingTime=*(ConvertToInt(GetFileLine(fileName, 5, 'O'))+1);
+        // Read Number OF Events
+        NumberOfEvents=*(ConvertToInt(GetFileLine(fileName,6, 'O')));
+        // Read File Events
+        GetFileLine(fileName,7,'E');
     }
 
     void Output()
