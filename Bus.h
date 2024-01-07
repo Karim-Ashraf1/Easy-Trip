@@ -5,11 +5,11 @@
 #include "Time.h"
 #include "Station.h"
 #include "Functions.h"
-int id= 0;
+int id = 0;
 class Bus
 {
 private:
-    int ID=0;
+    int ID = 0;
     int FirstOnTime, LastOffTime;
     int BusyTime;
     int Capacity;
@@ -55,14 +55,15 @@ public:
         direction = 'F';
         CurrentStation = 0;
     }
-    Bus(string type,int Capacity,int maintenanceJ)
-        :type(type),Capacity(Capacity),maintenanceJ(maintenanceJ){
-            Checkup=false;
-            maintenanceT=MovingTime=Journy=0;
-            CurrentStation=0;
-            ID=id;
-            id++;
-        }
+    Bus(string type, int Capacity, int maintenanceJ)
+        : type(type), Capacity(Capacity), maintenanceJ(maintenanceJ)
+    {
+        Checkup = false;
+        maintenanceT = MovingTime = Journy = 0;
+        CurrentStation = 0;
+        ID = id;
+        id++;
+    }
 
     // setter for current load
     void setCurrentStation(int CurrentStation) { this->CurrentStation = CurrentStation; }
@@ -153,17 +154,17 @@ public:
     //     }
     // }
 
-    //void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
- //    {
- //
-  //       Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
- //
- //        if (waitingStation != nullptr)
- //        {
-  //
- //             currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
- //        }
- //    }
+    // void busFromMovingToWaiting(DoubleLinkedList<Station *> &stationsList, Station &currentStation)
+    //    {
+    //
+    //       Node<Station *> *waitingStation = stationsList.Find(&currentStation); // Find the current station in the linked list
+    //
+    //        if (waitingStation != nullptr)
+    //        {
+    //
+    //             currentStation.getAvailableBusses().enqueue(*this); // add the bus to the current station's
+    //        }
+    //    }
 
     void JournyIncrement()
     {
@@ -183,9 +184,9 @@ public:
         return MovingPassengersList.peek()->getEndStation() == nextStation;
     }
 
-    void checkEndStationAndRemove(Station station, string Filename,int currenttime, LinkedQueue<Passenger *> FinishList, int BoardingTime)
+    void checkEndStationAndRemove(Station station, string Filename, int currenttime, LinkedQueue<Passenger *> FinishList, int BoardingTime)
     {
-        
+
         int loop;
         loop = 60 / BoardingTime;
         for (int i = 0; i < loop; i++)
@@ -209,16 +210,16 @@ public:
                     // Update the current load of the bus
                     setCurrentLoad(getCurrentLoad() - 1);
 
-                    //set the passenger get off time as current time
+                    // set the passenger get off time as current time
                     psngr.setOFFTime(currenttime);
 
                     // Add the removed passenger to the finish list of the station
                     FinishList.enqueue(pntr);
-                    if(psngr.getOFFTime()>LastOffTime){
-                        LastOffTime=psngr.getOFFTime();
-                        BusyTime=LastOffTime-FirstOnTime;
+                    if (psngr.getOFFTime() > LastOffTime)
+                    {
+                        LastOffTime = psngr.getOFFTime();
+                        BusyTime = LastOffTime - FirstOnTime;
                     }
-                
                 }
 
                 // Move to the next node in the linked list
@@ -226,84 +227,81 @@ public:
             }
         }
     }
-    void loadChairPassengersToBus(LinkedQueue <Passenger*>& waitingPassengers, int currenttime, int maxPassengers)
+    void loadChairPassengersToBus(LinkedQueue<Passenger *> &waitingPassengers, int currenttime, int maxPassengers)
     {
-       
+
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
         {
             Passenger nextPassenger;
 
-
             nextPassenger = *waitingPassengers.dequeue();
             // Add the pointer to the passenger to the bus's linked list
             Passengers.InsertEnd(&nextPassenger);
-            //set the passenger get on time as current time
+            // set the passenger get on time as current time
             nextPassenger.setOnTime(currenttime);
             setCurrentLoad(getCurrentLoad() + 1);
 
             // Decrease available seats and continue the loop
             availableSeats--;
-            if (nextPassenger.getOnTime() < FirstOnTime) {
+            if (nextPassenger.getOnTime() < FirstOnTime)
+            {
                 FirstOnTime = nextPassenger.getOnTime();
             }
-
         }
     }
-    
-    void loadNormalPassengersToBus(LinkedList <Passenger*> &waitingPassengers, int currenttime,int maxPassengers)
+
+    void loadNormalPassengersToBus(LinkedList<Passenger *> &waitingPassengers, int currenttime, int maxPassengers)
     {
-       
+
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.IsEmpty())
         {
             Passenger nextPassenger;
-            
-            
-                nextPassenger = *waitingPassengers.GetHead()->getItem();
-                // Add the pointer to the passenger to the bus's linked list
-                Passengers.InsertEnd(&nextPassenger);
-                //set the passenger get on time as current time
-                nextPassenger.setOnTime(currenttime);
-                setCurrentLoad(getCurrentLoad() + 1);
 
-                // Decrease available seats and continue the loop
-                availableSeats--;
-                if(nextPassenger.getOnTime()<FirstOnTime){
-                    FirstOnTime = nextPassenger.getOnTime();
-                }
-            
+            nextPassenger = *waitingPassengers.GetHead()->getItem();
+            // Add the pointer to the passenger to the bus's linked list
+            Passengers.InsertEnd(&nextPassenger);
+            // set the passenger get on time as current time
+            nextPassenger.setOnTime(currenttime);
+            setCurrentLoad(getCurrentLoad() + 1);
+
+            // Decrease available seats and continue the loop
+            availableSeats--;
+            if (nextPassenger.getOnTime() < FirstOnTime)
+            {
+                FirstOnTime = nextPassenger.getOnTime();
+            }
         }
     }
-    void loadSpecialPassengersToBus(PriorityQueue <Passenger*>& waitingPassengers, int currenttime,int maxPassengers)
+    void loadSpecialPassengersToBus(PriorityQueue<Passenger *> &waitingPassengers, int currenttime, int maxPassengers)
     {
-       
+
         int availableSeats = maxPassengers - getCurrentLoad();
 
         while (availableSeats > 0 && !waitingPassengers.isEmpty())
         {
             Passenger nextPassenger;
 
-
             nextPassenger = *waitingPassengers.dequeue();
             // Add the pointer to the passenger to the bus's linked list
             Passengers.InsertEnd(&nextPassenger);
-            //set the passenger get on time as current time
+            // set the passenger get on time as current time
             nextPassenger.setOnTime(currenttime);
             setCurrentLoad(getCurrentLoad() + 1);
 
             // Decrease available seats and continue the loop
             availableSeats--;
-            if (nextPassenger.getOnTime() < FirstOnTime) {
+            if (nextPassenger.getOnTime() < FirstOnTime)
+            {
                 FirstOnTime = nextPassenger.getOnTime();
             }
-
         }
     }
 
-    void boardPassengers(Station &station, string Filename, int currenttime,int maxPassengers)
+    void boardPassengers(Station &station, string Filename, int currenttime, int maxPassengers)
     {
         int BoardingTime = GetBoardingTime(Filename);
         int loop;
@@ -316,16 +314,16 @@ public:
                 // Forward direction
                 if (getType() == "NP")
                 {
-                    PriorityQueue<Passenger*> queue= station.getSpecialWaitingPassFwd();
+                    PriorityQueue<Passenger *> queue = station.getSpecialWaitingPassFwd();
                     // Normal bus
                     loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
-                    LinkedList <Passenger*> List = station.getNormalWaitingPassengersForward();
-                    loadNormalPassengersToBus(List, currenttime,maxPassengers);
+                    LinkedList<Passenger *> List = station.getNormalWaitingPassengersForward();
+                    loadNormalPassengersToBus(List, currenttime, maxPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassFwd();
+                    LinkedQueue<Passenger *> Lqueue = station.getWChairWaitingPassFwd();
                     loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
                 }
             }
@@ -335,18 +333,19 @@ public:
                 if (getType() == "NP")
                 {
                     // Normal bus
-                    PriorityQueue<Passenger*> queue = station.getSpecialWaitingPassBwd();
+                    PriorityQueue<Passenger *> queue = station.getSpecialWaitingPassBwd();
                     loadSpecialPassengersToBus(queue, currenttime, maxPassengers);
-                    LinkedList <Passenger*> List = station.getNormalWaitingPassengersBackward();
+                    LinkedList<Passenger *> List = station.getNormalWaitingPassengersBackward();
                     loadNormalPassengersToBus(List, currenttime, maxPassengers);
                 }
                 else if (getType() == "WP")
                 {
                     // Wheelchair bus
-                    LinkedQueue <Passenger*> Lqueue = station.getWChairWaitingPassBwd();
+                    LinkedQueue<Passenger *> Lqueue = station.getWChairWaitingPassBwd();
                     loadChairPassengersToBus(Lqueue, currenttime, maxPassengers);
                 }
             }
         }
     }
+    bool checkAddPassenger() { return MovingPassengersList.getSize() < Capacity; }
 };
