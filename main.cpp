@@ -8,7 +8,7 @@ int main()
     cout << "Enter The File Name" << endl;
     string filename;
     cin >> filename;
-    // MyCompany->ReadFile(filename);
+    MyCompany->ReadFile(filename);
     MyCompany->Simulate(filename);
    
     return 0;

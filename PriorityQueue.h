@@ -8,10 +8,12 @@ class PriorityQueue : public QueueADT<T>
 private:
 	Node<T> *backPtr;
 	Node<T> *frontPtr;
+	int priority;
 
 public:
 	PriorityQueue();
 	bool isEmpty() const;
+	void setPriority(int entry);
 	bool enqueue(const T &newEntry) override;
 	bool priorityEnqueue(const T &newEntry);
 	int getPriority(const T &entry) const;
@@ -127,14 +129,12 @@ Output: int shows the priority of the input.
 template <typename T>
 int PriorityQueue<T>::getPriority(const T &entry) const
 {
-	if (entry == "SP")
-	{
-		return 1;
-	}
-	else if (entry == "NP")
-	{
-		return 0;
-	}
+	return priority(entry);
+}
+template <typename T>
+void PriorityQueue<T>::setPriority(int entry)
+{
+	priority=entry;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
