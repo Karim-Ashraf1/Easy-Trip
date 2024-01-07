@@ -6,10 +6,11 @@
 #include "Station.h"
 #include "DoubleLinkedLIst.h"
 #include "Functions.h"
+int id= 0;
 class Bus
 {
 private:
-    int id;
+    int ID=0;
     int FirstOnTime, LastOffTime;
     int BusyTime;
     int Capacity;
@@ -35,9 +36,9 @@ private:
     PriorityQueue<Passenger *> MovingPassengersList;
 
 public:
-    Bus(int id, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
+    Bus(int ID, std::string type, int CurrentLoad, int MBmaintenanceT, int WBmaintenanceT, int maintenanceJ, char direction)
     {
-        id = id;
+        ID = ID;
         type = type;
         CurrentLoad = CurrentLoad;
         MBmaintenanceT = MBmaintenanceT;
@@ -47,7 +48,7 @@ public:
     }
     Bus()
     {
-        id = 1;
+        ID = 1;
         type = "MBus";
         CurrentLoad = 0;
         maintenanceT = 0;
@@ -55,11 +56,19 @@ public:
         direction = 'F';
         CurrentStation = 0;
     }
+    Bus(string type,int Capacity,int maintenanceJ)
+        :type(type),Capacity(Capacity),maintenanceJ(maintenanceJ){
+            Checkup=false;
+            maintenanceT=MovingTime=Journy=0;
+            CurrentStation=0;
+            ID=id;
+            id++;
+        }
 
     // setter for current load
     void setCurrentStation(int CurrentStation) { this->CurrentStation = CurrentStation; }
     void setJourney(int Journeys) { Journy = Journeys; }
-    void setId(int idx) { id = idx; }
+    void setId(int idx) { ID = idx; }
     void setType(std::string typex) { type = typex; }
     void setBusMaintenanceTime(int MBMT) { maintenanceT = MBMT; }
     void setMaintenanceJourney(int MJ) { maintenanceJ = MJ; }
@@ -78,7 +87,7 @@ public:
     // getters for attributes
     int getCurrentStation() { return CurrentStation; }
     int getJourney() { return Journy; }
-    int getId() { return id; }
+    int getId() { return ID; }
     std::string getType() { return type; }
     int getBusMaintenanceTime() { return maintenanceT; }
     bool getIsCheckup() { return Checkup; }
